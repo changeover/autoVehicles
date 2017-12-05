@@ -5,4 +5,5 @@ public interface SettingsController {
 
     int getVehicleCount();
 
+    void addListener(SettingsControllerListener settingsControllerListener);
 }

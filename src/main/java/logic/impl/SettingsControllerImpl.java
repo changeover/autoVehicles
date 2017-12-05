@@ -14,9 +14,19 @@ public class SettingsControllerImpl implements SettingsController {
     }
     public void setVehicleCount(int vehicleCount){
         this.vehicleCount = vehicleCount;
+        fireDataChanged();
     }
     public int getVehicleCount(){
         return this.vehicleCount;
     }
+    public void addListener(SettingsControllerListener settingsControllerListener){
+        listeners.add(settingsControllerListener);
+    }
+    private void fireDataChanged() {
+        for (SettingsControllerListener listener : listeners) {
+            listener.dataChanged();
+        }
+    }
+
 
 }
