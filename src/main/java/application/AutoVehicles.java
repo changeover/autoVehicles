@@ -5,6 +5,8 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import logic.Creature;
+import world.GlobalClock;
 
 public class AutoVehicles extends Application {
 
@@ -21,6 +23,13 @@ public class AutoVehicles extends Application {
         Scene scene = new Scene(mainPane,WINDOWWIDTH, WINDOWHEIGHT);
         primaryStage.setTitle("Autonomous vehicles");
         primaryStage.setScene(scene);
+
+        GlobalClock clock = new GlobalClock(1, applicationContext.getLightMap());
+
+        Thread creatureThread = new Thread(new vehicle.Creature(new int[1], applicationContext.getLightMap()));
+
+        clock.start();
+
         primaryStage.show();
     }
 }

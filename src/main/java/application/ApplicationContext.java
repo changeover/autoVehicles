@@ -3,12 +3,18 @@ package application;
 
 import logic.*;
 import logic.impl.*;
+import world.LightMap;
 
 public class ApplicationContext {
-    SettingsController settingsController;
+    private SettingsController settingsController;
+    private LightMap lightMap;
+
     public ApplicationContext(){
         settingsController = new SettingsControllerImpl();
+        this.lightMap = new LightMap(10, 10);
+
     }
+
     public void run(){
 
     }
@@ -17,5 +23,9 @@ public class ApplicationContext {
     }
     public SettingsController getSettingsController(){
         return this.settingsController;
+    }
+
+    public LightMap getLightMap() {
+        return lightMap;
     }
 }
