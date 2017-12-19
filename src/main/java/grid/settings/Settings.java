@@ -20,10 +20,11 @@ public class Settings extends StackPane {
         final Label vehicleCountLabel = new Label("Vehicle Count: ");
         Slider vehicleCount = new Slider();
         Label count = new Label();
-        vehicleCount.setMin(0);
+        vehicleCount.setMin(1);
         vehicleCount.setMax(1000);
         vehicleCount.setValue(100);
         settingsController.setVehicleCount(100);
+        settingsController.setSlider(vehicleCount);
         vehicleCount.valueProperty().addListener((observable, oldValue, newValue) -> settingsController.setVehicleCount(newValue.intValue()));
         settingsController.addListener(() -> {count.setText(String.valueOf(settingsController.getVehicleCount()));});
         controlPanel.getChildren().add(vehicleCountLabel);

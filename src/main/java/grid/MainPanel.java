@@ -8,10 +8,11 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 public class MainPanel extends BorderPane{
-    StackPane topPane = new StackPane();
+    Pane topPane = new Pane();
 
     public MainPanel(final ApplicationContext applicationContext, int windowWidth, int windowHeight){
         final int SETTINGHEIGHT = 100;
@@ -43,7 +44,7 @@ public class MainPanel extends BorderPane{
         setCenter(splitPane);
     }
 
-        public StackPane getTopPane(){
+        public Pane getTopPane(){
             return topPane;
 
     }

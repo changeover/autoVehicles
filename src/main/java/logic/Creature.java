@@ -6,6 +6,4 @@ package logic;
  * Every creature lives in its own thread
  */
 public interface Creature {
-
-
 }

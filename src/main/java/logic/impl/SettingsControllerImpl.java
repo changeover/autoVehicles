@@ -1,5 +1,6 @@
 package logic.impl;
 
+import javafx.scene.control.Slider;
 import logic.SettingsController;
 import logic.SettingsControllerListener;
 
@@ -9,6 +10,8 @@ import java.util.List;
 public class SettingsControllerImpl implements SettingsController {
     private List<SettingsControllerListener> listeners;
     private int vehicleCount;
+    private Slider slider;
+
     public SettingsControllerImpl(){
         listeners = new ArrayList<>();
     }
@@ -27,6 +30,17 @@ public class SettingsControllerImpl implements SettingsController {
             listener.dataChanged();
         }
     }
+
+    public void deactivateSlider(){
+        this.slider.setDisable(true);
+    }
+    public void setSlider(Slider slider){
+        this.slider = slider;
+    }
+    public void activateSlider(){
+        this.slider.setDisable(false);
+    }
+
 
 
 }

@@ -25,11 +25,11 @@ public class GlobalClock {
     };
 
     public GlobalClock(int fps, LightMap lightMap) {
-        this.period = 1 / fps * 1000;
+        this.period = (1 / fps) * 1000;
         this.lightMap = lightMap;
     }
 
     public void start() {
-        globalClock.scheduleAtFixedRate(pulse, 0, period);
+        globalClock.scheduleAtFixedRate(pulse, 0, 16);
     }
 }

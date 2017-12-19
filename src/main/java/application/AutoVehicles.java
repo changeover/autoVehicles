@@ -1,11 +1,8 @@
 package application;
 
-import grid.MainPanel;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import logic.Creature;
 import world.GlobalClock;
 
 public class AutoVehicles extends Application {
@@ -25,7 +22,20 @@ public class AutoVehicles extends Application {
 
         GlobalClock clock = new GlobalClock(1, applicationContext.getLightMap());
 
-        Thread creatureThread = new Thread(new vehicle.Creature(new int[1], applicationContext.getLightMap(),applicationContext.getMainPanel().getTopPane()));
+
+        applicationContext.getSettingsController().addListener(() -> {
+            if(applicationContext.getCreatureCount()< applicationContext.getSettingsController().getVehicleCount()) {
+                for (int i = applicationContext.getCreatureCount(); i < applicationContext.getSettingsController().getVehicleCount(); i++) {
+                    Thread creatureThread = new Thread(new vehicle.Creature(new int[1], applicationContext.getLightMap(),applicationContext.getMainPanel().getTopPane()));
+                    applicationContext.appendCreatureThreadList(creatureThread);
+                }
+            }
+            if(applicationContext.getCreatureCount()>applicationContext.getSettingsController().getVehicleCount()){
+                int diff = applicationContext.getCreatureCount()-applicationContext.getSettingsController().getVehicleCount();
+                applicationContext.removeThreads(diff-1 );
+            }
+        });
+
 
         clock.start();
 

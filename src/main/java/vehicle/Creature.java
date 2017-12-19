@@ -2,6 +2,7 @@ package vehicle;
 
 import grid.MainPanel;
 import javafx.application.Platform;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -18,52 +19,47 @@ import java.util.Stack;
  */
 
 public class Creature implements Runnable {
-
     private Wheel wheel = new Wheel();
-
-    private StackPane topPane;
-
+    private Pane topPane;
     private Eye eye;
-
     private Brain brain = new Brain();
-
     private LightMap lightMap;
-
     private int[] position;
+    Circle creature;
 
-
-
-
-
-    public Creature(int[] spawnPosition, LightMap lightMap, StackPane topPane) {
+    public Creature(int[] spawnPosition, LightMap lightMap, Pane topPane) {
         this.position = spawnPosition;
         this.lightMap = lightMap;
         this.eye = new Eye(position, lightMap);
         this.lightMap.addPropertyChangeListener(e -> update());
         this.brain.linkComponents(eye, wheel);
-        this.brain.addPropertyChangeListener(e -> lightMap.placeCreature(0, 0));
+        //this.brain.addPropertyChangeListener(e -> lightMap.placeCreature(0, 0));
         this.topPane = topPane;
+
     }
 
     @Override
     public void run() {
-
         Platform.runLater(() ->
         {
-            Circle creature = new Circle();
-            creature.setCenterX(Math.random() * 3000);
-            creature.setCenterY(Math.random() * 2000);
+            creature = new Circle();
+            int randX = (int)(Math.random() * 3000);
+            int randY = (int)(Math.random() * 2000);
+            creature.setCenterX(randX);
+            creature.setCenterY(randY);
             creature.setRadius(10);
             creature.setFill(Color.HOTPINK);
             topPane.getChildren().add(creature);
         });
-
     }
 
     private void update() {
-        System.out.println("updated creature...");
-        eye.measureLight();
+        if(creature != null) {
+            creature.setCenterX(creature.getCenterX() + 1);
+            creature.setCenterY(creature.getCenterY() + 2);
+            System.out.println("updated creature...");
+            eye.measureLight();
+        }
     }
-
 
 }
