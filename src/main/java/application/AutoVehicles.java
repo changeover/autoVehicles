@@ -16,17 +16,16 @@ public class AutoVehicles extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        final int WINDOWWIDTH = 1000;
-        final int WINDOWHEIGHT = 800;
+        final int WINDOWWIDTH = 3000;
+        final int WINDOWHEIGHT = 2000;
         ApplicationContext applicationContext = new ApplicationContext();
-        Pane mainPane = new MainPanel(applicationContext,WINDOWWIDTH,WINDOWHEIGHT);
-        Scene scene = new Scene(mainPane,WINDOWWIDTH, WINDOWHEIGHT);
+        Scene scene = new Scene(applicationContext.getMainPanel(),WINDOWWIDTH, WINDOWHEIGHT);
         primaryStage.setTitle("Autonomous vehicles");
         primaryStage.setScene(scene);
 
         GlobalClock clock = new GlobalClock(1, applicationContext.getLightMap());
 
-        Thread creatureThread = new Thread(new vehicle.Creature(new int[1], applicationContext.getLightMap()));
+        Thread creatureThread = new Thread(new vehicle.Creature(new int[1], applicationContext.getLightMap(),applicationContext.getMainPanel().getTopPane()));
 
         clock.start();
 

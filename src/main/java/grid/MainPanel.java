@@ -11,9 +11,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 
 public class MainPanel extends BorderPane{
+    StackPane topPane = new StackPane();
+
     public MainPanel(final ApplicationContext applicationContext, int windowWidth, int windowHeight){
         final int SETTINGHEIGHT = 100;
-        StackPane topPane = new StackPane();
         StackPane settingPane = new StackPane(new Settings(applicationContext));
         SplitPane splitPane = new SplitPane();
         splitPane.setOrientation(Orientation.VERTICAL);
@@ -40,6 +41,10 @@ public class MainPanel extends BorderPane{
 
         setTop(menuBar);
         setCenter(splitPane);
+    }
+
+        public StackPane getTopPane(){
+            return topPane;
 
     }
 }
