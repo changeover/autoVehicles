@@ -23,10 +23,12 @@ public class AutoVehicles extends Application {
         Scene scene = new Scene(mainPane,WINDOWWIDTH, WINDOWHEIGHT);
         primaryStage.setTitle("Autonomous vehicles");
         primaryStage.setScene(scene);
-
+        
+        
+        applicationContext.getLightGrid().addSource( new int[] {3,3}, 100);
         GlobalClock clock = new GlobalClock(1, applicationContext.getLightMap());
 
-        Thread creatureThread = new Thread(new vehicle.Creature(new int[1], applicationContext.getLightMap()));
+        Thread creatureThread = new Thread(new vehicle.Creature(new int[] {1,3}, applicationContext));
 
         clock.start();
 

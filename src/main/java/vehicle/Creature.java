@@ -1,5 +1,6 @@
 package vehicle;
 
+import application.ApplicationContext;
 import world.LightMap;
 
 /**
@@ -17,17 +18,14 @@ public class Creature implements Runnable {
 
     private Brain brain = new Brain();
 
-    private LightMap lightMap;
+    private ApplicationContext applicationContext;
 
     private int[] position;
 
-    public Creature(int[] spawnPosition, LightMap lightMap) {
+    public Creature(int[] spawnPosition, ApplicationContext aplli) {
         this.position = spawnPosition;
-        this.lightMap = lightMap;
-        this.eye = new Eye(position, lightMap);
-        this.lightMap.addPropertyChangeListener(e -> update());
+        this.applicationContext = aplli;
         this.brain.linkComponents(eye, wheel);
-        this.brain.addPropertyChangeListener(e -> lightMap.placeCreature(0, 0));
 
     }
 
