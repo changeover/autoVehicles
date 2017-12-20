@@ -8,6 +8,8 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import application.ApplicationContext;
+
 //url = https://github.com/changeover/autoVehicles.git
 //url=ssh://git@github.com:changeover/autoVehicles.git
 
@@ -15,11 +17,12 @@ public class Eye implements Sensor {
 
 
     private final List<PropertyChangeListener> listeners = new ArrayList<>();
-
+    private final ApplicationContext applicationCOntext;
     private int[] position;
 
-    public Eye(int[] position, LightMap lightMap) {
+    public Eye(int[] position, ApplicationContext appli) {
         this.position = position;
+        this.applicationCOntext=appli;
     }
 
     @Override
