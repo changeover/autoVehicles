@@ -17,7 +17,7 @@ public class BrainImpl implements Brain {
 
     private final List<BrainListener> listeners = new ArrayList<>();
     private Circle creature;
-    private int directionX, directionY;
+    private double newPositionX, newPositionY;
     private LightMap lightMap;
 
     public BrainImpl(LightMap lightMap, ReentrantLock lightmapLock){
@@ -33,18 +33,21 @@ public class BrainImpl implements Brain {
 
     public void computeNextPosition() {
         if(creature != null) {
-            int centerX = lightMap.getLightSourceX();
-            int centerY = lightMap.getLightSourceY();
-            if (creature.getCenterX() - centerX < 0) {
+            int directionX, directionY;
+            int LightCenterX = lightMap.getLightSourceX();
+            int LightCenterY = lightMap.getLightSourceY();
+            if (creature.getCenterX() - LightCenterX < 0) {
                 directionX = 1;
             } else {
                 directionX = -1;
             }
-            if (creature.getCenterY() - centerY < 0) {
+            if (creature.getCenterY() - LightCenterY < 0) {
                 directionY = 1;
             } else {
                 directionY = -1;
             }
+            newPositionX = creature.getCenterX() + directionX;
+            newPositionY = creature.getCenterY() + directionY;
             fireDataChanged();
         }
     }
@@ -63,10 +66,10 @@ public class BrainImpl implements Brain {
     public void addListener(BrainListener brainListener) {
         listeners.add(brainListener);
     }
-    public int getDirectionX(){
-        return this.directionX;
+    public double getPositionX(){
+        return this.newPositionX;
     }
-    public int getDirectionY(){
-        return this.directionY;
+    public double getPositionY(){
+        return this.newPositionY;
     }
 }

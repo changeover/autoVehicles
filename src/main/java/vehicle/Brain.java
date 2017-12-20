@@ -10,7 +10,7 @@ public interface Brain {
 
     void setCreature(Circle creature);
 
-    int getDirectionX();
+    double getPositionX();
 
-    int getDirectionY();
+    double getPositionY();
 }

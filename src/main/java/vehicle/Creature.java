@@ -31,7 +31,7 @@ public class Creature implements Runnable {
         this.topPane = topPane;
         this.panelLock = panelLock;
         brain = new BrainImpl(lightMap, lightMapLock);
-        brain.addListener(()->update(brain.getDirectionX(),brain.getDirectionY()));
+        brain.addListener(()->update(brain.getPositionX(),brain.getPositionY()));
     }
 
     @Override
@@ -56,13 +56,13 @@ public class Creature implements Runnable {
         }
     }
 
-    private void update(int directionX, int directionY) {
+    private void update(double positionX, double positionY) {
         panelLock.lock();
         try {
             if (creature != null) {
                 Platform.runLater(()->{
-                    creature.setCenterX(creature.getCenterX() + directionX);
-                    creature.setCenterY(creature.getCenterY() + directionY);
+                    creature.setCenterX(positionX);
+                    creature.setCenterY(positionY);
                 });
             }
         }
