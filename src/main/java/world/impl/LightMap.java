@@ -1,9 +1,8 @@
-package world;
+package world.impl;
 
-import logic.Map;
+import world.LightMapListener;
+import world.Map;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -16,14 +15,16 @@ public class LightMap implements Map {
     private final List<LightMapListener> listeners = new ArrayList<>();
 
     double[][] gridData;
+    int lightSourceX;
+    int lightSourceY;
 
     public LightMap(int mapWidth, int mapHeight) {
         this.gridData = new double[mapWidth][mapHeight];
     }
 
-    @Override
     public void placeLightSource(int xPos, int yPos) {
-
+        this.lightSourceX = xPos;
+        this.lightSourceY = yPos;
     }
 
     @Override
@@ -52,5 +53,12 @@ public class LightMap implements Map {
         while(iter.hasNext()){
             iter.next().dataChanged();
         }
+    }
+
+    public int getLightSourceX(){
+        return this.lightSourceX;
+    }
+    public int getLightSourceY(){
+        return this.lightSourceY;
     }
 }

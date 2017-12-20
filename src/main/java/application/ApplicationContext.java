@@ -5,10 +5,7 @@ import grid.MainPanel;
 import logic.*;
 import logic.impl.*;
 import world.GlobalClock;
-import world.LightMap;
-
-import java.util.ArrayList;
-import java.util.concurrent.locks.ReentrantLock;
+import world.impl.LightMap;
 
 public class ApplicationContext {
     private SettingsController settingsController;

@@ -1,4 +1,4 @@
-package logic;
+package world;
 
 /**
  * The Map contains a two-dimensional array that represents one layer  of the world the creatures are living.
@@ -12,6 +12,10 @@ public interface Map {
      * @param yPos
      */
     void placeLightSource(int xPos, int yPos);
+
+    int getLightSourceX();
+
+    int getLightSourceY();
 
     /**
      * Places a creature on the map

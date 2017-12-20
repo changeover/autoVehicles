@@ -12,7 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 public class MainPanel extends BorderPane{
-    Pane topPane = new Pane();
+    private Pane topPane = new Pane();
 
     public MainPanel(final ApplicationContext applicationContext, int windowWidth, int windowHeight){
         final int SETTINGHEIGHT = 100;
@@ -42,6 +42,9 @@ public class MainPanel extends BorderPane{
 
         setTop(menuBar);
         setCenter(splitPane);
+        topPane.setOnMouseMoved(event -> {
+            applicationContext.getLightMap().placeLightSource((int)event.getX(),(int)event.getY());
+        });
     }
 
         public Pane getTopPane(){

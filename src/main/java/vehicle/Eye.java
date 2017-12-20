@@ -1,9 +1,8 @@
 package vehicle;
 
 import logic.Sensor;
-import world.LightMap;
+import world.impl.LightMap;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,5 +1,7 @@
 package world;
 
+import world.impl.LightMap;
+
 import java.util.Timer;
 import java.util.TimerTask;
 

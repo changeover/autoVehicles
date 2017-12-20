@@ -3,7 +3,7 @@ package vehicle.impl;
 import javafx.scene.shape.Circle;
 import vehicle.Brain;
 import vehicle.BrainListener;
-import world.LightMap;
+import world.impl.LightMap;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,6 +18,7 @@ public class BrainImpl implements Brain {
     private final List<BrainListener> listeners = new ArrayList<>();
     private Circle creature;
     private int directionX, directionY;
+    private LightMap lightMap;
 
     public BrainImpl(LightMap lightMap, ReentrantLock lightmapLock){
         lightmapLock.lock();
@@ -27,12 +28,13 @@ public class BrainImpl implements Brain {
         finally {
             lightmapLock.unlock();
         }
+        this.lightMap = lightMap;
     }
 
     public void computeNextPosition() {
         if(creature != null) {
-            int centerX = 700;
-            int centerY = 400;
+            int centerX = lightMap.getLightSourceX();
+            int centerY = lightMap.getLightSourceY();
             if (creature.getCenterX() - centerX < 0) {
                 directionX = 1;
             } else {
