@@ -33,19 +33,14 @@ public class BrainImpl implements Brain {
 
     public void computeNextPosition() {
         if(creature != null) {
-            int directionX, directionY;
-            int LightCenterX = lightMap.getLightSourceX();
-            int LightCenterY = lightMap.getLightSourceY();
-            if (creature.getCenterX() - LightCenterX < 0) {
-                directionX = 1;
-            } else {
-                directionX = -1;
-            }
-            if (creature.getCenterY() - LightCenterY < 0) {
-                directionY = 1;
-            } else {
-                directionY = -1;
-            }
+            double directionX, directionY;
+            int lightCenterX = lightMap.getLightSourceX();
+            int lightCenterY = lightMap.getLightSourceY();
+            directionX = lightCenterX - creature.getCenterX();
+            directionY = lightCenterY - creature.getCenterY() ;
+            double res = Math.sqrt(Math.pow(directionX,2)+Math.pow(directionY,2));
+            directionX = directionX/res;
+            directionY = directionY/res;
             newPositionX = creature.getCenterX() + directionX;
             newPositionY = creature.getCenterY() + directionY;
             fireDataChanged();
