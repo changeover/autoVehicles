@@ -5,6 +5,7 @@ import logic.Map;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ import java.util.List;
  */
 public class LightMap implements Map {
 
-    private final List<PropertyChangeListener> listeners = new ArrayList<>();
+    private final List<LightMapListener> listeners = new ArrayList<>();
 
     double[][] gridData;
 
@@ -33,7 +34,7 @@ public class LightMap implements Map {
     @Override
     public void update() {
         System.out.println("Map updated");
-        emitPropertyChange("property", "oldValue", "new Value");
+        emitPropertyChange();
     }
 
 
@@ -42,15 +43,14 @@ public class LightMap implements Map {
      *
      * @param listener
      */
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
+    public void addPropertyChangeListener(LightMapListener listener) {
         listeners.add(listener);
     }
 
-    private void emitPropertyChange(String property, Object oldValue, Object newValue) {
-        for (PropertyChangeListener l : listeners) {
-            l.propertyChange(new PropertyChangeEvent(this, property, oldValue, newValue));
+    private void emitPropertyChange() {
+        Iterator<LightMapListener> iter = listeners.iterator();
+        while(iter.hasNext()){
+            iter.next().dataChanged();
         }
     }
-
-
 }

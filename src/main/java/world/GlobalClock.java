@@ -18,9 +18,7 @@ public class GlobalClock {
     private TimerTask pulse = new TimerTask() {
         @Override
         public void run() {
-            frameCounter++;
-            System.out.println("Frame " + frameCounter);
-            lightMap.update();
+            timerRun();
         }
     };
 
@@ -31,5 +29,22 @@ public class GlobalClock {
 
     public void start() {
         globalClock.scheduleAtFixedRate(pulse, 0, 16);
+    }
+
+    public void stop(){
+        pulse.cancel();
+        globalClock.cancel();
+        globalClock = new Timer();
+        pulse = new TimerTask() {
+            @Override
+            public void run() {
+                timerRun();
+            }
+        };
+    }
+    private void timerRun(){
+        frameCounter++;
+        System.out.println("Frame " + frameCounter);
+        lightMap.update();
     }
 }

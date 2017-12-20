@@ -5,6 +5,7 @@ import logic.SettingsController;
 import logic.SettingsControllerListener;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class SettingsControllerImpl implements SettingsController {
@@ -26,8 +27,9 @@ public class SettingsControllerImpl implements SettingsController {
         listeners.add(settingsControllerListener);
     }
     private void fireDataChanged() {
-        for (SettingsControllerListener listener : listeners) {
-            listener.dataChanged();
+        Iterator<SettingsControllerListener> iter = listeners.iterator();
+        while(iter.hasNext()) {
+            iter.next().dataChanged();
         }
     }
 

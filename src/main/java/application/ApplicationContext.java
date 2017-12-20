@@ -4,24 +4,28 @@ package application;
 import grid.MainPanel;
 import logic.*;
 import logic.impl.*;
+import world.GlobalClock;
 import world.LightMap;
 
 import java.util.ArrayList;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class ApplicationContext {
     private SettingsController settingsController;
     private LightMap lightMap;
-    private ArrayList<Thread> creatureThreadList;
     private MainPanel mainPanel;
-
-
+    private CreatureLogic creatureLogic;
+    private GlobalClock clock;
 
 
     public ApplicationContext(){
         settingsController = new SettingsControllerImpl();
         this.lightMap = new LightMap(10, 10);
-        creatureThreadList = new ArrayList<>();
         this.mainPanel = new MainPanel(this,3000, 2000);
+        creatureLogic = new CreatureLogicImpl(this);
+        clock = new GlobalClock(1, lightMap);
+
+
     }
 
     public MainPanel getMainPanel(){
@@ -30,17 +34,19 @@ public class ApplicationContext {
 
     public void run(){
         settingsController.deactivateSlider();
-        for(Thread creature:creatureThreadList){
+        for(Thread creature:creatureLogic.getCreatureList()){
             creature.start();
         }
+        clock.start();
     }
     public void stop(){
         settingsController.activateSlider();
-        for(Thread creature:creatureThreadList){
+        for(Thread creature:creatureLogic.getCreatureList()){
             creature.interrupt();
         }
-        creatureThreadList.clear();
+        creatureLogic.getCreatureList().clear();
         mainPanel.getTopPane().getChildren().clear();
+        clock.stop();
     }
     public SettingsController getSettingsController(){
         return this.settingsController;
@@ -49,16 +55,5 @@ public class ApplicationContext {
     public LightMap getLightMap() {
         return lightMap;
     }
-    public void appendCreatureThreadList(Thread creature){
-        this.creatureThreadList.add(creature);
-    }
-    public int getCreatureCount(){
-        return this.creatureThreadList.size();
-    }
-    public void removeThreads (int count){
-        for(int i=0;i<count;i++){
-            this.creatureThreadList.get(i).interrupt();
-            this.creatureThreadList.remove(i);
-        }
-    }
+
 }

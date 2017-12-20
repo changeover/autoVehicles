@@ -1,15 +1,14 @@
 package vehicle;
 
-import grid.MainPanel;
 import javafx.application.Platform;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Shape;
+import vehicle.impl.BrainImpl;
 import world.LightMap;
 
-import java.util.Stack;
+
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * /**
@@ -22,43 +21,53 @@ public class Creature implements Runnable {
     private Wheel wheel = new Wheel();
     private Pane topPane;
     private Eye eye;
-    private Brain brain = new Brain();
-    private LightMap lightMap;
+    private BrainImpl brain;
     private int[] position;
-    Circle creature;
+    private Circle creature;
+    private ReentrantLock panelLock;
 
-    public Creature(int[] spawnPosition, LightMap lightMap, Pane topPane) {
+    public Creature(int[] spawnPosition, LightMap lightMap, Pane topPane, ReentrantLock panelLock, ReentrantLock lightMapLock) {
         this.position = spawnPosition;
-        this.lightMap = lightMap;
-        this.eye = new Eye(position, lightMap);
-        this.lightMap.addPropertyChangeListener(e -> update());
-        this.brain.linkComponents(eye, wheel);
-        //this.brain.addPropertyChangeListener(e -> lightMap.placeCreature(0, 0));
         this.topPane = topPane;
-
+        this.panelLock = panelLock;
+        brain = new BrainImpl(lightMap, lightMapLock);
+        brain.addListener(()->update(brain.getDirectionX(),brain.getDirectionY()));
     }
 
     @Override
     public void run() {
-        Platform.runLater(() ->
-        {
-            creature = new Circle();
-            int randX = (int)(Math.random() * 3000);
-            int randY = (int)(Math.random() * 2000);
-            creature.setCenterX(randX);
-            creature.setCenterY(randY);
-            creature.setRadius(10);
-            creature.setFill(Color.HOTPINK);
-            topPane.getChildren().add(creature);
-        });
+        panelLock.lock();
+        try {
+            Platform.runLater(() ->
+            {
+                creature = new Circle();
+                brain.setCreature(creature);
+                int randX = (int) (Math.random() * 1400);
+                int randY = (int) (Math.random() * 800);
+                creature.setCenterX(randX);
+                creature.setCenterY(randY);
+                creature.setRadius(10);
+                creature.setFill(Color.HOTPINK);
+                topPane.getChildren().add(creature);
+            });
+        }
+        finally {
+            panelLock.unlock();
+        }
     }
 
-    private void update() {
-        if(creature != null) {
-            creature.setCenterX(creature.getCenterX() + 1);
-            creature.setCenterY(creature.getCenterY() + 2);
-            System.out.println("updated creature...");
-            eye.measureLight();
+    private void update(int directionX, int directionY) {
+        panelLock.lock();
+        try {
+            if (creature != null) {
+                Platform.runLater(()->{
+                    creature.setCenterX(creature.getCenterX() + directionX);
+                    creature.setCenterY(creature.getCenterY() + directionY);
+                });
+            }
+        }
+        finally {
+            panelLock.unlock();
         }
     }
 

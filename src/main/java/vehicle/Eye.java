@@ -47,10 +47,10 @@ public class Eye implements Sensor {
         listeners.add(listener);
     }
 
-    private void emitPropertyChange(String property, Object oldValue, Object newValue) {
+    private void emitPropertyChange(String property, Object oldValue, Object newValue) {/*
         for (PropertyChangeListener l : listeners) {
             l.propertyChange(new PropertyChangeEvent(this, property, oldValue, newValue));
-        }
+        }*/
     }
 
 }
