@@ -24,6 +24,7 @@ abstract class GridWorldFather<T> implements GridWorld<T> {
 	}
 	@Override
 	public void setValue(Point2D coordinates, T value) {
+		System.out.println("set Value");
 		values[(int) coordinates.getX()][(int) coordinates.getY()]=value;	
 	}
 

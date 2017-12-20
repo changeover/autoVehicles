@@ -11,32 +11,26 @@ import logic.Creature;
  * @author Joel Zimmerli
  *
  */
-public class vehicelsDataLyer<T,V> extends GridWorldFather<T> implements GridWorldVehicle<V>{
-	List<V> vehicels;
-	private T[][] values;
+public class vehicelsDataLyer<Vehicle> extends GridWorldFather<Vehicle> implements GridWorldVehicle<Vehicle, Vehicle>{
+	List<Vehicle> vehicels;
+	private Vehicle[][] values;
 	public vehicelsDataLyer() {
 		vehicels= new ArrayList<>();
 	}
 	
 	
 
+	
 	@Override
-	public void addVehicle(T vehicle, Point2D koordinates) {
-		vehicels.add(vehicle);
-		setValue(koordinates, vehicle);
-		
-	}
-
-	@Override
-	public List<V> getVehicles() {
+	public List<Vehicle> getVehicles() {
 		return vehicels;
 	}
 	
 	@Override
 	public String toString() {
 		String out="";
-		for (T[] row : values){
-			for(T value : row){
+		for (Vehicle[] row : values){
+			for(Vehicle value : row){
 				if(value!=null){
 					out=out+"x\t|";
 				}else{
@@ -46,6 +40,16 @@ public class vehicelsDataLyer<T,V> extends GridWorldFather<T> implements GridWor
 			out+="\n";
 		}
 		return out;
+	}
+
+
+
+
+	@Override
+	public void addVehicle(Vehicle vehicle, Point2D coordinates) {
+		vehicels.add(vehicle);
+		setValue(coordinates, vehicle);
+		
 	}
 
 

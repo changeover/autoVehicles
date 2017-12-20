@@ -23,7 +23,7 @@ public class GlobalClock {
         public void run() {
             frameCounter++;
             System.out.println("Frame " + frameCounter);
-            lightMap.update();
+            applicationContext.getLightMap().update();
         }
     };
 

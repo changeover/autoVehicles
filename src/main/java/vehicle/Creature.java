@@ -2,7 +2,6 @@ package vehicle;
 
 import application.ApplicationContext;
 import javafx.geometry.Point2D;
-import logic.Creature;
 import world.LightMap;
 
 /**
@@ -30,17 +29,19 @@ public class Creature implements Runnable {
         eye=new Eye(new int[] {1,1}, applicationContext);
         wheel=new Wheel();
         this.brain.linkComponents(eye, wheel);
-
+        
     }
 
     @Override
     public void run() {
     	try {
-    		while(!Thread.interrupted()){
+    		while(true){
+    			System.out.println("Creature.run()");
     			applicationContext.getVehicleGrid().setValue(position, this);
     		}
 		} catch (Exception e) {
 			// TODO: handle exception
+			System.out.println("Creature stoped");
 		}
 
     }

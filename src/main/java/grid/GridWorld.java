@@ -12,7 +12,7 @@ import javafx.geometry.Point2D;
  * @author Joel Zimmerli
  *
  */
-public interface GridWorld<V> {
+public interface GridWorld<GridValue> {
 	
 	
 	/**
@@ -20,13 +20,13 @@ public interface GridWorld<V> {
 	 * @param values a two-dimensional array of integer values
 	 * @param name a name that describe this layer in the world
 	 */
-	void setData(V[][] values, String name);
+	void setData(GridValue[][] values, String name);
 	/**
 	 * Allows the set a specific field in the grid
 	 * @param coordinates place where the value should be changed
 	 * @param vlaue value of the change
 	 */
-	void setValue(Point2D coordinates, V value);
+	void setValue(Point2D coordinates, GridValue value);
 	
 	/**
 	 * Returns the width of the grid
@@ -43,7 +43,7 @@ public interface GridWorld<V> {
 	 * @param koordinate x and y coordinates of the searched Value
 	 * @return data Value of the specific field
 	 */
-	V getValue(int[] koordinate);
+	GridValue getValue(int[] koordinate);
 	/**
 	 * Returns the name of the layer
 	 * @return

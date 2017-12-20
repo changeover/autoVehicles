@@ -2,24 +2,25 @@ package application;
 
 
 import grid.GridWorldSources;
-import grid.GridWorldVehicle;
 import grid.impl.lightDataLayer;
 import grid.impl.vehicelsDataLyer;
-import logic.*;
-import logic.impl.*;
+import logic.SettingsController;
+import logic.impl.SettingsControllerImpl;
+import vehicle.Creature;
 import world.LightMap;
+
 
 public class ApplicationContext {
     private SettingsController settingsController;
     private GridWorldSources<Integer> lightGrid;
-    private GridWorldVehicle<Creature> vehicleGrid;
+    private vehicelsDataLyer<Creature> vehicleGrid;
 	private LightMap lightMap;
 
     public ApplicationContext(){
         settingsController = new SettingsControllerImpl();
         this.lightMap = new LightMap(10, 10);
         lightGrid = new lightDataLayer<Integer>();
-        vehicleGrid = new vehicelsDataLyer<Creature>();
+        vehicleGrid = new vehicelsDataLyer<>();
 
     }
 
@@ -33,7 +34,7 @@ public class ApplicationContext {
 		return lightGrid;
 	}
 
-	public GridWorldVehicle<Creature> getVehicleGrid() {
+	public vehicelsDataLyer<Creature> getVehicleGrid() {
 		return vehicleGrid;
 	}
     public SettingsController getSettingsController(){

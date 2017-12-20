@@ -26,9 +26,10 @@ public class AutoVehicles extends Application {
         
         int[] coord = new int[]{3,3};
         applicationContext.getLightGrid().addSource( coord, 100);
-        GlobalClock clock = new GlobalClock(1, applicationContext.getLightMap());
+        GlobalClock clock = new GlobalClock(1, applicationContext);
 
         Thread creatureThread = new Thread(new vehicle.Creature(new int[] {1,3}, applicationContext));
+        creatureThread.start();
 
         clock.start();
 
