@@ -14,7 +14,10 @@ import javafx.geometry.Point2D;
  */
 
 public class lightDataLayer<T>  extends GridWorldFather<T> implements GridWorldSources<T>{
-private Map<Point2D, Double> sources;
+private Map<Point2D, Integer> sources;
+private Integer[][] values;
+private int min;
+private int max;
 	
 public lightDataLayer() {
 	super();
@@ -23,13 +26,13 @@ public lightDataLayer() {
 }
 
 @Override
-	public void addSource(int[] coordinates, double value) {
+	public void addSource(int[] coordinates, Integer value) {
 		sources.put(new Point2D(coordinates[0], coordinates[1]), value);
 		
 	}
 
 	@Override
-	public Map<Point2D, Double> getSources() {
+	public Map<Point2D, Integer> getSources() {
 		return sources;
 	}
 	@Override
@@ -38,5 +41,26 @@ public lightDataLayer() {
 			return super.toString();
 		}
 	
+	public void findMinMax(){
+		min = values[0][0];
+        max = values[0][0];
+
+        for (Integer[] row : values) {
+            for (int value : row) {
+                if (value > max) max = value;
+                if (value < min) min = value;
+            }
+        }
+	}
+
+	@Override
+	public int getMinValue() {
+		return min;
+	}
+
+	@Override
+	public int getMaxValue() {
+		return max;
+	}
 
 }

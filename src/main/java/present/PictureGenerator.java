@@ -1,4 +1,4 @@
-package grid;
+package present;
 /**
  * This Interface is used to generate the image which is shown in the GUI
  * an internal clock, will start a update process of this Data, which also
@@ -16,15 +16,12 @@ public interface PictureGenerator {
 	 */
 	void makePictures();
 	
-	/**
-	 * This method creates the new image of the Creatures grid.
-	 */
-	void makeMovement();
+	
 	/**
 	 * This method is called in a specific frequency by the clock
 	 * crates a new image to show
 	 */
-	void update();
+	void repaint();
 	
 	
 

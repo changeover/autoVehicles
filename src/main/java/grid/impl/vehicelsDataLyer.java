@@ -5,7 +5,6 @@ import java.util.List;
 
 import grid.GridWorldVehicle;
 import javafx.geometry.Point2D;
-import logic.Creature;
 /**
  * T needs to be changed to the Vehicle Objekt!!
  * @author Joel Zimmerli
