@@ -13,4 +13,7 @@ public interface Brain {
     double getPositionX();
 
     double getPositionY();
+
+    void setIndex(int index);
+
 }

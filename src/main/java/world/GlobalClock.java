@@ -4,6 +4,7 @@ import world.impl.LightMap;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * This class models a timer that generates a global clock scheduling in witch frequency the map updates it self.
@@ -15,7 +16,7 @@ public class GlobalClock {
     private int period;
 
     private LightMap lightMap;
-
+    private ReentrantLock lightMapLock;
     private Timer globalClock = new Timer();
     private TimerTask pulse = new TimerTask() {
         @Override
@@ -24,9 +25,10 @@ public class GlobalClock {
         }
     };
 
-    public GlobalClock(int fps, LightMap lightMap) {
+    public GlobalClock(int fps, LightMap lightMap,ReentrantLock lightMapLock) {
         this.period = (1 / fps) * 1000;
         this.lightMap = lightMap;
+        this.lightMapLock = lightMapLock;
     }
 
     public void start() {
@@ -47,6 +49,12 @@ public class GlobalClock {
     private void timerRun(){
         frameCounter++;
         System.out.println("Frame " + frameCounter);
-        lightMap.update();
+        lightMapLock.lock();
+        try {
+            lightMap.update();
+        }
+        finally {
+            lightMapLock.unlock();
+        }
     }
 }

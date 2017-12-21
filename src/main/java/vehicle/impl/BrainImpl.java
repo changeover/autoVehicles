@@ -18,7 +18,9 @@ public class BrainImpl implements Brain {
     private final List<BrainListener> listeners = new ArrayList<>();
     private Circle creature;
     private double newPositionX, newPositionY;
+    private int index;
     private LightMap lightMap;
+    private ReentrantLock lightmapLock;
 
     public BrainImpl(LightMap lightMap, ReentrantLock lightmapLock){
         lightmapLock.lock();
@@ -29,21 +31,47 @@ public class BrainImpl implements Brain {
             lightmapLock.unlock();
         }
         this.lightMap = lightMap;
+        this.lightmapLock = lightmapLock;
     }
 
     public void computeNextPosition() {
-        if(creature != null) {
-            double directionX, directionY;
-            int lightCenterX = lightMap.getLightSourceX();
-            int lightCenterY = lightMap.getLightSourceY();
-            directionX = lightCenterX - creature.getCenterX();
-            directionY = lightCenterY - creature.getCenterY() ;
-            double res = Math.sqrt(Math.pow(directionX,2)+Math.pow(directionY,2));
-            directionX = directionX/res;
-            directionY = directionY/res;
-            newPositionX = creature.getCenterX() + directionX;
-            newPositionY = creature.getCenterY() + directionY;
-            fireDataChanged();
+        lightmapLock.lock();
+        try {
+            if (creature != null) {
+                double directionX, directionY;
+                int lightCenterX = lightMap.getLightSourceX();
+                int lightCenterY = lightMap.getLightSourceY();
+                directionX = lightCenterX - creature.getCenterX();
+                directionY = lightCenterY - creature.getCenterY();
+                double res = Math.sqrt(Math.pow(directionX, 2) + Math.pow(directionY, 2));
+                directionX = directionX / res;
+                directionY = directionY / res;
+                newPositionX = creature.getCenterX() + directionX;
+                newPositionY = creature.getCenterY() + directionY;
+/*                ArrayList<Double> blockedX = lightMap.getBlockedX();
+                ArrayList<Double> blockedY = lightMap.getBlockedY();
+                boolean blockage = false;
+                for(int i=0; i<blockedX.size();i++){
+                    blockage = false;
+                    if(i!=index) {
+                        for (int ii = -10; ii <= 10; ii++) {
+                            if ((int) newPositionX == blockedX.get(i) + ii) {
+                                blockage = true;
+                            }
+                            if ((int) newPositionY == blockedY.get(i) + ii) {
+                                blockage = true;
+                            }
+                        }
+                    }
+                }
+                if (!blockage) {*/
+                    //lightMap.placeCreature(newPositionX, newPositionY,index);
+                    fireDataChanged();
+                //}
+            }
+        }
+        finally {
+            lightmapLock.unlock();
         }
     }
 
@@ -66,5 +94,8 @@ public class BrainImpl implements Brain {
     }
     public double getPositionY(){
         return this.newPositionY;
+    }
+    public void setIndex(int index){
+        this.index = index;
     }
 }

@@ -1,5 +1,6 @@
 package world.impl;
 
+import vehicle.impl.BrainImpl;
 import world.LightMapListener;
 import world.Map;
 
@@ -14,12 +15,15 @@ public class LightMap implements Map {
 
     private final List<LightMapListener> listeners = new ArrayList<>();
 
-    double[][] gridData;
-    int lightSourceX;
-    int lightSourceY;
+    private int lightSourceX;
+    private int lightSourceY;
+    private ArrayList<Double> blockedX;
+    private ArrayList<Double> blockedY;
+
 
     public LightMap(int mapWidth, int mapHeight) {
-        this.gridData = new double[mapWidth][mapHeight];
+        this.blockedY = new ArrayList<>();
+        this.blockedX = new ArrayList<>();
     }
 
     public void placeLightSource(int xPos, int yPos) {
@@ -28,8 +32,22 @@ public class LightMap implements Map {
     }
 
     @Override
-    public void placeCreature(int xPos, int yPos) {
-        System.out.println("Place creature on map");
+    public void placeCreature(Double xPos, Double yPos,int index) {
+        if(blockedX.size()>0) {
+            blockedX.set(index, xPos);
+        }
+        if(blockedY.size()>0) {
+            blockedY.set(index, yPos);
+        }
+    }
+
+    @Override
+    public int insertCreature(Double xPos, Double yPos) {
+        int location;
+        blockedY.add(yPos);
+        blockedX.add(xPos);
+        location = blockedX.size()-1;
+        return location;
     }
 
     @Override
@@ -60,5 +78,12 @@ public class LightMap implements Map {
     }
     public int getLightSourceY(){
         return this.lightSourceY;
+    }
+
+    public ArrayList<Double> getBlockedX(){
+        return this.blockedX;
+    }
+    public ArrayList<Double> getBlockedY(){
+        return this.blockedY;
     }
 }

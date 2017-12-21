@@ -1,6 +1,7 @@
 package vehicle;
 
 import javafx.application.Platform;
+import javafx.scene.effect.Light;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -19,41 +20,23 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class Creature implements Runnable {
     private Wheel wheel = new Wheel();
-    private Pane topPane;
     private Eye eye;
     private BrainImpl brain;
-    private int[] position;
     private Circle creature;
     private ReentrantLock panelLock;
 
-    public Creature(int[] spawnPosition, LightMap lightMap, Pane topPane, ReentrantLock panelLock, ReentrantLock lightMapLock) {
-        this.position = spawnPosition;
-        this.topPane = topPane;
+    public Creature(LightMap lightMap, ReentrantLock panelLock, ReentrantLock lightMapLock, Circle creature, int index) {
         this.panelLock = panelLock;
         brain = new BrainImpl(lightMap, lightMapLock);
+        brain.setCreature(creature);
         brain.addListener(()->update(brain.getPositionX(),brain.getPositionY()));
+        this.creature = creature;
+        brain.setIndex(index);
     }
 
     @Override
     public void run() {
-        panelLock.lock();
-        try {
-            Platform.runLater(() ->
-            {
-                creature = new Circle();
-                brain.setCreature(creature);
-                int randX = (int) (Math.random() * 1400);
-                int randY = (int) (Math.random() * 800);
-                creature.setCenterX(randX);
-                creature.setCenterY(randY);
-                creature.setRadius(10);
-                creature.setFill(Color.HOTPINK);
-                topPane.getChildren().add(creature);
-            });
-        }
-        finally {
-            panelLock.unlock();
-        }
+
     }
 
     private void update(double positionX, double positionY) {

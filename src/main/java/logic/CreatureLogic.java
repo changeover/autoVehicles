@@ -17,5 +17,4 @@ public interface CreatureLogic {
 
     void removeThreads (int count);
 
-    ReentrantLock getPanelLock();
 }

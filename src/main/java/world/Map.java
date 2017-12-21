@@ -1,5 +1,7 @@
 package world;
 
+import java.util.ArrayList;
+
 /**
  * The Map contains a two-dimensional array that represents one layer  of the world the creatures are living.
  */
@@ -23,11 +25,16 @@ public interface Map {
      * @param xPos
      * @param yPos
      */
-    void placeCreature(int xPos, int yPos);
+    void placeCreature(Double xPos, Double yPos, int index);
 
     /**
      * Update the map
      */
+    int insertCreature(Double xPos, Double yPos);
+
     void update();
 
+    ArrayList<Double> getBlockedX();
+
+    ArrayList<Double> getBlockedY();
 }
