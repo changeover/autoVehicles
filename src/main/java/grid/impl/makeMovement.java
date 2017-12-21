@@ -1,23 +1,29 @@
-package present;
+package grid.impl;
 
 import application.ApplicationContext;
-import javafx.scene.image.Image;
+import present.DrawingPane;
+import present.PictureGenerator;
 
-public class BackgroundPic implements PictureGenerator{
-	
+public class makeMovement extends DrawingPane implements PictureGenerator {
 	private ApplicationContext applicationContext;
-	private Image backGround;
+	
+	
 
 	@Override
 	public void makePictures() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	
 
 	@Override
 	public void repaint() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected void paint() {
 		// TODO Auto-generated method stub
 		
 	}

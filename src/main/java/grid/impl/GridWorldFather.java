@@ -8,23 +8,20 @@ import grid.GridWorldListener;
 import javafx.geometry.Point2D;
 
 abstract class GridWorldFather<T> implements GridWorld<T> {
-	private T[][] values;
-	private String name;
+	protected T[][] values;
+	protected String name;
 	private List<GridWorldListener> listeners;
+
 	
 	public GridWorldFather() {
 		name="";
 		listeners= new ArrayList<>();
 	}
 	@Override
-	public void setData(T[][] values, String name) {
-		this.values=values;
-		this.name = name;
-		fireDataChanged();
-	}
+	abstract public void setData(T[][] values, String name);
 	@Override
 	public void setValue(Point2D coordinates, T value) {
-		System.out.println("set Value");
+		System.out.println("GridWorldFather.setValue()");
 		values[(int) coordinates.getX()][(int) coordinates.getY()]=value;	
 	}
 
@@ -57,7 +54,7 @@ abstract class GridWorldFather<T> implements GridWorld<T> {
 		listeners.add(listener);
 	}
 	
-	private void fireDataChanged(){
+	protected void fireDataChanged(){
 		for (GridWorldListener listener: listeners){
 			listener.dataChanged();
 		}

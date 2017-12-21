@@ -17,9 +17,6 @@ public class vehicelsDataLyer<Vehicle> extends GridWorldFather<Vehicle> implemen
 		vehicels= new ArrayList<>();
 	}
 	
-	
-
-	
 	@Override
 	public List<Vehicle> getVehicles() {
 		return vehicels;
@@ -41,18 +38,18 @@ public class vehicelsDataLyer<Vehicle> extends GridWorldFather<Vehicle> implemen
 		return out;
 	}
 
-
-
-
 	@Override
 	public void addVehicle(Vehicle vehicle, Point2D coordinates) {
 		vehicels.add(vehicle);
 		setValue(coordinates, vehicle);
-		
 	}
 
-
-
-	
+	@Override
+	public void setData(Vehicle[][] values, String name) {
+		super.values=values;
+		super.name = name;
+		super.fireDataChanged();
+		System.out.println("vehicelsDataLyer.setData()");
+	}
 
 }

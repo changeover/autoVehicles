@@ -13,19 +13,18 @@ import javafx.geometry.Point2D;
  *
  */
 
-public class lightDataLayer<T>  extends GridWorldFather<T> implements GridWorldSources<T>{
-private Map<Point2D, Integer> sources;
-private Integer[][] values;
-private int min;
-private int max;
+public class lightDataLayer  extends GridWorldFather<Integer> implements GridWorldSources<Integer>{
+	private Map<Point2D, Integer> sources;
+	private int min;
+	private int max;
 	
-public lightDataLayer() {
-	super();
-	sources= new HashMap<>();
 	
-}
+	public lightDataLayer() {
+		super();
+		sources= new HashMap<>();
+	}
 
-@Override
+	@Override
 	public void addSource(int[] coordinates, Integer value) {
 		sources.put(new Point2D(coordinates[0], coordinates[1]), value);
 		
@@ -36,22 +35,11 @@ public lightDataLayer() {
 		return sources;
 	}
 	@Override
-		public String toString() {
-			// TODO Auto-generated method stub
-			return super.toString();
-		}
-	
-	public void findMinMax(){
-		min = values[0][0];
-        max = values[0][0];
-
-        for (Integer[] row : values) {
-            for (int value : row) {
-                if (value > max) max = value;
-                if (value < min) min = value;
-            }
-        }
+	public String toString() {
+		return super.toString();
 	}
+	
+	
 
 	@Override
 	public int getMinValue() {
@@ -61,6 +49,28 @@ public lightDataLayer() {
 	@Override
 	public int getMaxValue() {
 		return max;
+	}
+	public void findMinMax(){
+		min = (int) super.values[0][0];
+        max = (int) super.values[0][0];
+        for (Integer[] row : super.values) {
+            for (Integer value : row) {
+                if (value > max) max = (int) value;
+                if (value < min) min = (int) value;
+            }
+        }
+        System.out.println("lightDataLayer.findMinMax()"+min+" : "+max);
+	}
+
+	@Override
+	public void setData(Integer[][] values, String name) {{
+			super.values=values;
+			super.name = name;
+			findMinMax();
+			System.out.println("lightDataLayer.setData()");
+			super.fireDataChanged();
+		}
+		
 	}
 
 }

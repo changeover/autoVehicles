@@ -1,4 +1,4 @@
-package grid;
+package present;
 
 import grid.settings.Settings;
 import application.ApplicationContext;
@@ -7,6 +7,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 
@@ -18,7 +19,15 @@ public class MainPanel extends BorderPane{
         SplitPane splitPane = new SplitPane();
         splitPane.setOrientation(Orientation.VERTICAL);
         splitPane.setDividerPosition(0,(double)(windowHeight - SETTINGHEIGHT) / (double)windowHeight);
+        
+        BackgroundImgae imageView = new BackgroundImgae(applicationContext);
+        imageView.fitHeightProperty().bind(topPane.heightProperty());
+        imageView.fitWidthProperty().bind(topPane.widthProperty());
+        
+        
+        
         splitPane.getItems().addAll(topPane,settingPane);
+        topPane.getChildren().add(imageView);
         MenuBar menuBar = new MenuBar();
         Menu menu;
         MenuItem menuItem;
