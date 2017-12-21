@@ -21,17 +21,15 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Creature implements Runnable {
     private Wheel wheel = new Wheel();
     private Eye eye;
-    private BrainImpl brain;
+    private Brain brain;
     private Circle creature;
     private ReentrantLock panelLock;
 
-    public Creature(LightMap lightMap, ReentrantLock panelLock, ReentrantLock lightMapLock, Circle creature, int index) {
+    public Creature(ReentrantLock panelLock, Circle creature, Brain brain) {
         this.panelLock = panelLock;
-        brain = new BrainImpl(lightMap, lightMapLock);
-        brain.setCreature(creature);
-        brain.addListener(()->update(brain.getPositionX(),brain.getPositionY()));
+        this.brain = brain;
         this.creature = creature;
-        brain.setIndex(index);
+        brain.addListener(()->update(brain.getPositionX(),brain.getPositionY()));
     }
 
     @Override

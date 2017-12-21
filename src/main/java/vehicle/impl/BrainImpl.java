@@ -48,7 +48,7 @@ public class BrainImpl implements Brain {
                 directionY = directionY / res;
                 newPositionX = creature.getCenterX() + directionX;
                 newPositionY = creature.getCenterY() + directionY;
-/*                ArrayList<Double> blockedX = lightMap.getBlockedX();
+                ArrayList<Double> blockedX = lightMap.getBlockedX();
                 ArrayList<Double> blockedY = lightMap.getBlockedY();
                 boolean blockage = false;
                 for(int i=0; i<blockedX.size();i++){
@@ -64,10 +64,13 @@ public class BrainImpl implements Brain {
                         }
                     }
                 }
-                if (!blockage) {*/
-                    //lightMap.placeCreature(newPositionX, newPositionY,index);
-                    fireDataChanged();
-                //}
+                if (!blockage) {
+                    //ugly af
+                    if(lightMap.getBlockedX().size()>index) {
+                     //   lightMap.placeCreature(newPositionX, newPositionY, index);
+                        fireDataChanged();
+                    }
+                }
             }
         }
         finally {
@@ -97,5 +100,6 @@ public class BrainImpl implements Brain {
     }
     public void setIndex(int index){
         this.index = index;
+        this.index = this.index;
     }
 }

@@ -4,6 +4,8 @@ import application.ApplicationContext;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import logic.CreatureLogic;
+import vehicle.Brain;
+import vehicle.impl.BrainImpl;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -54,7 +56,11 @@ public class CreatureLogicImpl implements CreatureLogic {
             creature.interrupt();
             iter.remove();
         }
-        creatureList.clear();
+        Iterator<Circle> creatureIt = creatureList.iterator();
+        while (creatureIt.hasNext()){
+            applicationContext.getMainPanel().getTopPane().getChildren().remove(creatureIt.next());
+            creatureIt.remove();
+        }
         applicationContext.getLightMap().getBlockedX().clear();
         applicationContext.getLightMap().getBlockedY().clear();
         for(int i = getCreatureCount();i<applicationContext.getSettingsController().getVehicleCount();i++){
@@ -72,10 +78,12 @@ public class CreatureLogicImpl implements CreatureLogic {
         creature.setRadius(10);
         creature.setFill(Color.HOTPINK);
         int index = applicationContext.getLightMap().insertCreature(randX, randY);
-        Thread creatureThread = new Thread(new vehicle.Creature(applicationContext.getLightMap(),panelLock,lightMapLock,creature, index));
+        Brain brain = new BrainImpl(applicationContext.getLightMap(), lightMapLock);
+        brain.setCreature(creature);
+        brain.setIndex(index);
+        Thread creatureThread = new Thread(new vehicle.Creature(panelLock,creature,brain));
         applicationContext.getMainPanel().getTopPane().getChildren().add(creature);
         appendCreatureThreadList(creatureThread);
         creatureList.add(creature);
-        applicationContext.getLightMap().insertCreature(randX,randY);
     }
 }
