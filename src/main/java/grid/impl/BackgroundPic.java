@@ -24,16 +24,16 @@ public class BackgroundPic implements PictureGenerator{
 	    	System.out.println("make Pic");
 	    	WritableImage writableImage = new WritableImage(lightData.getWidth(), lightData.getHeight());
 	        int[] windowedValue = new int[1];
-            double p = 0.8;
+            double p = 0.7;
             for (int row = 0; row < lightData.getHeight(); row++) {
                 for (int column = 0; column < lightData.getWidth(); column++) {
                     int xPos = column - lightData.getWidth() / 2 + 1;
                     int yPos = row - lightData.getHeight() / 2 + 1;
-                    double value = 1 / (2 * 3.1415 * Math.sqrt(1 - p)) *
+                    double value = 1 / (2 * 1.2 * Math.sqrt(1 - p)) *
                             Math.exp(-1 / (2 * (1 - Math.sqrt(1 - Math.pow(p, 2))) * (xPos * xPos + xPos * yPos + yPos * yPos)));
 
-                    windowedValue[0] = (int) (value * 255);
-                    windowedValue[0] = 255 - windowedValue[0];
+                    value = (value * 255);
+                    windowedValue[0] = 255 - (int) value;
                     //int value = lightData.getValue(new int[] {column, row});
                     //windowedValue[0] = (int) ((double)(value - lightData.getMinValue() /
                     //		(double)(lightData.getMaxValue() - lightData.getMinValue()) * 255));
