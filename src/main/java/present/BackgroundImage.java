@@ -4,10 +4,10 @@ import application.ApplicationContext;
 import grid.GridWorldListener;
 import javafx.scene.image.ImageView;
 
-public class BackgroundImgae extends ImageView{
+public class BackgroundImage extends ImageView{
 	ApplicationContext applicationContext;
 	
-	public BackgroundImgae(ApplicationContext appli) {
+	public BackgroundImage(ApplicationContext appli) {
 		super();
 		applicationContext=appli;		
 		applicationContext.getLightGrid().addListener(new GridWorldListener(){

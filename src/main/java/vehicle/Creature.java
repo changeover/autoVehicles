@@ -19,7 +19,12 @@ public class Creature implements Runnable {
     public Creature(int[] spawnPosition, ApplicationContext aplli) {
         this.position = new Point2D(spawnPosition[0], spawnPosition[1]);
         this.applicationContext = aplli;
+        aplli.getVehicleGrid().addVehicle(this, position);
         
+    }
+    
+    public Point2D getPosition(){
+    	return position;
     }
 
     @Override
@@ -28,10 +33,9 @@ public class Creature implements Runnable {
     		while(true){
     			System.out.println("Creature.run()");
     			applicationContext.getVehicleGrid().setValue(position, this);
-    			position = position.add(Math.floor(Math.random() * 1)+0.3   , Math.floor(Math.random() * 1)+0.3  );
+    			position = position.add(Math.floor(Math.random() * 1)+10   , Math.floor(Math.random() * 1)+10  );
     			Thread.sleep(1000);
-    			
-    			
+
     		}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -39,7 +39,7 @@ public class BackgroundPic implements PictureGenerator{
                     //		(double)(lightData.getMaxValue() - lightData.getMinValue()) * 255));
                     //windowedValue[0] = Math.min(windowedValue[0], 255);
                     //windowedValue[0] = Math.max(windowedValue[0], 0);
-                    writableImage.getPixelWriter().setColor(column, row, Color.rgb(windowedValue[0], windowedValue[0], 0));
+                    writableImage.getPixelWriter().setColor(column, row, Color.rgb(windowedValue[0], windowedValue[0], 100));
                 }
             }
             backGround = writableImage;
