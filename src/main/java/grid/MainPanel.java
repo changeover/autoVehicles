@@ -28,6 +28,10 @@ public class MainPanel extends BorderPane{
         menu = new Menu("Application");
         menuBar.getMenus().add(menu);
 
+        menuItem = new MenuItem("Draw World");
+        menu.getItems().add(menuItem);
+        menuItem.setOnAction(event -> applicationContext.drawWorld());
+
         menuItem = new MenuItem("Start");
         menu.getItems().add(menuItem);
         menuItem.setOnAction(event -> applicationContext.run());
@@ -47,8 +51,8 @@ public class MainPanel extends BorderPane{
         });
     }
 
-        public Pane getTopPane(){
-            return topPane;
+    public Pane getTopPane(){
+        return topPane;
 
     }
 }

@@ -3,6 +3,7 @@ package vehicle.impl;
 import javafx.scene.shape.Circle;
 import vehicle.Brain;
 import vehicle.BrainListener;
+import world.BlockedParts;
 import world.impl.LightMap;
 
 import java.util.ArrayList;
@@ -21,8 +22,10 @@ public class BrainImpl implements Brain {
     private int index;
     private LightMap lightMap;
     private ReentrantLock lightmapLock;
+    private BlockedParts blockedParts;
+    private ReentrantLock blockedPartsLock;
 
-    public BrainImpl(LightMap lightMap, ReentrantLock lightmapLock){
+    public BrainImpl(LightMap lightMap, ReentrantLock lightmapLock, BlockedParts blockedParts, ReentrantLock blockedPartsLock){
         lightmapLock.lock();
         try {
             lightMap.addPropertyChangeListener(() -> computeNextPosition());
@@ -32,10 +35,13 @@ public class BrainImpl implements Brain {
         }
         this.lightMap = lightMap;
         this.lightmapLock = lightmapLock;
+        this.blockedParts = blockedParts;
+        this.blockedPartsLock = blockedPartsLock;
     }
 
     public void computeNextPosition() {
         lightmapLock.lock();
+        blockedPartsLock.lock();
         try {
             if (creature != null) {
                 double directionX, directionY;
@@ -48,32 +54,17 @@ public class BrainImpl implements Brain {
                 directionY = directionY / res;
                 newPositionX = creature.getCenterX() + directionX;
                 newPositionY = creature.getCenterY() + directionY;
-                ArrayList<Double> blockedX = lightMap.getBlockedX();
-                ArrayList<Double> blockedY = lightMap.getBlockedY();
-                boolean blockage = false;
-                for(int i=0; i<blockedX.size();i++){
-                    blockage = false;
-                    if(i!=index) {
-                        for (int ii = -10; ii <= 10; ii++) {
-                            if ((int) newPositionX == blockedX.get(i) + ii) {
-                                blockage = true;
-                            }
-                            if ((int) newPositionY == blockedY.get(i) + ii) {
-                                blockage = true;
-                            }
-                        }
-                    }
-                }
+                boolean blockage;
+                blockage = blockedParts.hasBlocked((int)newPositionX,(int)newPositionY);
                 if (!blockage) {
                     //ugly af
-                    if(lightMap.getBlockedX().size()>index) {
                      //   lightMap.placeCreature(newPositionX, newPositionY, index);
                         fireDataChanged();
-                    }
                 }
             }
         }
         finally {
+            blockedPartsLock.unlock();
             lightmapLock.unlock();
         }
     }
