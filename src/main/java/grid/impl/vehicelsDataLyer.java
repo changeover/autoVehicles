@@ -2,24 +2,51 @@ package grid.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 
 import grid.GridWorldVehicle;
 import javafx.geometry.Point2D;
 /**
- * T needs to be changed to the Vehicle Objekt!!
+ * This class is for saving all produced vehicles and to handle them 
+ * with the calculation timing. 
+ * Vehicles should always be added to the list, so it is going to be 
+ * painted.
  * @author Joel Zimmerli
  *
  */
 public class vehicelsDataLyer<Vehicle> extends GridWorldFather<Vehicle> implements GridWorldVehicle<Vehicle, Vehicle>{
 	List<Vehicle> vehicels;
 	private Vehicle[][] values;
+	private ReentrantLock reentLock;
+	private Condition waitForView, waitForBot;
+	
+	
 	public vehicelsDataLyer() {
+		reentLock= new ReentrantLock();
+		waitForView= reentLock.newCondition();
+		waitForBot= reentLock.newCondition();
 		vehicels= new ArrayList<>();
 	}
 	
 	@Override
 	public List<Vehicle> getVehicles() {
-		return vehicels;
+		reentLock.lock();
+		try {
+			System.out.println("vehicelsDataLyer.getVehicles()");
+			waitForView.signalAll();
+			/**try{
+				
+				while(vehicels.isEmpty()){
+					waitForBot.await();
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}*/
+			return vehicels;
+		} finally {
+			reentLock.unlock();
+		}	
 	}
 	
 	@Override
@@ -41,15 +68,31 @@ public class vehicelsDataLyer<Vehicle> extends GridWorldFather<Vehicle> implemen
 	@Override
 	public void addVehicle(Vehicle vehicle, Point2D coordinates) {
 		vehicels.add(vehicle);
-		System.out.println("vehicelsDataLyer.addVehicle()"+vehicels);
-		setValue(coordinates, vehicle);
+	}
+	
+	@Override
+	public void setValue(Point2D coordinates, Vehicle value) {
+		reentLock.lock();
+		try {
+			super.setValue(coordinates, value);
+			waitForBot.signalAll();
+			try {
+				System.out.println("vehicelsDataLyer.setValue()"+"wait for view");
+				waitForView.await();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+		} finally {
+			reentLock.unlock();
+		}
+		
 	}
 
 	@Override
 	public void setData(Vehicle[][] values, String name) {
 		super.values=values;
 		super.name = name;
-		super.fireDataChanged();
 	}
 
 }

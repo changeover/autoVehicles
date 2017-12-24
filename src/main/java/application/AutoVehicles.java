@@ -20,7 +20,7 @@ public class AutoVehicles extends Application {
     		final int WINDOWWIDTH = 1000;
             final int WINDOWHEIGHT = 800;
             ApplicationContext applicationContext = new ApplicationContext();
-            Pane mainPane = new MainPanel(applicationContext,WINDOWWIDTH,WINDOWHEIGHT);
+            MainPanel mainPane = new MainPanel(applicationContext,WINDOWWIDTH,WINDOWHEIGHT);
             Scene scene = new Scene(mainPane,WINDOWWIDTH, WINDOWHEIGHT);
             primaryStage.setTitle("Autonomous vehicles");
             primaryStage.setScene(scene);
@@ -32,6 +32,7 @@ public class AutoVehicles extends Application {
             create(applicationContext);
 
             primaryStage.show();
+            
 			
 		} catch (Exception e) {
 			e.printStackTrace();

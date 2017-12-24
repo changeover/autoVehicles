@@ -11,6 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 
 public class MainPanel extends BorderPane{
+	private FrontPage front;
     public MainPanel(final ApplicationContext applicationContext, int windowWidth, int windowHeight){
         final int SETTINGHEIGHT = 100;
         StackPane topPane = new StackPane();
@@ -23,7 +24,7 @@ public class MainPanel extends BorderPane{
         imageView.fitHeightProperty().bind(topPane.heightProperty());
         imageView.fitWidthProperty().bind(topPane.widthProperty());
         
-        frontPage front = new frontPage(applicationContext);
+         front = new FrontPage(applicationContext);
         
         
         
@@ -49,9 +50,20 @@ public class MainPanel extends BorderPane{
         menuItem = new MenuItem("Exit");
         menu.getItems().add(menuItem);
         menuItem.setOnAction(event -> System.exit(0));
+        
 
         setTop(menuBar);
         setCenter(splitPane);
 
+    }
+    public void frontPageUpdate(){
+    	try {
+			Thread.sleep(5000);
+			front.repaint();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
     }
 }
