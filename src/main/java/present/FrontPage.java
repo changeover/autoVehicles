@@ -25,24 +25,15 @@ public class FrontPage extends DrawingPane{
 
 	@Override
 	protected void paint() {
-		g.setFill(Color.RED);
-		g.fillOval(100, 100, 100, 100);
+		System.out.println("frontPage.paint()");
 		for (Creature vehicle :applicationContext.getVehicleGrid().getVehicles()){
 			Point2D point = vehicle.getPosition();
-			System.out.println("frontPage.paint()");
 			g.setFill(Color.RED);
 			g.fillOval(point.getX(), point.getY(), 10, 10);
 	
 		}
 		
 	}
-	public void paintFront(){
-		repaint();
-	}
-	@Override
-	public void repaint() {
-		// TODO Auto-generated method stub
-		super.repaint();
-	}
+
 
 }

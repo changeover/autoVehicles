@@ -25,10 +25,11 @@ public class AutoVehicles extends Application {
             Scene scene = new Scene(mainPane,WINDOWWIDTH, WINDOWHEIGHT);
             primaryStage.setTitle("Autonomous vehicles");
             primaryStage.setScene(scene);
-            int[] coord = new int[]{3,3};
+            int[] coord = new int[]{50,50};
             crateLayers(applicationContext);
             applicationContext.getLightGrid().addSource( coord, 100);
-
+            coord = new int[]{45,45};
+            applicationContext.getLightGrid().addSource( coord, 100);
 
             
             createVehicle(applicationContext);
@@ -56,7 +57,7 @@ public class AutoVehicles extends Application {
     	Integer[][] valueLayer = new Integer[100][100];
     	for (int i = 0 ; i<valueLayer.length; i++){
     		for (int y =0; y<valueLayer.length; y++){
-    			valueLayer[i][y]=i+y;
+    			valueLayer[i][y]=0;
     		}
     	}
     	applicationContext.getLightGrid().setData(valueLayer, "Light Grid");
