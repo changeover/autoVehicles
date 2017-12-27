@@ -15,8 +15,7 @@ public class BackgroundImage extends ImageView{
 			@Override
 			public void dataChanged() {
 				System.out.println("BackgroundImgae.BackgroundImgae(...).new GridWorldListener() {...}.dataChanged()");
-				appli.getBackgroudnPic().makePictures();
-				setImage(appli.getBackgroudnPic().getBackground());
+				setImage(appli.getLightGrid().getBackground());
 			}
 			
 		});
