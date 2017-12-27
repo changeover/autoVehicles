@@ -1,4 +1,7 @@
-package present;
+package grid;
+
+import javafx.scene.image.Image;
+
 /**
  * This Interface is used to generate the image which is shown in the GUI
  * an internal clock, will start a update process of this Data, which also
@@ -17,11 +20,7 @@ public interface PictureGenerator {
 	void makePictures();
 	
 	
-	/**
-	 * This method is called in a specific frequency by the clock
-	 * crates a new image to show
-	 */
-	void repaint();
+	Image getBackground();
 	
 	
 
