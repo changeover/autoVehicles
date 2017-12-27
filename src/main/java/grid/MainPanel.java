@@ -1,4 +1,4 @@
-package present;
+package grid;
 
 import grid.settings.Settings;
 import application.ApplicationContext;
@@ -7,27 +7,21 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
+import world.WorldPane;
 
 public class MainPanel extends BorderPane{
+
+    private WorldPane worldPane;
+
     public MainPanel(final ApplicationContext applicationContext, int windowWidth, int windowHeight){
         final int SETTINGHEIGHT = 100;
-        StackPane topPane = new StackPane();
+        this.worldPane = applicationContext.getWorldPane();
         StackPane settingPane = new StackPane(new Settings(applicationContext));
         SplitPane splitPane = new SplitPane();
         splitPane.setOrientation(Orientation.VERTICAL);
         splitPane.setDividerPosition(0,(double)(windowHeight - SETTINGHEIGHT) / (double)windowHeight);
-        
-        BackgroundImgae imageView = new BackgroundImgae(applicationContext);
-        imageView.fitHeightProperty().bind(topPane.heightProperty());
-        imageView.fitWidthProperty().bind(topPane.widthProperty());
-        
-        
-        
-        splitPane.getItems().addAll(topPane,settingPane);
-        topPane.getChildren().add(imageView);
+        splitPane.getItems().addAll(worldPane, settingPane);
         MenuBar menuBar = new MenuBar();
         Menu menu;
         MenuItem menuItem;
@@ -50,5 +44,9 @@ public class MainPanel extends BorderPane{
         setTop(menuBar);
         setCenter(splitPane);
 
+    }
+
+    public Pane getWorldPane() {
+        return worldPane;
     }
 }
