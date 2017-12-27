@@ -13,14 +13,6 @@ public class FrontPage extends DrawingPane{
 		applicationContext=appli;
 		g.setFill(Color.RED);
 		g.fillOval(100, 100, 300, 300);
-		appli.getVehicleGrid().addListener(new GridWorldListener() {
-			
-			@Override
-			public void dataChanged() {
-			//	repaint();
-				
-			}
-		});
 		new AnimationTimer() {
 			//siehe: https://gamedevelopment.tutsplus.com/tutorials/introduction-to-javafx-for-game-development--cms-23835
 			@Override
@@ -39,7 +31,7 @@ public class FrontPage extends DrawingPane{
 			Point2D point = vehicle.getPosition();
 			System.out.println("frontPage.paint()");
 			g.setFill(Color.RED);
-			g.fillOval(point.getX(), point.getY(), 100, 100);
+			g.fillOval(point.getX(), point.getY(), 10, 10);
 	
 		}
 		

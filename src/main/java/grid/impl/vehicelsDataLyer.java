@@ -17,7 +17,6 @@ import javafx.geometry.Point2D;
  */
 public class vehicelsDataLyer<Vehicle> extends GridWorldFather<Vehicle> implements GridWorldVehicle<Vehicle, Vehicle>{
 	List<Vehicle> vehicels;
-	private Vehicle[][] values;
 	private ReentrantLock reentLock;
 	private Condition waitForView, waitForBot;
 	

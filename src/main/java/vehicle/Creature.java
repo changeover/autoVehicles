@@ -33,8 +33,7 @@ public class Creature implements Runnable {
     		while(true){
     			System.out.println("Creature.run()");
     			applicationContext.getVehicleGrid().setValue(position, this);
-    			position = position.add(Math.floor(Math.random() * 1)+10   , Math.floor(Math.random() * 1)+10  );
-    			Thread.sleep(1000);
+    			position = position.add(Math.round(Math.random() * 1)   , Math.round(Math.random() * 1.5)  );
 
     		}
 		} catch (Exception e) {

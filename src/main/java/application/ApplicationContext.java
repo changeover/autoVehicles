@@ -1,7 +1,6 @@
 package application;
 
 
-import grid.GridWorldSources;
 import grid.impl.BackgroundPic;
 import grid.impl.lightDataLayer;
 import grid.impl.vehicelsDataLyer;

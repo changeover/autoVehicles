@@ -1,8 +1,8 @@
 package grid.impl;
 
 import application.ApplicationContext;
+import grid.PictureGenerator;
 import present.DrawingPane;
-import present.PictureGenerator;
 
 public class makeMovement extends DrawingPane implements PictureGenerator {
 	private ApplicationContext applicationContext;

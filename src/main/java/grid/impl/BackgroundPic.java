@@ -2,10 +2,10 @@ package grid.impl;
 
 
 import grid.GridWorldSources;
+import grid.PictureGenerator;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
-import present.PictureGenerator;
 
 public class BackgroundPic implements PictureGenerator{
 	

@@ -56,14 +56,5 @@ public class MainPanel extends BorderPane{
         setCenter(splitPane);
 
     }
-    public void frontPageUpdate(){
-    	try {
-			Thread.sleep(5000);
-			front.repaint();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-    }
 }
+
