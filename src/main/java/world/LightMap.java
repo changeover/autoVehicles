@@ -64,9 +64,12 @@ public class LightMap implements Map {
         return backGround;
     }
 
+    public double[][] getGridData() {
+        return gridData;
+    }
+
     @Override
     public void placeCreature(int xPos, int yPos) {
-        System.out.println("Place creature on map");
     }
 
     @Override
@@ -76,7 +79,6 @@ public class LightMap implements Map {
 
     @Override
     public void update() {
-        System.out.println("Map updated");
         emitPropertyChange("property", "oldValue", "new Value");
     }
 

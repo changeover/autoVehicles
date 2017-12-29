@@ -23,7 +23,6 @@ public class GlobalClock {
             @Override
             public void handle(long now) {
                 worldPane.update();
-                System.out.println();
 
             }
         };

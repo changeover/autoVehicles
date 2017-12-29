@@ -47,8 +47,8 @@ public class Wheel implements Actor {
             angle = 45 * Math.PI / 180;
             magnitude = backIntensity;
         }
-        double x = Math.cos(angle) * (magnitude);
-        double y = Math.sin(angle) * (magnitude);
+        double x = Math.cos(angle) * (magnitude) * 1;//Geschindigkeiten anpassen
+        double y = Math.sin(angle) * (magnitude) * 1;
         velocity = new Point2D(x, y);
     }
 

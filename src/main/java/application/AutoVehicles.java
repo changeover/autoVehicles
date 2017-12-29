@@ -30,15 +30,14 @@ public class AutoVehicles extends Application {
         primaryStage.setScene(scene);
 
         GlobalClock clock = new GlobalClock(applicationContext.getWorldPane());
-        clock.start();
+
 
         //temp
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
 
-            applicationContext.getWorldPane().placeCreature(new vehicle.Creature(applicationContext), Math.random() * 700 + 100, Math.random() * 200 + 290);
+            applicationContext.getWorldPane().placeCreature(new vehicle.Creature(applicationContext), Math.random() * 990, Math.random() * 790);
         }
-
-
+        clock.start();
         primaryStage.show();
     }
 }

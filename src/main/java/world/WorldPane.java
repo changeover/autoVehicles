@@ -23,7 +23,23 @@ public class WorldPane extends Pane {
     }
 
     public void update() {
+
+        for (Creature cx : creatures) {
+            for (Creature cy : creatures) {
+                if (!cx.equals(cy) && cx.isColloding(cy)) {
+                    //cx.setAlive(false);
+                    //cy.setAlive(false);
+                    //getChildren().removeAll(cx,cy);
+                    System.out.println("is colliding");
+                }
+            }
+
+        }
+
+        creatures.removeIf(Creature::isDead);
         creatures.forEach(Creature::update);
+
+
     }
 
 }

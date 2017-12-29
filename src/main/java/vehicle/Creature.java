@@ -24,9 +24,15 @@ public class Creature extends Circle {
     double rotate = 0;
 
     private enum Location {TOPRIGHT, TOPLEFT, BOTTOMLEFT, BOTTOMRIGHT}
-
     private Location located;
+
+    public enum Collision {NONE, RIGHT, LEFT, BOTTOM, TOP}
+
+    private Collision collision;
+
     private Point2D currentVelocity = new Point2D(0, 0);
+
+    public Boolean alive;
 
     private final List<PropertyChangeListener> listeners = new ArrayList<>();
 
@@ -53,12 +59,24 @@ public class Creature extends Circle {
         this.brain = new Brain(this);
         this.brain.linkComponents(leftFrontEye, leftBackEye, leftWheel);
         this.brain.linkComponents(rightFrontEye, rightBackEye, rightWheel);
+        leftFrontEye.addPropertyChangeListener(e -> {
+            this.collision = (Collision) e.getOldValue();
+        });
+        this.alive = true;
 
     }
 
     public void update() {
         emitPropertyChange("currentPosition", this.getTranslateX(), this.getTranslateY());
 
+        if (collision != Collision.NONE) {
+            //rotation
+            currentVelocity = currentVelocity = new Point2D(currentVelocity.getX() *
+                    Math.cos(Math.toRadians(180)) - currentVelocity.getY() * Math.sin(Math.toRadians(180)),
+                    currentVelocity.getX() * Math.sin(Math.toRadians(180)) + currentVelocity.getY() *
+                            Math.cos(Math.toRadians(180)));
+
+        }
 
         Point2D leftVelocity = leftWheel.getVelocity();
         Point2D rightVelocity = rightWheel.getVelocity();
@@ -149,6 +167,19 @@ public class Creature extends Circle {
             return reference.angle(v) + 180 + 90;
         }
         return 0;
+    }
+
+    public boolean isColloding(Creature other) {
+
+        return getBoundsInParent().intersects(other.getBoundsInParent());
+    }
+
+    public void setAlive(boolean b) {
+        alive = b;
+    }
+
+    public boolean isDead() {
+        return !alive;
     }
 
     /**

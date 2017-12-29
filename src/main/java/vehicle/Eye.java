@@ -17,12 +17,12 @@ public class Eye implements Sensor {
 
     private sensorPosition position;
 
-    private LightMap lightmap;
+    private LightMap lightMap;
     double intensity;
 
     public Eye(sensorPosition pos, LightMap lightMap) {
         this.position = pos;
-        this.lightmap = lightMap;
+        this.lightMap = lightMap;
     }
 
     @Override
@@ -37,21 +37,46 @@ public class Eye implements Sensor {
 
     @Override
     public double measureLight(double currentPosX, double currentPosY) {
-        switch (position) {
-            case LEFTBACK:
-                intensity = lightmap.getIntensity((int) currentPosX - 1, (int) currentPosY + 1);
-                break;
-            case LEFTFRONT:
-                intensity = lightmap.getIntensity((int) currentPosX - 1, (int) currentPosY - 1);
-                break;
-            case RIGHTBACK:
-                intensity = lightmap.getIntensity((int) currentPosX + 1, (int) currentPosY + 1);
-                break;
-            case RIGHTFRONT:
-                intensity = lightmap.getIntensity((int) currentPosX + 1, (int) currentPosY - 1);
-                break;
+        Creature.Collision collision = checkForCollision((int) currentPosX, (int) currentPosY);
+        if (collision == Creature.Collision.NONE) {
+            switch (position) {
+                case LEFTBACK:
+                    intensity = lightMap.getIntensity((int) currentPosX - 1, (int) currentPosY + 1);
+                    break;
+                case LEFTFRONT:
+                    intensity = lightMap.getIntensity((int) currentPosX - 1, (int) currentPosY - 1);
+                    break;
+                case RIGHTBACK:
+                    intensity = lightMap.getIntensity((int) currentPosX + 1, (int) currentPosY + 1);
+                    break;
+                case RIGHTFRONT:
+                    intensity = lightMap.getIntensity((int) currentPosX + 1, (int) currentPosY - 1);
+                    break;
+            }
+            return intensity;
+        } else
+            return 0;
+    }
+
+
+    private Creature.Collision checkForCollision(int currentPosX, int currentPosY) {
+        Creature.Collision collision = Creature.Collision.NONE;
+        int xBorder = this.lightMap.getGridData().length;
+        int yBorder = this.lightMap.getGridData()[0].length;
+        if (currentPosX - 1 < 0) {
+            collision = Creature.Collision.RIGHT;
         }
-        return intensity;
+        if (currentPosX + 1 > xBorder) {
+            collision = Creature.Collision.LEFT;
+        }
+        if (currentPosY - 1 < 0) {
+            collision = Creature.Collision.TOP;
+        }
+        if (currentPosY + 1 > yBorder) {
+            collision = Creature.Collision.BOTTOM;
+        }
+        emitPropertyChange("collison", collision);
+        return collision;
     }
 
     /**
@@ -63,9 +88,9 @@ public class Eye implements Sensor {
         listeners.add(listener);
     }
 
-    private void emitPropertyChange(String property, Object oldValue, Object newValue) {
+    private void emitPropertyChange(String property, Creature.Collision collision) {
         for (PropertyChangeListener l : listeners) {
-            l.propertyChange(new PropertyChangeEvent(this, property, oldValue, newValue));
+            l.propertyChange(new PropertyChangeEvent(this, property, collision, null));
         }
     }
 
