@@ -28,6 +28,8 @@ public class AutoVehicles extends Application {
             int[] coord = new int[]{500,500};
             crateLayers(applicationContext);
             applicationContext.getLightGrid().addSource( coord, 100);
+            coord = new int[]{600,600};
+            applicationContext.getLightGrid().addSource( coord, 100);
 
 
             
@@ -64,7 +66,7 @@ public class AutoVehicles extends Application {
     }
     
     public void createVehicle(ApplicationContext applicationContext){
-    	Thread creatureThread = new Thread(new vehicle.Creature( applicationContext,499,499));
+    	Thread creatureThread = new Thread(new vehicle.Creature( applicationContext,300,300));
     	creatureThread.setDaemon(true);
     	creatureThread.start();
         

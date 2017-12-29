@@ -112,7 +112,7 @@ public class Creature implements Runnable{
         System.out.println(currentVelocity);
 
 
-        position=position.add( (result.getX() + currentVelocity.getX())/1,(result.getY() + currentVelocity.getY())/1);
+        position=position.add( (result.getX() + currentVelocity.getX())/10,(result.getY() + currentVelocity.getY())/10);
         currentVelocity = result.add(currentVelocity);
     }
     public Point2D getPosition(){

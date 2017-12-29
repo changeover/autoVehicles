@@ -120,7 +120,7 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
 	    int difX;
 	    int difY;
 	    double difTotal;
-
+	   /* 
 	    for (int j = 0; j < values.length; j++) {
 	        for (int i = 0; i < values[j].length; i++) {
 	            difX = (int) (position.getX()- i);
@@ -128,7 +128,18 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
 	            difTotal = Math.sqrt(difX*difX + difY*difY);
 	            values[j][i] += (lightValue * Math.exp(-difTotal/scatterMultiplier));
 	        }
-	    }
+	    }*/
+	    double p = 0.1;
+        for (int x = 0; x < values.length; x++) {
+            for (int y = 0; y < values[x].length; y++) {
+                int xPos =x-(int) position.getX(); //x - values[x].length / 2 + 1;
+                int yPos =y-(int) position.getY(); //y - values.length / 2 + 1;
+                values[x][y] += 1 / (2 * 6.1 * Math.sqrt(1 - p)) *
+                        Math.exp(-1 / (2 * (1 - Math.sqrt(1 - Math.pow(p, 2))) *
+                                (xPos * xPos + 2 * p * xPos * yPos + yPos * yPos)));
+
+            }
+        }
 	}
 
 }
