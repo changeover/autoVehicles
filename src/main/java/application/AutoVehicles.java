@@ -25,18 +25,18 @@ public class AutoVehicles extends Application {
             Scene scene = new Scene(mainPane,WINDOWWIDTH, WINDOWHEIGHT);
             primaryStage.setTitle("Autonomous vehicles");
             primaryStage.setScene(scene);
-            int[] coord = new int[]{500,500};
+            int[] coord = new int[]{400,400};
             crateLayers(applicationContext);
             applicationContext.getLightGrid().addSource( coord, 100);
-            coord = new int[]{600,600};
+            coord = new int[]{500,500};
             applicationContext.getLightGrid().addSource( coord, 100);
 
 
             
-            createVehicle(applicationContext);
-            createVehicle(applicationContext);
-            createVehicle(applicationContext);
-            createVehicle(applicationContext);
+            createVehicle(applicationContext,300,300);
+            createVehicle(applicationContext,100,200);
+            createVehicle(applicationContext,100,500);
+            createVehicle(applicationContext,10,10);
 
             primaryStage.show();
             
@@ -47,7 +47,7 @@ public class AutoVehicles extends Application {
         
     }
     public void crateLayers(ApplicationContext applicationContext){
-    	Creature[][] dataLayer =new Creature[1000][1000];
+    	Creature[][] dataLayer =new Creature[800][800];
     	for (int i = 0 ; i<dataLayer.length; i++){
     		for (int y =0; y<dataLayer.length; y++){
     			dataLayer[i][y]=null;
@@ -55,7 +55,7 @@ public class AutoVehicles extends Application {
     	}
     	applicationContext.getVehicleGrid().setData(dataLayer, "Vehicles");
     	
-    	Double[][] valueLayer = new Double[1000][1000];
+    	Double[][] valueLayer = new Double[800][800];
     	for (int i = 0 ; i<valueLayer.length; i++){
     		for (int y =0; y<valueLayer.length; y++){
     			valueLayer[i][y]=(double) 0;
@@ -65,8 +65,8 @@ public class AutoVehicles extends Application {
     	
     }
     
-    public void createVehicle(ApplicationContext applicationContext){
-    	Thread creatureThread = new Thread(new vehicle.Creature( applicationContext,300,300));
+    public void createVehicle(ApplicationContext applicationContext, int x, int y){
+    	Thread creatureThread = new Thread(new vehicle.Creature( applicationContext,x,y));
     	creatureThread.setDaemon(true);
     	creatureThread.start();
         

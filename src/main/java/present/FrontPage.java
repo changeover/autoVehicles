@@ -26,9 +26,11 @@ public class FrontPage extends DrawingPane{
 	@Override
 	protected void paint() {
 		System.out.println("frontPage.paint()");
+		g.drawImage(applicationContext.getLightGrid().getBackground(), 0, 0);
 		for (Creature vehicle :applicationContext.getVehicleGrid().getVehicles()){
 			Point2D point = vehicle.getPosition();
 			g.setFill(Color.RED);
+			
 			g.fillOval(point.getX(), point.getY(), 10, 10);
 	
 		}

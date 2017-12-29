@@ -21,8 +21,8 @@ public class MainPanel extends BorderPane{
         splitPane.setDividerPosition(0,(double)(windowHeight - SETTINGHEIGHT) / (double)windowHeight);
         
         BackgroundImage imageView = new BackgroundImage(applicationContext);
-        imageView.fitHeightProperty().bind(topPane.heightProperty());
-        imageView.fitWidthProperty().bind(topPane.widthProperty());
+        imageView.setPreserveRatio(true);
+        
         
          front = new FrontPage(applicationContext);
         
@@ -30,7 +30,7 @@ public class MainPanel extends BorderPane{
         
         
         splitPane.getItems().addAll(topPane,settingPane);
-        topPane.getChildren().add(imageView);
+        //topPane.getChildren().add(imageView);
         topPane.getChildren().add(front);
         MenuBar menuBar = new MenuBar();
         Menu menu;
