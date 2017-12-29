@@ -1,7 +1,6 @@
 package vehicle;
 
 import logic.Sensor;
-import world.LightMap;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
