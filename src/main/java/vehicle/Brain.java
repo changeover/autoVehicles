@@ -1,6 +1,5 @@
 package vehicle;
 
-import javafx.geometry.Point2D;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -22,8 +21,8 @@ public class Brain {
     }
 
     public void linkComponents(Eye frontEye, Eye backEye, Wheel wheel) {
-        creature.addPropertyChangeListener(evt -> wheel.drive(frontEye.measureLight(creature.getBody().getTranslateX(), creature.getBody().getTranslateY()),
-                backEye.measureLight(creature.getBody().getTranslateX(), creature.getBody().getTranslateY())));
+        creature.addPropertyChangeListener(evt -> wheel.drive(frontEye.measureLight(creature.getPosition().getX(), creature.getPosition().getY()),
+                backEye.measureLight(creature.getPosition().getX(), creature.getPosition().getY())));
     }
 
     /**

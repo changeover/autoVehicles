@@ -40,16 +40,16 @@ public class Eye implements Sensor {
     public double measureLight(double currentPosX, double currentPosY) {
         switch (position) {
             case LEFTBACK:
-                intensity = lightmap.getIntensity((int) currentPosX - 1, (int) currentPosY + 1);
+                intensity = lightmap.getValue((int) currentPosX - 1, (int) currentPosY + 1);
                 break;
             case LEFTFRONT:
-                intensity = lightmap.getIntensity((int) currentPosX - 1, (int) currentPosY - 1);
+                intensity = lightmap.getValue((int) currentPosX - 1, (int) currentPosY - 1);
                 break;
             case RIGHTBACK:
-                intensity = lightmap.getIntensity((int) currentPosX + 1, (int) currentPosY + 1);
+                intensity = lightmap.getValue((int) currentPosX + 1, (int) currentPosY + 1);
                 break;
             case RIGHTFRONT:
-                intensity = lightmap.getIntensity((int) currentPosX + 1, (int) currentPosY - 1);
+                intensity = lightmap.getValue((int) currentPosX + 1, (int) currentPosY - 1);
                 break;
         }
         return intensity;

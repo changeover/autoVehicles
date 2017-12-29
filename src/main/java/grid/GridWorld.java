@@ -43,7 +43,7 @@ public interface GridWorld<GridValue> {
 	 * @param koordinate x and y coordinates of the searched Value
 	 * @return data Value of the specific field
 	 */
-	GridValue getValue(int[] koordinate);
+	GridValue getValue(int x, int y);
 	/**
 	 * Returns the name of the layer
 	 * @return

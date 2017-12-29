@@ -1,13 +1,9 @@
 package vehicle;
 
 import application.ApplicationContext;
-import grid.GridWorldSources;
 import grid.impl.LightDataLayer;
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import world.LightMap;
+
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -21,7 +17,7 @@ import java.util.List;
  * Every creature lives in its own thread
  */
 
-public class Creature extends Circle {
+public class Creature implements Runnable{
 
     double rotate = 0;
 
@@ -29,11 +25,13 @@ public class Creature extends Circle {
 
     private Location located;
     private Point2D currentVelocity = new Point2D(0, 0);
+    private Point2D position;
 
     private final List<PropertyChangeListener> listeners = new ArrayList<>();
 
     private Wheel leftWheel = new Wheel(Wheel.WheelPosition.LEFT);
     private Wheel rightWheel = new Wheel(Wheel.WheelPosition.RIGHT);
+    private ApplicationContext applicationContext;
 
     private Eye leftFrontEye;
     private Eye leftBackEye;
@@ -44,27 +42,29 @@ public class Creature extends Circle {
 
     private LightDataLayer lightMap;
 
-    public Creature(ApplicationContext applicationContext) {
-        super(5, 5, 5, Color.HOTPINK);
+    public Creature(ApplicationContext applicationContext, int x, int y) {
+    	this.position=new Point2D(x, y);
+    	this.applicationContext=applicationContext;
         this.lightMap = applicationContext.getLightGrid();
         this.leftFrontEye = new Eye(Eye.sensorPosition.LEFTFRONT, lightMap);
         this.leftBackEye = new Eye(Eye.sensorPosition.LEFTBACK, lightMap);
         this.rightFrontEye = new Eye(Eye.sensorPosition.RIGHTFRONT, lightMap);
         this.rightBackEye = new Eye(Eye.sensorPosition.RIGHTBACK, lightMap);
-        this.lightMap.addPropertyChangeListener(e -> update());
         this.brain = new Brain(this);
         this.brain.linkComponents(leftFrontEye, leftBackEye, leftWheel);
         this.brain.linkComponents(rightFrontEye, rightBackEye, rightWheel);
-
+        applicationContext.getVehicleGrid().addVehicle(this, position);
     }
 
     public void update() {
-        emitPropertyChange("currentPosition", this.getTranslateX(), this.getTranslateY());
+    	System.out.println("Creature.update()");
+        emitPropertyChange("currentPosition", position.getX(), position.getY());
 
 
         Point2D leftVelocity = leftWheel.getVelocity();
         Point2D rightVelocity = rightWheel.getVelocity();
         Point2D result = leftVelocity.add(rightVelocity);
+       
 
         double x = currentVelocity.getX();
         double y = currentVelocity.getY();
@@ -107,21 +107,19 @@ public class Creature extends Circle {
                     break;
             }
 
-            currentVelocity = new Point2D(x * Math.cos(rotate) - y * Math.sin(rotate), x * Math.sin(rotate) + y * Math.cos(rotate));
+            currentVelocity = new Point2D((x * Math.cos(rotate) - y * Math.sin(rotate)),( x * Math.sin(rotate) + y * Math.cos(rotate)));
         }
+        System.out.println(currentVelocity);
 
 
-        this.setTranslateX(this.getTranslateX() + result.getX() + currentVelocity.getX());
-        this.setTranslateY(this.getTranslateY() + result.getY() + currentVelocity.getY());
-
+        position=position.add( (result.getX() + currentVelocity.getX())/1,(result.getY() + currentVelocity.getY())/1);
         currentVelocity = result.add(currentVelocity);
-
+    }
+    public Point2D getPosition(){
+    	return position;
     }
 
-    public Node getBody() {
-        return this;
-    }
-
+ 
     public double angleBetween(Point2D v) {
 
         Point2D reference = new Point2D(1, 0);
@@ -167,4 +165,20 @@ public class Creature extends Circle {
             l.propertyChange(new PropertyChangeEvent(this, property, xPos, yPos));
         }
     }
+
+	@Override
+	public void run() {
+		try {
+    		while(true){
+    			update();
+    			System.out.println("Creature.run()");
+    			applicationContext.getVehicleGrid().setValue(position, this);
+
+    		}
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+
+	}
 }

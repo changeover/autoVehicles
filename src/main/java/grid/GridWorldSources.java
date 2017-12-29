@@ -17,7 +17,7 @@ public interface GridWorldSources<T> extends GridWorld<T> {
 	 */
 	Map<Point2D,Integer> getSources();
 	
-	int getMinValue();
-	int getMaxValue();
+	T getMinValue();
+	T getMaxValue();
 
 }

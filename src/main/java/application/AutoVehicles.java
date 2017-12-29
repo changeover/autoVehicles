@@ -25,11 +25,10 @@ public class AutoVehicles extends Application {
             Scene scene = new Scene(mainPane,WINDOWWIDTH, WINDOWHEIGHT);
             primaryStage.setTitle("Autonomous vehicles");
             primaryStage.setScene(scene);
-            int[] coord = new int[]{50,50};
+            int[] coord = new int[]{500,500};
             crateLayers(applicationContext);
             applicationContext.getLightGrid().addSource( coord, 100);
-            coord = new int[]{45,45};
-            applicationContext.getLightGrid().addSource( coord, 100);
+
 
             
             createVehicle(applicationContext);
@@ -46,7 +45,7 @@ public class AutoVehicles extends Application {
         
     }
     public void crateLayers(ApplicationContext applicationContext){
-    	Creature[][] dataLayer =new Creature[10000][10000];
+    	Creature[][] dataLayer =new Creature[1000][1000];
     	for (int i = 0 ; i<dataLayer.length; i++){
     		for (int y =0; y<dataLayer.length; y++){
     			dataLayer[i][y]=null;
@@ -54,10 +53,10 @@ public class AutoVehicles extends Application {
     	}
     	applicationContext.getVehicleGrid().setData(dataLayer, "Vehicles");
     	
-    	Integer[][] valueLayer = new Integer[100][100];
+    	Double[][] valueLayer = new Double[1000][1000];
     	for (int i = 0 ; i<valueLayer.length; i++){
     		for (int y =0; y<valueLayer.length; y++){
-    			valueLayer[i][y]=0;
+    			valueLayer[i][y]=(double) 0;
     		}
     	}
     	applicationContext.getLightGrid().setData(valueLayer, "Light Grid");
@@ -65,7 +64,7 @@ public class AutoVehicles extends Application {
     }
     
     public void createVehicle(ApplicationContext applicationContext){
-    	Thread creatureThread = new Thread(new vehicle.Creature(new int[] {1,3}, applicationContext));
+    	Thread creatureThread = new Thread(new vehicle.Creature( applicationContext,499,499));
     	creatureThread.setDaemon(true);
     	creatureThread.start();
         

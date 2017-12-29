@@ -9,11 +9,11 @@ import javafx.scene.paint.Color;
 
 public class BackgroundPic implements PictureGenerator{
 	
-	private GridWorldSources<Integer> lightData;
+	private GridWorldSources<Double> lightData;
 	private Image backGround;
 	
 	
-	public BackgroundPic(GridWorldSources<Integer> lightGrid) {
+	public BackgroundPic(GridWorldSources<Double> lightGrid) {
 		this.lightData=lightGrid;
 	}
 	

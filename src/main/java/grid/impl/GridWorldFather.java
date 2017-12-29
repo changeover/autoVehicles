@@ -22,6 +22,7 @@ abstract class GridWorldFather<T> implements GridWorld<T> {
 	@Override
 	public void setValue(Point2D coordinates, T value) {
 		System.out.println("GridWorldFather.setValue()");
+		System.out.println(coordinates);
 		values[(int) coordinates.getX()][(int) coordinates.getY()]=value;	
 		fireDataChanged();
 	}
@@ -39,8 +40,8 @@ abstract class GridWorldFather<T> implements GridWorld<T> {
 	}
 	
 	@Override
-	public T getValue(int[] koordinate) {
-		return values[koordinate[0]][koordinate[1]];
+	public T getValue(int x, int y) {
+		return values[x][y];
 	}
 
 	@Override

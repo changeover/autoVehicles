@@ -17,10 +17,10 @@ import javafx.scene.paint.Color;
  *
  */
 
-public class LightDataLayer  extends GridWorldFather<Integer> implements GridWorldSources<Integer>, PictureGenerator{
+public class LightDataLayer  extends GridWorldFather<Double> implements GridWorldSources<Double>, PictureGenerator{
 	private Map<Point2D, Integer> sources;
-	private int min;
-	private int max;
+	private Double min;
+	private Double max;
 	private Image backGround;
 	
 	
@@ -52,28 +52,28 @@ public class LightDataLayer  extends GridWorldFather<Integer> implements GridWor
 	
 
 	@Override
-	public int getMinValue() {
+	public Double getMinValue() {
 		return min;
 	}
 
 	@Override
-	public int getMaxValue() {
+	public Double getMaxValue() {
 		return max;
 	}
 	public void findMinMax(){
-		min = (int) super.values[0][0];
-        max = (int) super.values[0][0];
-        for (Integer[] row : super.values) {
-            for (Integer value : row) {
-                if (value > max) max = (int) value;
-                if (value < min) min = (int) value;
+		min = super.values[0][0];
+        max = super.values[0][0];
+        for (Double[] row : super.values) {
+            for (Double value : row) {
+                if (value > max) max = value;
+                if (value < min) min = value;
             }
         }
         System.out.println("lightDataLayer.findMinMax()"+min+" : "+max);
 	}
 
 	@Override
-	public void setData(Integer[][] values, String name) {{
+	public void setData(Double[][] values, String name) {{
 			super.values=values;
 			super.name = name;
 			findMinMax();
@@ -94,8 +94,8 @@ public class LightDataLayer  extends GridWorldFather<Integer> implements GridWor
             for (int row = 0; row < getHeight(); row++) {
                 for (int column = 0; column < getWidth(); column++) {
                     
-                    int value = (values[row][column] * 255);
-                    windowedValue[0] = (int) value/max;
+                    Double value = (values[row][column] * 255);
+                    windowedValue[0] = (int) (value/max);
                     //int value = lightData.getValue(new int[] {column, row});
                     //windowedValue[0] = (int) ((double)(value - lightData.getMinValue() /
                     //		(double)(lightData.getMaxValue() - lightData.getMinValue()) * 255));
@@ -115,8 +115,8 @@ public class LightDataLayer  extends GridWorldFather<Integer> implements GridWor
 	}
 	
 	public void calculateLight(Point2D position){
-	    int lightValue = 999;
-	    int scatterMultiplier = 5;
+	    int lightValue = 1;
+	    int scatterMultiplier =5;
 	    int difX;
 	    int difY;
 	    double difTotal;
@@ -126,7 +126,7 @@ public class LightDataLayer  extends GridWorldFather<Integer> implements GridWor
 	            difX = (int) (position.getX()- i);
 	            difY = (int) (position.getY() - j);
 	            difTotal = Math.sqrt(difX*difX + difY*difY);
-	            values[j][i] += (int) (lightValue * Math.exp(-difTotal/scatterMultiplier));
+	            values[j][i] += (lightValue * Math.exp(-difTotal/scatterMultiplier));
 	        }
 	    }
 	}
