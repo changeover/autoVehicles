@@ -2,7 +2,7 @@ package application;
 
 
 import grid.impl.BackgroundPic;
-import grid.impl.lightDataLayer;
+import grid.impl.LightDataLayer;
 import grid.impl.vehicelsDataLyer;
 import logic.SettingsController;
 import logic.impl.SettingsControllerImpl;
@@ -11,12 +11,12 @@ import vehicle.Creature;
 
 public class ApplicationContext {
     private SettingsController settingsController;
-    private lightDataLayer lightGrid;
+    private LightDataLayer lightGrid;
     private vehicelsDataLyer<Creature> vehicleGrid;
     private BackgroundPic background;
     public ApplicationContext(){
         settingsController = new SettingsControllerImpl();
-        lightGrid = new lightDataLayer();
+        lightGrid = new LightDataLayer();
         vehicleGrid = new vehicelsDataLyer<>();
         background = new BackgroundPic(lightGrid);
 
@@ -28,7 +28,7 @@ public class ApplicationContext {
     public void stop(){
 
     }
-    public lightDataLayer getLightGrid() {
+    public LightDataLayer getLightGrid() {
 		return lightGrid;
 	}
 

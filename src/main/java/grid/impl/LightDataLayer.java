@@ -17,14 +17,14 @@ import javafx.scene.paint.Color;
  *
  */
 
-public class lightDataLayer  extends GridWorldFather<Integer> implements GridWorldSources<Integer>, PictureGenerator{
+public class LightDataLayer  extends GridWorldFather<Integer> implements GridWorldSources<Integer>, PictureGenerator{
 	private Map<Point2D, Integer> sources;
 	private int min;
 	private int max;
 	private Image backGround;
 	
 	
-	public lightDataLayer() {
+	public LightDataLayer() {
 		super();
 		sources= new HashMap<>();
 	}
