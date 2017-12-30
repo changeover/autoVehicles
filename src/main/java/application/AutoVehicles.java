@@ -47,17 +47,17 @@ public class AutoVehicles extends Application {
         
     }
     public void crateLayers(ApplicationContext applicationContext){
-    	Creature[][] dataLayer =new Creature[800][800];
+    	Creature[][] dataLayer =new Creature[800][1000];
     	for (int i = 0 ; i<dataLayer.length; i++){
-    		for (int y =0; y<dataLayer.length; y++){
+    		for (int y =0; y<dataLayer[i].length; y++){
     			dataLayer[i][y]=null;
     		}
     	}
     	applicationContext.getVehicleGrid().setData(dataLayer, "Vehicles");
     	
-    	Double[][] valueLayer = new Double[800][800];
+    	Double[][] valueLayer = new Double[800][1000];
     	for (int i = 0 ; i<valueLayer.length; i++){
-    		for (int y =0; y<valueLayer.length; y++){
+    		for (int y =0; y<valueLayer[i].length; y++){
     			valueLayer[i][y]=(double) 0;
     		}
     	}
