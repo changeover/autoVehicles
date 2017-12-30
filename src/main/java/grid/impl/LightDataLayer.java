@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import grid.GridWorldSources;
-import grid.PictureGenerator;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
@@ -17,7 +16,7 @@ import javafx.scene.paint.Color;
  *
  */
 
-public class LightDataLayer  extends GridWorldFather<Double> implements GridWorldSources<Double>, PictureGenerator{
+public class LightDataLayer  extends GridWorldFather<Double> implements GridWorldSources<Double>{
 	private Map<Point2D, Integer> sources;
 	private Double min;
 	private Double max;
@@ -83,7 +82,6 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
 		
 	}
 
-	@Override
 	public void makePictures() {
 		System.out.println("BackgroundPic.makePictures()");
 	    if ((getWidth() > 0) && (getHeight() > 0)) {
@@ -108,7 +106,7 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
         }
 	}
 
-	@Override
+	
 	public Image getBackground() {
 		System.out.println("lightDataLayer.getBackground()");
 		return backGround;

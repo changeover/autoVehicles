@@ -19,9 +19,7 @@ public class MainPanel extends BorderPane{
         SplitPane splitPane = new SplitPane();
         splitPane.setOrientation(Orientation.VERTICAL);
         splitPane.setDividerPosition(0,(double)(windowHeight - SETTINGHEIGHT) / (double)windowHeight);
-        
-        BackgroundImage imageView = new BackgroundImage(applicationContext);
-        imageView.setPreserveRatio(true);
+
         
         
          front = new FrontPage(applicationContext);

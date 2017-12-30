@@ -9,7 +9,7 @@ import vehicle.Creature;
 
 
 public class AutoVehicles extends Application {
-
+	
     public static void main(String[] args) {
         launch(args);
     }
