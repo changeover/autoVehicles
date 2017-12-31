@@ -30,7 +30,7 @@ public class AutoVehicles extends Application {
 
 
         //temp
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 300; i++) {
 
             applicationContext.getWorldPane().placeCreature(new vehicle.Creature(applicationContext), Math.random() * 990, Math.random() * 790);
         }
