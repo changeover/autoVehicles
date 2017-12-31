@@ -22,8 +22,8 @@ public class Brain {
     }
 
     public void linkComponents(Eye frontEye, Eye backEye, Wheel wheel) {
-        creature.addPropertyChangeListener(evt -> wheel.drive(frontEye.measureLight(creature.getBody().getTranslateX(), creature.getBody().getTranslateY()),
-                backEye.measureLight(creature.getBody().getTranslateX(), creature.getBody().getTranslateY())));
+        creature.addPropertyChangeListener(evt -> wheel.drive(frontEye.measureLight(creature.getTranslateX(), creature.getTranslateY()),
+                backEye.measureLight(creature.getTranslateX(), creature.getTranslateY())));
     }
 
     /**

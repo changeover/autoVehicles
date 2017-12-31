@@ -30,7 +30,8 @@ public class WorldPane extends Pane {
                     //cx.setAlive(false);
                     //cy.setAlive(false);
                     //getChildren().removeAll(cx,cy);
-                    System.out.println("is colliding");
+                    cx.momentumConservation(cy.getCurrentVelocity());
+                    cy.momentumConservation(cx.getCurrentVelocity());
                 }
             }
 

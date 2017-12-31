@@ -3,9 +3,6 @@ package application;
 import grid.MainPanel;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import world.GlobalClock;
@@ -33,7 +30,7 @@ public class AutoVehicles extends Application {
 
 
         //temp
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
 
             applicationContext.getWorldPane().placeCreature(new vehicle.Creature(applicationContext), Math.random() * 990, Math.random() * 790);
         }

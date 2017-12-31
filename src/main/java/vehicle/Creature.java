@@ -134,10 +134,6 @@ public class Creature extends Circle {
 
     }
 
-    public Node getBody() {
-        return this;
-    }
-
     public double angleBetween(Point2D v) {
 
         Point2D reference = new Point2D(1, 0);
@@ -169,6 +165,10 @@ public class Creature extends Circle {
         return 0;
     }
 
+    public Point2D getCurrentVelocity() {
+        return currentVelocity;
+    }
+
     public boolean isColloding(Creature other) {
 
         return getBoundsInParent().intersects(other.getBoundsInParent());
@@ -180,6 +180,15 @@ public class Creature extends Circle {
 
     public boolean isDead() {
         return !alive;
+    }
+
+    public void momentumConservation(Point2D otherVelocity) {
+        double x1 = this.currentVelocity.getX();
+        double y1 = this.currentVelocity.getY();
+        double x2 = otherVelocity.getX();
+        double y2 = otherVelocity.getY();
+
+        this.currentVelocity = new Point2D(x1, y2);
     }
 
     /**
