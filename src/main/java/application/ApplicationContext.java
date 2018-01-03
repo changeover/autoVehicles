@@ -3,7 +3,7 @@ package application;
 
 
 import grid.impl.LightDataLayer;
-import grid.impl.VehicelDataLayer;
+import grid.impl.VehicleDataLayer;
 import javafx.scene.image.Image;
 import logic.SettingsController;
 import logic.impl.SettingsControllerImpl;
@@ -13,14 +13,13 @@ import vehicle.Creature;
 public class ApplicationContext {
     private SettingsController settingsController;
     private LightDataLayer lightGrid;
-    private VehicelDataLayer<Creature> vehicleGrid;
+    private VehicleDataLayer<Creature> vehicleGrid;
     private Image image;
     public ApplicationContext(){
         settingsController = new SettingsControllerImpl();
         lightGrid = new LightDataLayer();
-        vehicleGrid = new VehicelDataLayer<>();
+        vehicleGrid = new VehicleDataLayer<>();
         image = new Image("VehicleImage.jpg");
-
     }
 
     public void run(){
@@ -41,7 +40,7 @@ public class ApplicationContext {
 		return lightGrid;
 	}
 
-	public VehicelDataLayer<Creature> getVehicleGrid() {
+	public VehicleDataLayer<Creature> getVehicleGrid() {
 		return vehicleGrid;
 	}
     public SettingsController getSettingsController(){

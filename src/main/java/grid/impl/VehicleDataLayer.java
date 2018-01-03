@@ -15,13 +15,13 @@ import javafx.geometry.Point2D;
  * @author Joel Zimmerli
  *
  */
-public class VehicelDataLayer<Vehicle> extends GridWorldFather<Vehicle> implements GridWorldVehicle<Vehicle, Vehicle>{
+public class VehicleDataLayer<Vehicle> extends GridWorldFather<Vehicle> implements GridWorldVehicle<Vehicle, Vehicle>{
 	List<Vehicle> vehicels;
 	private ReentrantLock reentLock;
 	private Condition waitForView, waitForBot;
 	
 	
-	public VehicelDataLayer() {
+	public VehicleDataLayer() {
 		reentLock= new ReentrantLock();
 		waitForView= reentLock.newCondition();
 		waitForBot= reentLock.newCondition();
@@ -32,7 +32,7 @@ public class VehicelDataLayer<Vehicle> extends GridWorldFather<Vehicle> implemen
 	public List<Vehicle> getVehicles() {
 		reentLock.lock();
 		try {
-			System.out.println("VehicelDataLayer.getVehicles()");
+			System.out.println("VehicleDataLayer.getVehicles()");
 			waitForView.signalAll();
 			/**try{
 				
@@ -76,7 +76,7 @@ public class VehicelDataLayer<Vehicle> extends GridWorldFather<Vehicle> implemen
 			super.setValue(coordinates, value);
 			waitForBot.signalAll();
 			try {
-				System.out.println("VehicelDataLayer.setValue()"+"wait for view");
+				System.out.println("VehicleDataLayer.setValue()"+"wait for view");
 				waitForView.await();
 			} catch (InterruptedException e) {
 				e.printStackTrace();

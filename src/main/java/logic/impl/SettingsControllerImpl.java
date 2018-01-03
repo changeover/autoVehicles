@@ -29,6 +29,7 @@ public class SettingsControllerImpl implements SettingsController {
     public void setSlider(Slider slider){
         this.slider = slider;
     }
+
     public void activateSlider(){
         this.slider.setDisable(false);
     }
