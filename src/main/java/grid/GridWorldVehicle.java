@@ -24,7 +24,5 @@ public interface GridWorldVehicle<GridValue,Vehicle> extends GridWorld<GridValue
 	 * @return
 	 */
 	List<Vehicle> getVehicles();
-	
-	
 
 }

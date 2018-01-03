@@ -29,14 +29,14 @@ abstract class GridWorldFather<T> implements GridWorld<T> {
 
 	@Override
 	public int getWidth() {
-		if (values == null || values[0] == null) return 0;
-		return values[0].length;
+		if (values == null) return 0;
+		return values.length;
 	}
 
 	@Override
 	public int getHeight() {
-		if (values == null)return 0;
-		return values.length;
+		if (values == null ||values[0] == null)return 0;
+		return values[0].length;
 	}
 	
 	@Override

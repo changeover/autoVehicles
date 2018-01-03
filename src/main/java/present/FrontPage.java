@@ -1,24 +1,20 @@
 package present;
 
 import application.ApplicationContext;
-import grid.GridWorldListener;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Point2D;
-import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import vehicle.Creature;
 
 public class FrontPage extends DrawingPane{
 	ApplicationContext applicationContext;
 	public FrontPage(ApplicationContext appli) {
 		applicationContext=appli;
-		g.setFill(Color.RED);
-		g.fillOval(100, 100, 300, 300);
 		new AnimationTimer() {
 			//siehe: https://gamedevelopment.tutsplus.com/tutorials/introduction-to-javafx-for-game-development--cms-23835
 			@Override
 			public void handle(long currentNanoTime) {
-				 
-				 repaint();
+                repaint();
 			}
 		}.start();
 	}
@@ -29,13 +25,9 @@ public class FrontPage extends DrawingPane{
 		g.drawImage(applicationContext.getLightGrid().getBackground(), 0, 0);
 		for (Creature vehicle :applicationContext.getVehicleGrid().getVehicles()){
 			Point2D point = vehicle.getPosition();
-			g.setFill(Color.RED);
-			
-			g.fillOval(point.getX(), point.getY(), 10, 10);
-	
+            ImagePattern imagePattern = new ImagePattern(applicationContext.getImage());
+            g.setFill(imagePattern);
+			g.fillOval(point.getX(), point.getY(), 20, 20);
 		}
-		
 	}
-
-
 }

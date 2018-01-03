@@ -89,8 +89,8 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
 	    	WritableImage writableImage = new WritableImage(getWidth(), getHeight());
 	        int[] windowedValue = new int[1];
             double p = 0.7;
-            for (int row = 0; row < getHeight(); row++) {
-                for (int column = 0; column < getWidth(); column++) {
+            for (int row = 0; row < getWidth(); row++) {
+                for (int column = 0; column < getHeight(); column++) {
                     
                     Double value = (values[row][column] * 255);
                     windowedValue[0] = (int) (value/max);
@@ -99,7 +99,7 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
                     //		(double)(lightData.getMaxValue() - lightData.getMinValue()) * 255));
                     //windowedValue[0] = Math.min(windowedValue[0], 255);
                     //windowedValue[0] = Math.max(windowedValue[0], 0);
-                    writableImage.getPixelWriter().setColor(column, row, Color.rgb(windowedValue[0], windowedValue[0], 100));
+                    writableImage.getPixelWriter().setColor(row, column, Color.rgb(windowedValue[0], windowedValue[0], 100));
                 }
             }
             backGround = writableImage;
