@@ -11,6 +11,9 @@ import vehicle.Creature;
 
 
 public class ApplicationContext {
+
+    private int WINDOWWIDTH = 600;
+    private int WINDOWHEIGHT = 400;
     private SettingsController settingsController;
     private LightDataLayer lightGrid;
     private VehicleDataLayer<Creature> vehicleGrid;
@@ -27,7 +30,9 @@ public class ApplicationContext {
         settingsController.deactivateSlider();
         int vehiclesAmount = settingsController.getVehicleCount();
         for(int i = 0; i <= vehiclesAmount; i++ ){
-            createVehicle((int)(Math.random()*1000), (int)(Math.random()*800));
+            double randomX = Math.random();
+            double randomY = Math.random();
+            createVehicle((int)((randomX*WINDOWWIDTH)-(randomX*20)), (int)((randomY*WINDOWHEIGHT)-(randomY*20)));
         }
 
     }
@@ -60,4 +65,12 @@ public class ApplicationContext {
     private void deleteVehicles(){
         vehicleGrid.clearData();
        }
+
+    public int getWindowWidth() {
+        return WINDOWWIDTH;
+    }
+
+    public int getWindowHeight() {
+        return WINDOWHEIGHT;
+    }
 }

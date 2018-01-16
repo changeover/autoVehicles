@@ -9,8 +9,9 @@ import vehicle.Creature;
 
 
 public class AutoVehicles extends Application {
-    final int WINDOWWIDTH = 1000;
-    final int WINDOWHEIGHT = 800;
+
+    int WINDOWWIDTH;
+    int WINDOWHEIGHT;
 	
     public static void main(String[] args) {
         launch(args);
@@ -20,17 +21,20 @@ public class AutoVehicles extends Application {
     public void start(Stage primaryStage) {
     	try {
             ApplicationContext applicationContext = new ApplicationContext();
+
+            WINDOWWIDTH = applicationContext.getWindowWidth();
+            WINDOWHEIGHT = applicationContext.getWindowHeight();
             
-            MainPanel mainPane = new MainPanel(applicationContext,WINDOWWIDTH,WINDOWHEIGHT);
-            Scene scene = new Scene(mainPane,WINDOWWIDTH, WINDOWHEIGHT);
+            MainPanel mainPane = new MainPanel(applicationContext);
+            Scene scene = new Scene(mainPane,applicationContext.getWindowWidth(),mainPane.getMinHeight());
             primaryStage.setTitle("Autonomous vehicles");
             primaryStage.setScene(scene);
-            int[] coord = new int[]{400,400};
+            int[] coord = new int[]{WINDOWWIDTH/2,WINDOWHEIGHT/2};
             crateLayers(applicationContext);
             applicationContext.getLightGrid().addSource( coord, 100);
-            coord = new int[]{500,500};
+            coord = new int[]{WINDOWWIDTH/2+100,WINDOWHEIGHT/2+100};
             applicationContext.getLightGrid().addSource( coord, 100);
-
+            System.out.println(mainPane.getHeight());
 
             primaryStage.show();
             

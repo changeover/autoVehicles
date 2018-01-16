@@ -2,55 +2,68 @@ package present;
 
 import grid.settings.Settings;
 import application.ApplicationContext;
+import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SplitPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 
 public class MainPanel extends BorderPane{
 	private FrontPage front;
-    public MainPanel(final ApplicationContext applicationContext, int windowWidth, int windowHeight){
+    public MainPanel(final ApplicationContext applicationContext){
         final int SETTINGHEIGHT = 100;
-        StackPane topPane = new StackPane();
+        StackPane visualPane = new StackPane();
         StackPane settingPane = new StackPane(new Settings(applicationContext));
+        TilePane buttonPane = new TilePane();
+        buttonPane.setPadding(new Insets(5,10,5,10));
+        buttonPane.setHgap(30);
         SplitPane splitPane = new SplitPane();
         splitPane.setOrientation(Orientation.VERTICAL);
-        splitPane.setDividerPosition(0,(double)(windowHeight - SETTINGHEIGHT) / (double)windowHeight);
+        splitPane.setDividerPositions(1,SETTINGHEIGHT/applicationContext.getWindowHeight());
+        splitPane.setDividerPositions(0,(double)(applicationContext.getWindowHeight() - SETTINGHEIGHT) / (double)applicationContext.getWindowHeight());
+        Button startButton = new Button("Start");
+        Button stopButton = new Button("Stop");
+        Button exitButton = new Button("Exit");
 
-        
-        
-         front = new FrontPage(applicationContext);
-        
-        
-        
-        
-        splitPane.getItems().addAll(topPane,settingPane);
-        //topPane.getChildren().add(imageView);
-        topPane.getChildren().add(front);
-        MenuBar menuBar = new MenuBar();
-        Menu menu;
-        MenuItem menuItem;
+        front = new FrontPage(applicationContext);
 
-        menu = new Menu("Application");
-        menuBar.getMenus().add(menu);
+        buttonPane.setMaxHeight(30);
+        settingPane.setMaxHeight(30);
+        visualPane.setMinHeight(applicationContext.getWindowHeight());
+        splitPane.setMaxWidth(applicationContext.getWindowWidth());
+        splitPane.getItems().addAll(buttonPane,visualPane,settingPane);
 
-        menuItem = new MenuItem("Start");
-        menu.getItems().add(menuItem);
-        menuItem.setOnAction(event -> applicationContext.run());
 
-        menuItem = new MenuItem("Stop");
-        menu.getItems().add(menuItem);
-        menuItem.setOnAction(event -> applicationContext.stop());
+        buttonPane.getChildren().addAll(startButton,stopButton,exitButton);
+        startButton.setOnAction(event -> applicationContext.run());
+        stopButton.setOnAction(event -> applicationContext.stop());
+        exitButton.setOnAction(event -> System.exit(0));
 
-        menuItem = new MenuItem("Exit");
-        menu.getItems().add(menuItem);
-        menuItem.setOnAction(event -> System.exit(0));
-        
+        visualPane.getChildren().add(front);
 
-        setTop(menuBar);
+
+
+        //MenuBar menuBar = new MenuBar();
+        //Menu menu;
+        //MenuItem menuItem;
+//
+        //menu = new Menu("Application");
+        //menuBar.getMenus().add(menu);
+//
+        //menuItem = new MenuItem("Start");
+        //menu.getItems().add(menuItem);
+        //menuItem.setOnAction(event -> applicationContext.run());
+//
+        //menuItem = new MenuItem("Stop");
+        //menu.getItems().add(menuItem);
+        //menuItem.setOnAction(event -> applicationContext.stop());
+//
+        //menuItem = new MenuItem("Exit");
+        //menu.getItems().add(menuItem);
+        //menuItem.setOnAction(event -> System.exit(0));
+        //
+//
+//
+        //setTop(menuBar);
         setCenter(splitPane);
 
     }

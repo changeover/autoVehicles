@@ -32,7 +32,7 @@ public class VehicleDataLayer<Vehicle> extends GridWorldFather<Vehicle> implemen
 	public List<Vehicle> getVehicles() {
 		reentLock.lock();
 		try {
-			System.out.println("VehicleDataLayer.getVehicles()");
+			//System.out.println("VehicleDataLayer.getVehicles()");
 			waitForView.signalAll();
 			/**try{
 				
@@ -76,7 +76,7 @@ public class VehicleDataLayer<Vehicle> extends GridWorldFather<Vehicle> implemen
 			super.setValue(coordinates, value);
 			waitForBot.signalAll();
 			try {
-				System.out.println("VehicleDataLayer.setValue()"+"wait for view");
+				//System.out.println("VehicleDataLayer.setValue()"+"wait for view");
 				waitForView.await();
 			} catch (InterruptedException e) {
 				e.printStackTrace();

@@ -68,7 +68,7 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
                 if (value < min) min = value;
             }
         }
-        System.out.println("lightDataLayer.findMinMax()"+min+" : "+max);
+        //System.out.println("lightDataLayer.findMinMax()"+min+" : "+max);
 	}
 
 	@Override
@@ -76,16 +76,16 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
 			super.values=values;
 			super.name = name;
 			findMinMax();
-			System.out.println("lightDataLayer.setData()");
+			//System.out.println("lightDataLayer.setData()");
 			super.fireDataChanged();
 		}
 		
 	}
 
 	public void makePictures() {
-		System.out.println("BackgroundPic.makePictures()");
+		//System.out.println("BackgroundPic.makePictures()");
 	    if ((getWidth() > 0) && (getHeight() > 0)) {
-	    	System.out.println("make Pic");
+	    	//System.out.println("make Pic");
 	    	WritableImage writableImage = new WritableImage(getWidth(), getHeight());
 	        int[] windowedValue = new int[1];
             double p = 0.7;
@@ -108,7 +108,7 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
 
 	
 	public Image getBackground() {
-		System.out.println("lightDataLayer.getBackground()");
+		//System.out.println("lightDataLayer.getBackground()");
 		return backGround;
 	}
 	

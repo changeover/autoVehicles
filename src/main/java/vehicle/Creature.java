@@ -43,7 +43,7 @@ public class Creature implements Runnable{
     private LightDataLayer lightMap;
 
     public Creature(ApplicationContext applicationContext, int x, int y) {
-    	this.position=new Point2D(x, y);
+    	this.position  = new Point2D(x, y);
     	this.applicationContext=applicationContext;
         this.lightMap = applicationContext.getLightGrid();
         this.leftFrontEye = new Eye(Eye.sensorPosition.LEFTFRONT, lightMap);
@@ -57,7 +57,7 @@ public class Creature implements Runnable{
     }
 
     public void update() {
-    	System.out.println("Creature.update()");
+    	//System.out.println("Creature.update()");
         emitPropertyChange("currentPosition", position.getX(), position.getY());
 
 
@@ -109,7 +109,7 @@ public class Creature implements Runnable{
 
             currentVelocity = new Point2D((x * Math.cos(rotate) - y * Math.sin(rotate)),( x * Math.sin(rotate) + y * Math.cos(rotate)));
         }
-        System.out.println(currentVelocity);
+        //System.out.println(currentVelocity);
 
 
         position=position.add( (result.getX() + currentVelocity.getX())/10,(result.getY() + currentVelocity.getY())/10);
