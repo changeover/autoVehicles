@@ -7,7 +7,7 @@ import javafx.scene.paint.ImagePattern;
 import vehicle.Creature;
 
 public class FrontPage extends DrawingPane{
-	ApplicationContext applicationContext;
+	private ApplicationContext applicationContext;
 	public FrontPage(ApplicationContext appli) {
 		applicationContext=appli;
 		new AnimationTimer() {
@@ -17,6 +17,14 @@ public class FrontPage extends DrawingPane{
                 repaint();
 			}
 		}.start();
+
+		this.setOnMouseMoved(event -> {
+
+			applicationContext.getLightGrid().deleteSources();
+			int[] coord = new int[]{(int)event.getX(),(int)event.getY()};
+			applicationContext.getLightGrid().addSource(coord, 100);
+
+		});
 	}
 
 	@Override

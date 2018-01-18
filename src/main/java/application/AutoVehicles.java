@@ -2,7 +2,6 @@ package application;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import present.MainPanel;
 import vehicle.Creature;
@@ -29,11 +28,11 @@ public class AutoVehicles extends Application {
             Scene scene = new Scene(mainPane,applicationContext.getWindowWidth(),mainPane.getMinHeight());
             primaryStage.setTitle("Autonomous vehicles");
             primaryStage.setScene(scene);
+            createLayers(applicationContext);
             int[] coord = new int[]{WINDOWWIDTH/2,WINDOWHEIGHT/2};
-            crateLayers(applicationContext);
             applicationContext.getLightGrid().addSource( coord, 100);
-            coord = new int[]{WINDOWWIDTH/2+100,WINDOWHEIGHT/2+100};
-            applicationContext.getLightGrid().addSource( coord, 100);
+            //coord = new int[]{WINDOWWIDTH/2+100,WINDOWHEIGHT/2+100};
+            //applicationContext.getLightGrid().addSource( coord, 100);
             System.out.println(mainPane.getHeight());
 
             primaryStage.show();
@@ -44,7 +43,7 @@ public class AutoVehicles extends Application {
 		}
         
     }
-    public void crateLayers(ApplicationContext applicationContext){
+    private void createLayers(ApplicationContext applicationContext){
     	Creature[][] dataLayer =new Creature[WINDOWWIDTH][WINDOWHEIGHT];
     	for (int i = 0 ; i<dataLayer.length; i++){
     		for (int y =0; y<dataLayer[i].length; y++){

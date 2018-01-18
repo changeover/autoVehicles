@@ -55,8 +55,7 @@ public interface GridWorld<GridValue> {
 	 * @param listener
 	 */
 	void addListener(GridWorldListener listener);
-	
-	
-	
+
+	void resetValues();
 
 }

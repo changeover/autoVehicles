@@ -29,7 +29,7 @@ public class ApplicationContext {
         deleteVehicles();
         settingsController.deactivateSlider();
         int vehiclesAmount = settingsController.getVehicleCount();
-        for(int i = 0; i <= vehiclesAmount; i++ ){
+        for(int i = 0; i < vehiclesAmount; i++ ){
             double randomX = Math.random();
             double randomY = Math.random();
             createVehicle((int)((randomX*WINDOWWIDTH)-(randomX*20)), (int)((randomY*WINDOWHEIGHT)-(randomY*20)));

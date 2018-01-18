@@ -36,7 +36,14 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
 		findMinMax();
 		makePictures();
 		fireDataChanged();
-		
+	}
+
+	@Override
+	public void deleteSources(){
+		resetValues();
+		sources.clear();
+		makePictures();
+		fireDataChanged();
 	}
 
 	@Override
@@ -59,7 +66,7 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
 	public Double getMaxValue() {
 		return max;
 	}
-	public void findMinMax(){
+	private void findMinMax(){
 		min = super.values[0][0];
         max = super.values[0][0];
         for (Double[] row : super.values) {
@@ -82,7 +89,7 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
 		
 	}
 
-	public void makePictures() {
+	private void makePictures() {
 		//System.out.println("BackgroundPic.makePictures()");
 	    if ((getWidth() > 0) && (getHeight() > 0)) {
 	    	//System.out.println("make Pic");

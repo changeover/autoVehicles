@@ -27,6 +27,16 @@ abstract class GridWorldFather<T> implements GridWorld<T> {
 		fireDataChanged();
 	}
 
+	public void resetValues(){
+		for (int i = 0 ; i<values.length; i++){
+			for (int y =0; y<values[i].length; y++){
+				if(getValue(i,y) instanceof Double) {
+					values[i][y] = (T)(Object)(0.0);
+				}
+			}
+		}
+	}
+
 	@Override
 	public int getWidth() {
 		if (values == null) return 0;

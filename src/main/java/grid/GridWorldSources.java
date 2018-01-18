@@ -20,4 +20,5 @@ public interface GridWorldSources<T> extends GridWorld<T> {
 	T getMinValue();
 	T getMaxValue();
 
+	void deleteSources();
 }
