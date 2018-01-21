@@ -36,6 +36,7 @@ public class Eye implements Sensor {
     @Override
     public double measureLight(double currentPosX, double currentPosY) {
         border = lightmap.checkForCollision((int)currentPosX,(int)currentPosY);
+        emitPropertyChange("border", null, border);
         if(border == LightDataLayer.reachedBorder.NONE){
             switch (position) {
                 case LEFTBACK:
@@ -52,8 +53,6 @@ public class Eye implements Sensor {
                     break;
 
             }
-        }else {
-            emitPropertyChange("border", null, border);
         }
         return intensity;
     }
