@@ -21,36 +21,39 @@ public class Eye implements Sensor {
     private LightDataLayer lightmap;
     double intensity;
 
+    private LightDataLayer.reachedBorder border;
+
+    public LightDataLayer.reachedBorder getBorder() {
+        return border;
+    }
+
     public Eye(sensorPosition pos, LightDataLayer lightMap) {
         this.position = pos;
         this.lightmap = lightMap;
     }
 
-    @Override
-    public double getIntensity() {
-        return 0;
-    }
-
-    @Override
-    public void updatePosition(int xPos, int yPos) {
-
-    }
 
     @Override
     public double measureLight(double currentPosX, double currentPosY) {
-        switch (position) {
-            case LEFTBACK:
-                intensity = lightmap.getValue((int) currentPosX - 1, (int) currentPosY + 1);
-                break;
-            case LEFTFRONT:
-                intensity = lightmap.getValue((int) currentPosX - 1, (int) currentPosY - 1);
-                break;
-            case RIGHTBACK:
-                intensity = lightmap.getValue((int) currentPosX + 1, (int) currentPosY + 1);
-                break;
-            case RIGHTFRONT:
-                intensity = lightmap.getValue((int) currentPosX + 1, (int) currentPosY - 1);
-                break;
+        border = lightmap.checkForCollision((int)currentPosX,(int)currentPosY);
+        if(border == LightDataLayer.reachedBorder.NONE){
+            switch (position) {
+                case LEFTBACK:
+                    intensity = lightmap.getValue((int) currentPosX - 1, (int) currentPosY + 1);
+                    break;
+                case LEFTFRONT:
+                    intensity = lightmap.getValue((int) currentPosX - 1, (int) currentPosY - 1);
+                    break;
+                case RIGHTBACK:
+                    intensity = lightmap.getValue((int) currentPosX + 1, (int) currentPosY + 1);
+                    break;
+                case RIGHTFRONT:
+                    intensity = lightmap.getValue((int) currentPosX + 1, (int) currentPosY - 1);
+                    break;
+
+            }
+        }else {
+            emitPropertyChange("border", null, border);
         }
         return intensity;
     }

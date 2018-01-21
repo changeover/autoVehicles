@@ -8,18 +8,6 @@ public interface Sensor {
 
 
     /**
-     * Returns the measured light intensity
-     *
-     * @return light intensity
-     */
-    double getIntensity();
-
-    /**
-     * Updates the position of this sensor
-     */
-    void updatePosition(int xPos, int yPos);
-
-    /**
      * Measure light intensity
      */
     double measureLight(double currentPosX, double currentPosY);

@@ -24,7 +24,7 @@ public interface GridWorld<GridValue> {
 	/**
 	 * Allows the set a specific field in the grid
 	 * @param coordinates place where the value should be changed
-	 * @param vlaue value of the change
+	 * @param value value of the change
 	 */
 	void setValue(Point2D coordinates, GridValue value);
 	
@@ -40,7 +40,7 @@ public interface GridWorld<GridValue> {
 	int getHeight();
 	/**
 	 * Returns the data Value at the specific position.
-	 * @param koordinate x and y coordinates of the searched Value
+	 * @param x,y coordinates of the searched Value
 	 * @return data Value of the specific field
 	 */
 	GridValue getValue(int x, int y);

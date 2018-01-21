@@ -21,7 +21,9 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
 	private Double min;
 	private Double max;
 	private Image backGround;
-	
+
+	public enum reachedBorder {TOP,BOTTOM,RIGHT,LEFT,NONE};
+
 	
 	public LightDataLayer() {
 		super();
@@ -147,4 +149,34 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
         }
 	}
 
+	public reachedBorder checkForCollision(int x ,int y){
+		if(x <= 0){
+			System.out.println("--------------------");
+			System.out.println("reached left Border x: " + x + " y: " + y);
+			System.out.println("--------------------");
+			return reachedBorder.LEFT;
+		}
+		else if(x >= values.length-1) {
+			System.out.println("--------------------");
+			System.out.println("reached right Border x: " + x + " y: " + y);
+			System.out.println("--------------------");
+			return reachedBorder.RIGHT;
+		}
+		else if(y <= 0) {
+			System.out.println("--------------------");
+			System.out.println("reached top Border x: " + x + " y: " + y);
+			System.out.println("--------------------");
+			return reachedBorder.TOP;
+		}
+		else if(y >= values[0].length-1) {
+			System.out.println("--------------------");
+			System.out.println("reached bottom Border x: " + x + " y: " + y);
+			System.out.println("--------------------");
+			return reachedBorder.BOTTOM;
+		}
+		else {
+			System.out.println("NONE x: " + x + " y: " + y);
+			return reachedBorder.NONE;
+		}
+	}
 }

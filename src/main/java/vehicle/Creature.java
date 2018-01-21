@@ -24,7 +24,7 @@ public class Creature implements Runnable{
     private enum Location {TOPRIGHT, TOPLEFT, BOTTOMLEFT, BOTTOMRIGHT}
 
     private Location located;
-    private Point2D currentVelocity = new Point2D(0, 0);
+    private Point2D currentVelocity = new Point2D(1, 1);
     private Point2D position;
 
     private final List<PropertyChangeListener> listeners = new ArrayList<>();
@@ -37,6 +37,8 @@ public class Creature implements Runnable{
     private Eye leftBackEye;
     private Eye rightFrontEye;
     private Eye rightBackEye;
+
+    private LightDataLayer.reachedBorder border = LightDataLayer.reachedBorder.NONE;
 
     private Brain brain;
 
@@ -54,6 +56,28 @@ public class Creature implements Runnable{
         this.brain.linkComponents(leftFrontEye, leftBackEye, leftWheel);
         this.brain.linkComponents(rightFrontEye, rightBackEye, rightWheel);
         applicationContext.getVehicleGrid().addVehicle(this, position);
+        leftFrontEye.addPropertyChangeListener(evt -> {
+            if(leftFrontEye.getBorder() == LightDataLayer.reachedBorder.TOP ||
+                    leftFrontEye.getBorder() == LightDataLayer.reachedBorder.LEFT){
+                border = leftFrontEye.getBorder();
+            }
+        });
+        leftBackEye.addPropertyChangeListener(evt -> {
+            if(leftBackEye.getBorder() == LightDataLayer.reachedBorder.BOTTOM){
+                border = leftBackEye.getBorder();
+            }
+        });
+        rightFrontEye.addPropertyChangeListener(evt -> {
+            if(rightFrontEye.getBorder() == LightDataLayer.reachedBorder.TOP ||
+                    rightFrontEye.getBorder() == LightDataLayer.reachedBorder.RIGHT){
+                border = rightFrontEye.getBorder();
+            }
+        } );
+        rightBackEye.addPropertyChangeListener(evt -> {
+            if(rightBackEye.getBorder() == LightDataLayer.reachedBorder.BOTTOM){
+                border = rightBackEye.getBorder();
+            }
+        });
     }
 
     public void update() {
@@ -61,59 +85,69 @@ public class Creature implements Runnable{
         emitPropertyChange("currentPosition", position.getX(), position.getY());
 
 
-        Point2D leftVelocity = leftWheel.getVelocity();
-        Point2D rightVelocity = rightWheel.getVelocity();
-        Point2D result = leftVelocity.add(rightVelocity);
-       
+        if(border == LightDataLayer.reachedBorder.NONE){
 
-        double x = currentVelocity.getX();
-        double y = currentVelocity.getY();
+            Point2D leftVelocity = leftWheel.getVelocity();
+            Point2D rightVelocity = rightWheel.getVelocity();
+            Point2D result = leftVelocity.add(rightVelocity);
 
-        double currentAngle = angleBetween(currentVelocity);
-        double resultAngle = angleBetween(result);
+            double x = currentVelocity.getX();
+            double y = currentVelocity.getY();
 
-        double angle = resultAngle - currentAngle;
+            double currentAngle = angleBetween(currentVelocity);
+            double resultAngle = angleBetween(result);
+
+            double angle = resultAngle - currentAngle;
 
 
-        if (angle > 90 || angle < -90) {
-            switch (located) {
-                case TOPLEFT:
-                    if (y > 0) {
-                        rotate = -0.15;
-                    } else {
-                        rotate = +0.15;
-                    }
-                    break;
-                case TOPRIGHT:
-                    if (y > 0) {
-                        rotate = +0.15;
-                    } else {
-                        rotate = -0.15;
-                    }
-                    break;
-                case BOTTOMRIGHT:
-                    if (y > 0) {
-                        rotate = +0.15;
-                    } else {
-                        rotate = -0.15;
-                    }
-                    break;
-                case BOTTOMLEFT:
-                    if (y > 0) {
-                        rotate = -0.15;
-                    } else {
-                        rotate = +0.15;
-                    }
-                    break;
+            if (angle > 90 || angle < -90) {
+                switch (located) {
+                    case TOPLEFT:
+                        if (y > 0) {
+                            rotate = -0.15;
+                        } else {
+                            rotate = +0.15;
+                        }
+                        break;
+                    case TOPRIGHT:
+                        if (y > 0) {
+                            rotate = +0.15;
+                        } else {
+                            rotate = -0.15;
+                        }
+                        break;
+                    case BOTTOMRIGHT:
+                        if (y > 0) {
+                            rotate = +0.15;
+                        } else {
+                            rotate = -0.15;
+                        }
+                        break;
+                    case BOTTOMLEFT:
+                        if (y > 0) {
+                            rotate = -0.15;
+                        } else {
+                            rotate = +0.15;
+                        }
+                        break;
+                }
+
+                currentVelocity = new Point2D((x * Math.cos(rotate) - y * Math.sin(rotate)),( x * Math.sin(rotate) + y * Math.cos(rotate)));
             }
+            //System.out.println(currentVelocity);
 
-            currentVelocity = new Point2D((x * Math.cos(rotate) - y * Math.sin(rotate)),( x * Math.sin(rotate) + y * Math.cos(rotate)));
+
+            position=position.add( (result.getX() + currentVelocity.getX())/10,(result.getY() + currentVelocity.getY())/10);
+            currentVelocity = result.add(currentVelocity);
         }
-        //System.out.println(currentVelocity);
-
-
-        position=position.add( (result.getX() + currentVelocity.getX())/10,(result.getY() + currentVelocity.getY())/10);
-        currentVelocity = result.add(currentVelocity);
+        else {
+            if(border == LightDataLayer.reachedBorder.TOP || border == LightDataLayer.reachedBorder.BOTTOM){
+                currentVelocity = new Point2D((currentVelocity.getX() * Math.cos(3.1) - currentVelocity.getY() * Math.sin(3.1)),( currentVelocity.getX() * Math.sin(3.1) + currentVelocity.getY() * Math.cos(3.1)));
+            }
+            else if(border == LightDataLayer.reachedBorder.LEFT || border == LightDataLayer.reachedBorder.RIGHT){
+                currentVelocity = new Point2D(currentVelocity.getX()*-1,currentVelocity.getY());
+            }
+        }
     }
     public Point2D getPosition(){
     	return position;
@@ -171,7 +205,6 @@ public class Creature implements Runnable{
 		try {
     		while(true){
     			update();
-    			System.out.println("Creature.run()");
     			applicationContext.getVehicleGrid().setValue(position, this);
 
     		}
