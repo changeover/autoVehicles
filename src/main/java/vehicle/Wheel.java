@@ -17,8 +17,12 @@ public class Wheel implements Actor {
     private double magnitude;
     private double angle = 0;
     private Point2D velocity;
-    public Wheel(WheelPosition position) {
+    private int speedAmplifier;
+
+    public Wheel(WheelPosition position, int speedAmplifier) {
+
         this.position = position;
+        this.speedAmplifier = speedAmplifier;
     }
 
     @Override
@@ -42,8 +46,8 @@ public class Wheel implements Actor {
             angle = 45 * Math.PI / 180;
             magnitude = backIntensity;
         }
-        double x = Math.cos(angle) * (magnitude) * 1.5;
-        double y = Math.sin(angle) * (magnitude) * 1.5;
+        double x = Math.cos(angle) * (magnitude) * speedAmplifier / 100;
+        double y = Math.sin(angle) * (magnitude) * speedAmplifier / 100;
         velocity = new Point2D(x, y);
     }
 

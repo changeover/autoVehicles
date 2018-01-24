@@ -10,28 +10,46 @@ import java.util.List;
 public class SettingsControllerImpl implements SettingsController {
     private List<SettingsControllerListener> listeners;
     private int vehicleCount;
-    private Slider slider;
+    private int vehicleSpeed;
+    private Slider countSlider;
+    private Slider speedSlider;
     public SettingsControllerImpl(){
         listeners = new ArrayList<>();
     }
+
+    public int getVehicleCount() {
+        return vehicleCount;
+    }
+
     public void setVehicleCount(int vehicleCount){
         this.vehicleCount = vehicleCount;
+
         fireDataChanged();
     }
-    public int getVehicleCount(){
-        return this.vehicleCount;
+
+    public int getVehicleSpeed() {
+        return vehicleSpeed;
+    }
+
+    public void setVehicleSpeed(int vehicleSpeed) {
+        this.vehicleSpeed = vehicleSpeed;
+
+        fireDataChanged();
     }
 
     public void deactivateSlider(){
-        this.slider.setDisable(true);
+        this.speedSlider.setDisable(true);
+        this.countSlider.setDisable(true);
     }
 
-    public void setSlider(Slider slider){
-        this.slider = slider;
+    public void setSliders(Slider countSlider, Slider speedSlider) {
+        this.speedSlider = speedSlider;
+        this.countSlider = countSlider;
     }
 
     public void activateSlider(){
-        this.slider.setDisable(false);
+        this.speedSlider.setDisable(false);
+        this.countSlider.setDisable(false);
     }
 
     public void addListener(SettingsControllerListener settingsControllerListener){

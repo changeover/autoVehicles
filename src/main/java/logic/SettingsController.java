@@ -3,11 +3,15 @@ package logic;
 import javafx.scene.control.Slider;
 
 public interface SettingsController {
-    void setVehicleCount(int vehicleCount);
+    int getVehicleSpeed();
+
+    void setVehicleSpeed(int vehicleCount);
 
     int getVehicleCount();
 
-    void setSlider(Slider slider);
+    void setVehicleCount(int vehicleCount);
+
+    void setSliders(Slider countSlider, Slider speedSlider);
 
     void deactivateSlider();
 

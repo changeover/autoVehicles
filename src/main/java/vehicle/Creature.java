@@ -25,8 +25,8 @@ public class Creature implements Runnable{
     private Location located;
     private Point2D currentVelocity = new Point2D(1, 1);
     private Point2D position;
-    private Wheel leftWheel = new Wheel(Wheel.WheelPosition.LEFT);
-    private Wheel rightWheel = new Wheel(Wheel.WheelPosition.RIGHT);
+    private Wheel leftWheel;
+    private Wheel rightWheel;
     private ApplicationContext applicationContext;
     private Eye leftFrontEye;
     private Eye leftBackEye;
@@ -35,15 +35,20 @@ public class Creature implements Runnable{
     private LightDataLayer.reachedBorder border = LightDataLayer.reachedBorder.NONE;
     private Brain brain;
     private LightDataLayer lightMap;
+    private int speedAmplification;
 
     public Creature(ApplicationContext applicationContext, int x, int y) {
-    	this.position  = new Point2D(x, y);
+        this.speedAmplification = applicationContext.getSettingsController().getVehicleSpeed();
+        this.position  = new Point2D(x, y);
     	this.applicationContext=applicationContext;
         this.lightMap = applicationContext.getLightGrid();
         this.leftFrontEye = new Eye(Eye.sensorPosition.LEFTFRONT, lightMap);
         this.leftBackEye = new Eye(Eye.sensorPosition.LEFTBACK, lightMap);
         this.rightFrontEye = new Eye(Eye.sensorPosition.RIGHTFRONT, lightMap);
         this.rightBackEye = new Eye(Eye.sensorPosition.RIGHTBACK, lightMap);
+        leftWheel = new Wheel(Wheel.WheelPosition.LEFT, speedAmplification);
+        rightWheel = new Wheel(Wheel.WheelPosition.RIGHT, speedAmplification);
+
         this.brain = new Brain(this);
         this.brain.linkComponents(leftFrontEye, leftBackEye, leftWheel);
         this.brain.linkComponents(rightFrontEye, rightBackEye, rightWheel);
