@@ -6,40 +6,45 @@ import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Inside this class will be the logic of the light source
+ * Inside this class will be the logic of the light source,
+ * As well its create the picture for the background
  * all others function are implemented by his father
- * @author Joel Zimmerli
+ * @author Joel Zimmerli, Cesar De Carmo, Kevin Streiter, Gregor von Gunten
  *
  */
 
-public class LightDataLayer  extends GridWorldFather<Double> implements GridWorldSources<Double>{
-	private Map<Point2D, Integer> sources;
-	private Double min;
-	private Double max;
+public class LightLayer  extends GridWorldFather<Double> implements GridWorldSources<Double>{
+	private List<LightSource> lightSources;
+	private Double minValueLight;
+	private Double maxValueLight;
 	private Image backGround;
 	private Double[][] lightLayer;
 
-	public LightDataLayer() {
+	public LightLayer() {
 		super();
-		
-		sources= new HashMap<>();
+		lightSources= new ArrayList<>();
 	}
 
 	@Override
-	public void addSource(int[] coordinates, Integer value) {
-		Point2D point= new Point2D(coordinates[0], coordinates[1]);
-		sources.put(point, value);
-		changeWindow(point);
+	public void addSource(int[] coordinates) {
+		lightSources.add(new LightSource(coordinates, 0));
+		changeIllumination(coordinates);
 		makePictures();
 	}
-	private void changeWindow(Point2D position){
+	@Override
+	public void updateSource(int[] coordinates) {
+		lightSources.get(0).setKoordinates(coordinates);
+		changeIllumination(coordinates);
+		makePictures();
+	}
+	private void changeIllumination(int[] coordinates){
 		//Calculate difference of Source to center
-		int xDiffCenter=(int) (-position.getX()+values.length/2);
-		int yDiffCenter=(int) (-position.getY()+values[0].length/2);
+		int xDiffCenter=(int) (-coordinates[0]+values.length/2);
+		int yDiffCenter=(int) (-coordinates[1]+values[0].length/2);
 		int xValuesStart=(int) lightLayer.length/2-values.length/2;
 		int yValuesStart=(int) lightLayer[0].length/2-values[0].length/2;
 		for (int i = 0; i<values.length;i++){
@@ -52,15 +57,12 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
 	@Override
 	public void deleteSources(){
 		resetValues();
-		sources.clear();
+		lightSources.clear();
+		changeIllumination(new int[]{1,1});
 		makePictures();
-		fireDataChanged();
 	}
 
-	@Override
-	public Map<Point2D, Integer> getSources() {
-		return sources;
-	}
+	
 
 	@Override
 	public String toString() {
@@ -69,21 +71,21 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
 	
 	@Override
 	public Double getMinValue() {
-		return min;
+		return minValueLight;
 	}
 
 	@Override
 	public Double getMaxValue() {
-		return max;
+		return maxValueLight;
 	}
 
 	private void findMinMax(){
-		min = lightLayer[0][0];
-        max = lightLayer[0][0];
+		minValueLight = lightLayer[0][0];
+        maxValueLight = lightLayer[0][0];
         for (Double[] row : lightLayer) {
             for (Double value : row) {
-                if (value > max) max = value;
-                if (value < min) min = value;
+                if (value > maxValueLight) maxValueLight = value;
+                if (value < minValueLight) minValueLight = value;
             }
         }
 	}
@@ -107,7 +109,7 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
             for (int row = 0; row < getWidth(); row++) {
                 for (int column = 0; column < getHeight(); column++) {
                     Double value = (values[row][column] * 255);
-					windowedValue = 255 - (int) (value / max);
+					windowedValue = 255 - (int) (value / maxValueLight);
 
 					writableImage.getPixelWriter().setColor(row, column, Color.rgb(windowedValue, windowedValue, 100));
                 }

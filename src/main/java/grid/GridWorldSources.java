@@ -1,24 +1,34 @@
 package grid;
 
-import java.util.Map;
 
-import javafx.geometry.Point2D;
-
+/**
+ * Interface for a Source in this Project. 
+ * This should be the necessary classes to add and Update a source
+ * 
+ * @author Joel Zimmerli, Kevin Streiter
+ *
+ * @param <T>
+ */
 public interface GridWorldSources<T> extends GridWorld<T> {
 	
 	/**
 	 * Sets a source at the given coordinates, which can probably float around
-	 * @param koordiates
+	 * @param koordinates
 	 */
-	void addSource(int[] koordiates, Integer value);
+	void addSource(int[] koordinates);
+	
 	/**
-	 * Return the coordinate of the source with it's Value
-	 * @return Map<Point2D, Double>
+	 * Updates the source, if the layer just has one.
+	 * @param koordinates
 	 */
-	Map<Point2D,Integer> getSources();
+	void updateSource(int[] koordinates);
+	
+
 	
 	T getMinValue();
 	T getMaxValue();
-
+	/**
+	 * Deletes all Sources in the list
+	 */
 	void deleteSources();
 }

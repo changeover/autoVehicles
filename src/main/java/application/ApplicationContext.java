@@ -2,7 +2,7 @@ package application;
 
 
 
-import grid.impl.LightDataLayer;
+import grid.impl.LightLayer;
 import grid.impl.VehicleDataLayer;
 import javafx.scene.image.Image;
 import logic.SettingsController;
@@ -15,12 +15,12 @@ public class ApplicationContext {
     private int WINDOWWIDTH = 1000;
     private int WINDOWHEIGHT = 800;
     private SettingsController settingsController;
-    private LightDataLayer lightGrid;
+    private LightLayer lightGrid;
     private VehicleDataLayer<Creature> vehicleGrid;
     private Image image;
     public ApplicationContext(){
         settingsController = new SettingsControllerImpl();
-        lightGrid = new LightDataLayer();
+        lightGrid = new LightLayer();
         vehicleGrid = new VehicleDataLayer<>();
         image = new Image("VehicleImage.jpg");
     }
@@ -41,7 +41,7 @@ public class ApplicationContext {
         deleteVehicles();
     }
 
-    public LightDataLayer getLightGrid() {
+    public LightLayer getLightGrid() {
 		return lightGrid;
 	}
 

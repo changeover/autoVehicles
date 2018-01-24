@@ -7,7 +7,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import grid.impl.LightDataLayer;
+import grid.impl.LightLayer;
 
 
 public class Eye implements Sensor {
@@ -18,16 +18,16 @@ public class Eye implements Sensor {
 
     private sensorPosition position;
 
-    private LightDataLayer lightmap;
+    private LightLayer lightmap;
     double intensity;
 
-    private LightDataLayer.reachedBorder border;
+    private LightLayer.reachedBorder border;
 
-    public LightDataLayer.reachedBorder getBorder() {
+    public LightLayer.reachedBorder getBorder() {
         return border;
     }
 
-    public Eye(sensorPosition pos, LightDataLayer lightMap) {
+    public Eye(sensorPosition pos, LightLayer lightMap) {
         this.position = pos;
         this.lightmap = lightMap;
     }
@@ -37,7 +37,7 @@ public class Eye implements Sensor {
     public double measureLight(double currentPosX, double currentPosY) {
         border = lightmap.checkForCollision((int)currentPosX,(int)currentPosY);
         emitPropertyChange("border", null, border);
-        if(border == LightDataLayer.reachedBorder.NONE){
+        if(border == LightLayer.reachedBorder.NONE){
             switch (position) {
                 case LEFTBACK:
                     intensity = lightmap.getValue((int) currentPosX - 1, (int) currentPosY + 1);

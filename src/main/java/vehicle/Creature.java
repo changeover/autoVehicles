@@ -1,7 +1,7 @@
 package vehicle;
 
 import application.ApplicationContext;
-import grid.impl.LightDataLayer;
+import grid.impl.LightLayer;
 import javafx.geometry.Point2D;
 
 import java.beans.PropertyChangeEvent;
@@ -32,9 +32,9 @@ public class Creature implements Runnable{
     private Eye leftBackEye;
     private Eye rightFrontEye;
     private Eye rightBackEye;
-    private LightDataLayer.reachedBorder border = LightDataLayer.reachedBorder.NONE;
+    private LightLayer.reachedBorder border = LightLayer.reachedBorder.NONE;
     private Brain brain;
-    private LightDataLayer lightMap;
+    private LightLayer lightMap;
     private int speedAmplification;
 
     public Creature(ApplicationContext applicationContext, int x, int y) {
@@ -54,24 +54,24 @@ public class Creature implements Runnable{
         this.brain.linkComponents(rightFrontEye, rightBackEye, rightWheel);
         applicationContext.getVehicleGrid().addVehicle(this, position);
         leftFrontEye.addPropertyChangeListener(evt -> {
-            if(leftFrontEye.getBorder() == LightDataLayer.reachedBorder.TOP ||
-                    leftFrontEye.getBorder() == LightDataLayer.reachedBorder.LEFT){
+            if(leftFrontEye.getBorder() == LightLayer.reachedBorder.TOP ||
+                    leftFrontEye.getBorder() == LightLayer.reachedBorder.LEFT){
                 border = leftFrontEye.getBorder();
             }
         });
         leftBackEye.addPropertyChangeListener(evt -> {
-            if(leftBackEye.getBorder() == LightDataLayer.reachedBorder.BOTTOM){
+            if(leftBackEye.getBorder() == LightLayer.reachedBorder.BOTTOM){
                 border = leftBackEye.getBorder();
             }
         });
         rightFrontEye.addPropertyChangeListener(evt -> {
-            if(rightFrontEye.getBorder() == LightDataLayer.reachedBorder.TOP ||
-                    rightFrontEye.getBorder() == LightDataLayer.reachedBorder.RIGHT){
+            if(rightFrontEye.getBorder() == LightLayer.reachedBorder.TOP ||
+                    rightFrontEye.getBorder() == LightLayer.reachedBorder.RIGHT){
                 border = rightFrontEye.getBorder();
             }
         } );
         rightBackEye.addPropertyChangeListener(evt -> {
-            if(rightBackEye.getBorder() == LightDataLayer.reachedBorder.BOTTOM){
+            if(rightBackEye.getBorder() == LightLayer.reachedBorder.BOTTOM){
                 border = rightBackEye.getBorder();
             }
         });
@@ -82,7 +82,7 @@ public class Creature implements Runnable{
         emitPropertyChange("currentPosition", position.getX(), position.getY());
 
 
-        if(border == LightDataLayer.reachedBorder.NONE){
+        if(border == LightLayer.reachedBorder.NONE){
 
             Point2D leftVelocity = leftWheel.getVelocity();
             Point2D rightVelocity = rightWheel.getVelocity();
@@ -136,15 +136,15 @@ public class Creature implements Runnable{
             currentVelocity = result.add(currentVelocity);
         }
         else {
-            if(border == LightDataLayer.reachedBorder.TOP || border == LightDataLayer.reachedBorder.BOTTOM){
+            if(border == LightLayer.reachedBorder.TOP || border == LightLayer.reachedBorder.BOTTOM){
                 currentVelocity = new Point2D((currentVelocity.getX() * Math.cos(3.1) - currentVelocity.getY() * Math.sin(3.1)), (currentVelocity.getX() * Math.sin(3.1) + currentVelocity.getY() * Math.cos(3.1)));
                 position = position.add(currentVelocity);
-                border = LightDataLayer.reachedBorder.NONE;
+                border = LightLayer.reachedBorder.NONE;
             }
-            else if(border == LightDataLayer.reachedBorder.LEFT || border == LightDataLayer.reachedBorder.RIGHT){
+            else if(border == LightLayer.reachedBorder.LEFT || border == LightLayer.reachedBorder.RIGHT){
                 currentVelocity = new Point2D((currentVelocity.getX() * Math.cos(3.1) - currentVelocity.getY() * Math.sin(3.1)), (currentVelocity.getX() * Math.sin(3.1) + currentVelocity.getY() * Math.cos(3.1)));
                 position = position.add(currentVelocity);
-                border = LightDataLayer.reachedBorder.NONE;
+                border = LightLayer.reachedBorder.NONE;
             }
         }
     }
