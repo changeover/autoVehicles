@@ -84,7 +84,7 @@ public class Creature implements Runnable{
     	//System.out.println("Creature.update()");
         emitPropertyChange("currentPosition", position.getX(), position.getY());
 
-        System.out.println(border);
+
         if(border == LightDataLayer.reachedBorder.NONE){
 
             Point2D leftVelocity = leftWheel.getVelocity();
@@ -141,13 +141,16 @@ public class Creature implements Runnable{
             currentVelocity = result.add(currentVelocity);
         }
         else {
+            System.out.println(border);
             if(border == LightDataLayer.reachedBorder.TOP || border == LightDataLayer.reachedBorder.BOTTOM){
-                position = position.add(new Point2D((currentVelocity.getX() * Math.cos(3.1) - currentVelocity.getY() * Math.sin(3.1))/10,( currentVelocity.getX() * Math.sin(3.1) + currentVelocity.getY() * Math.cos(3.1))/10));
-                //border = LightDataLayer.reachedBorder.NONE;
+                currentVelocity = new Point2D((currentVelocity.getX() * Math.cos(3.1) - currentVelocity.getY() * Math.sin(3.1))/8,( currentVelocity.getX() * Math.sin(3.1) + currentVelocity.getY() * Math.cos(3.1))/8);
+                position = position.add(currentVelocity);
+                border = LightDataLayer.reachedBorder.NONE;
             }
             else if(border == LightDataLayer.reachedBorder.LEFT || border == LightDataLayer.reachedBorder.RIGHT){
-                position = position.add(new Point2D((currentVelocity.getX() * Math.cos(3.1) - currentVelocity.getY() * Math.sin(3.1))/10,( currentVelocity.getX() * Math.sin(3.1) + currentVelocity.getY() * Math.cos(3.1))/10));
-                //border = LightDataLayer.reachedBorder.NONE;
+                currentVelocity = new Point2D((currentVelocity.getX() * Math.cos(3.1) - currentVelocity.getY() * Math.sin(3.1))/8,( currentVelocity.getX() * Math.sin(3.1) + currentVelocity.getY() * Math.cos(3.1))/8);
+                position = position.add(currentVelocity);
+                border = LightDataLayer.reachedBorder.NONE;
             }
         }
     }
