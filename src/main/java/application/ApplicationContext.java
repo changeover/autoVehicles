@@ -63,6 +63,7 @@ public class ApplicationContext {
     }
 
     private void deleteVehicles(){
+
         vehicleGrid.clearData();
        }
 

@@ -1,13 +1,13 @@
 package grid.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import grid.GridWorldSources;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Inside this class will be the logic of the light source
@@ -22,9 +22,6 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
 	private Double max;
 	private Image backGround;
 
-	public enum reachedBorder {TOP,BOTTOM,RIGHT,LEFT,NONE};
-
-	
 	public LightDataLayer() {
 		super();
 		sources= new HashMap<>();
@@ -52,12 +49,11 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
 	public Map<Point2D, Integer> getSources() {
 		return sources;
 	}
+
 	@Override
 	public String toString() {
 		return super.toString();
 	}
-	
-	
 
 	@Override
 	public Double getMinValue() {
@@ -68,6 +64,7 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
 	public Double getMaxValue() {
 		return max;
 	}
+
 	private void findMinMax(){
 		min = super.values[0][0];
         max = super.values[0][0];
@@ -88,7 +85,7 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
 			//System.out.println("lightDataLayer.setData()");
 			super.fireDataChanged();
 		}
-		
+
 	}
 
 	private void makePictures() {
@@ -96,39 +93,34 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
 	    if ((getWidth() > 0) && (getHeight() > 0)) {
 	    	//System.out.println("make Pic");
 	    	WritableImage writableImage = new WritableImage(getWidth(), getHeight());
-	        int[] windowedValue = new int[1];
-            double p = 0.7;
+			int windowedValue;
+			double p = 0.7;
             for (int row = 0; row < getWidth(); row++) {
                 for (int column = 0; column < getHeight(); column++) {
-                    
+
                     Double value = (values[row][column] * 255);
-                    windowedValue[0] = (int) (value/max);
-                    //int value = lightData.getValue(new int[] {column, row});
-                    //windowedValue[0] = (int) ((double)(value - lightData.getMinValue() /
-                    //		(double)(lightData.getMaxValue() - lightData.getMinValue()) * 255));
-                    //windowedValue[0] = Math.min(windowedValue[0], 255);
-                    //windowedValue[0] = Math.max(windowedValue[0], 0);
-                    writableImage.getPixelWriter().setColor(row, column, Color.rgb(windowedValue[0], windowedValue[0], 100));
-                }
+					windowedValue = 255 - (int) (value / max);
+
+					writableImage.getPixelWriter().setColor(row, column, Color.rgb(windowedValue, windowedValue, 100));
+				}
             }
             backGround = writableImage;
         }
 	}
 
-	
 	public Image getBackground() {
 		//System.out.println("lightDataLayer.getBackground()");
 		return backGround;
 	}
-	
+
 	public void calculateLight(Point2D position){
 	    int lightValue = 1;
 	    int scatterMultiplier =5;
 	    int difX;
 	    int difY;
 	    double difTotal;
-	   /* 
-	    for (int j = 0; j < values.length; j++) {
+	   /*
+		for (int j = 0; j < values.length; j++) {
 	        for (int i = 0; i < values[j].length; i++) {
 	            difX = (int) (position.getX()- i);
 	            difY = (int) (position.getY() - j);
@@ -166,4 +158,6 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
 			return reachedBorder.NONE;
 		}
 	}
+
+	public enum reachedBorder {TOP, BOTTOM, RIGHT, LEFT, NONE}
 }
