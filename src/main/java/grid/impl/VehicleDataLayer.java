@@ -1,12 +1,14 @@
 package grid.impl;
 
+import grid.GridWorldVehicle;
+import javafx.geometry.Point2D;
+import vehicle.Creature;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
-import grid.GridWorldVehicle;
-import javafx.geometry.Point2D;
 /**
  * This class is for saving all produced vehicles and to handle them 
  * with the calculation timing. 
@@ -15,7 +17,7 @@ import javafx.geometry.Point2D;
  * @author Joel Zimmerli
  *
  */
-public class VehicleDataLayer<Vehicle> extends GridWorldFather<Vehicle> implements GridWorldVehicle<Vehicle, Vehicle>{
+public class VehicleDataLayer<Vehicle extends Creature> extends GridWorldFather<Vehicle> implements GridWorldVehicle<Vehicle, Vehicle> {
 	List<Vehicle> vehicels;
 	private ReentrantLock reentLock;
 	private Condition waitForView, waitForBot;
@@ -95,6 +97,8 @@ public class VehicleDataLayer<Vehicle> extends GridWorldFather<Vehicle> implemen
 	}
 
 	public void clearData(){
+		vehicels.forEach(Creature::kill);
+
 		vehicels.clear();
 	}
 

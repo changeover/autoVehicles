@@ -1,13 +1,13 @@
 package grid.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import grid.GridWorldSources;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Inside this class will be the logic of the light source
@@ -23,9 +23,6 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
 	private Image backGround;
 	private Double[][] lightLayer;
 
-	public enum reachedBorder {TOP,BOTTOM,RIGHT,LEFT,NONE};
-
-	
 	public LightDataLayer() {
 		super();
 		
@@ -64,13 +61,12 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
 	public Map<Point2D, Integer> getSources() {
 		return sources;
 	}
+
 	@Override
 	public String toString() {
 		return super.toString();
 	}
 	
-	
-
 	@Override
 	public Double getMinValue() {
 		return min;
@@ -80,6 +76,7 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
 	public Double getMaxValue() {
 		return max;
 	}
+
 	private void findMinMax(){
 		min = lightLayer[0][0];
         max = lightLayer[0][0];
@@ -106,20 +103,19 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
 	private void makePictures() {
 		
 	    	WritableImage writableImage = new WritableImage(getWidth(), getHeight());
-	        int[] windowedValue = new int[1];
+			int windowedValue;
             for (int row = 0; row < getWidth(); row++) {
                 for (int column = 0; column < getHeight(); column++) {
                     Double value = (values[row][column] * 255);
-                    windowedValue[0] = (int) (value/max);
-                    
-                    writableImage.getPixelWriter().setColor(row, column, Color.rgb(windowedValue[0], windowedValue[0], 100));
+					windowedValue = 255 - (int) (value / max);
+
+					writableImage.getPixelWriter().setColor(row, column, Color.rgb(windowedValue, windowedValue, 100));
                 }
             }
             backGround = writableImage;
         
 	}
 
-	
 	public Image getBackground() {
 		return backGround;
 	}
@@ -156,4 +152,6 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
 			return reachedBorder.NONE;
 		}
 	}
+
+	public enum reachedBorder {TOP, BOTTOM, RIGHT, LEFT, NONE}
 }

@@ -12,16 +12,11 @@ import java.util.List;
  */
 public class Wheel implements Actor {
 
-    public enum WheelPosition {LEFT, RIGHT}
-
-    private WheelPosition position;
-
     private final List<PropertyChangeListener> listeners = new ArrayList<>();
-
+    private WheelPosition position;
     private double magnitude;
     private double angle = 0;
     private Point2D velocity;
-
     public Wheel(WheelPosition position) {
         this.position = position;
     }
@@ -47,13 +42,15 @@ public class Wheel implements Actor {
             angle = 45 * Math.PI / 180;
             magnitude = backIntensity;
         }
-        double x = Math.cos(angle) * (magnitude);
-        double y = Math.sin(angle) * (magnitude);
+        double x = Math.cos(angle) * (magnitude) * 1.5;
+        double y = Math.sin(angle) * (magnitude) * 1.5;
         velocity = new Point2D(x, y);
     }
 
     public Point2D getVelocity() {
         return velocity;
     }
+
+    public enum WheelPosition {LEFT, RIGHT}
 }
 
