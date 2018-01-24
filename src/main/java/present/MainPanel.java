@@ -8,7 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 public class MainPanel extends BorderPane{
-	private FrontPage front;
+	private WorldPage front;
     public MainPanel(final ApplicationContext applicationContext){
         final int SETTINGHEIGHT = 100;
         StackPane visualPane = new StackPane();
@@ -24,7 +24,7 @@ public class MainPanel extends BorderPane{
         Button stopButton = new Button("Stop");
         Button exitButton = new Button("Exit");
 
-        front = new FrontPage(applicationContext);
+        front = new WorldPage(applicationContext);
 
         buttonPane.setMaxHeight(30);
         settingPane.setMaxHeight(30);
@@ -34,8 +34,22 @@ public class MainPanel extends BorderPane{
 
 
         buttonPane.getChildren().addAll(startButton,stopButton,exitButton);
-        startButton.setOnAction(event -> applicationContext.run());
-        stopButton.setOnAction(event -> applicationContext.stop());
+        startButton.setOnAction(event -> {
+        	 applicationContext.getVehicleGrid().deleteVehicles();
+             applicationContext.getSettingsController().deactivateSlider();
+             int vehiclesAmount = applicationContext.getSettingsController().getVehicleCount();
+             for(int i = 0; i < vehiclesAmount; i++ ){
+                 double randomX = Math.random();
+                 double randomY = Math.random();
+                 applicationContext.getVehicleGrid().createVehicle((int)(
+                		 (randomX*applicationContext.getWindowWidth())-(randomX*20)),
+                		 (int)((randomY*applicationContext.getWindowHeight())-(randomY*20)));
+             }
+        });
+        stopButton.setOnAction(event -> {
+        	applicationContext.getSettingsController().activateSlider();
+            applicationContext.getVehicleGrid().deleteVehicles();
+        });
         exitButton.setOnAction(event -> System.exit(0));
 
         visualPane.getChildren().add(front);

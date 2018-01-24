@@ -6,12 +6,20 @@ import javafx.geometry.Point2D;
 import javafx.scene.paint.ImagePattern;
 import vehicle.Creature;
 
-public class FrontPage extends DrawingPane{
+/**
+ * This class extends an Canvas.
+ * It's repaint this canvas with all Vehicles position 
+ * and the Background from LightSources.
+ * 
+ * @author Joel Zimmerli, Kevin Streiter
+ *
+ */
+public class WorldPage extends DrawingPane{
 	private ApplicationContext applicationContext;
-	public FrontPage(ApplicationContext appli) {
+	public WorldPage(ApplicationContext appli) {
 		applicationContext=appli;
 		new AnimationTimer() {
-			//siehe: https://gamedevelopment.tutsplus.com/tutorials/introduction-to-javafx-for-game-development--cms-23835
+			
 			@Override
 			public void handle(long currentNanoTime) {
                 repaint();
@@ -19,17 +27,14 @@ public class FrontPage extends DrawingPane{
 		}.start();
 
 		this.setOnMouseMoved(event -> {
-
-			applicationContext.getLightGrid().deleteSources();
-			int[] coord = new int[]{(int)event.getX(),(int)event.getY()};
-			applicationContext.getLightGrid().addSource(coord, 100);
+			int[] coordinates = new int[]{(int)event.getX(),(int)event.getY()};
+			applicationContext.getLightGrid().updateSource(coordinates);
 
 		});
 	}
 
 	@Override
-	protected void paint() {
-		//System.out.println("frontPage.paint()");
+	protected void paitWorld() {
 		g.drawImage(applicationContext.getLightGrid().getBackground(), 0, 0);
 		for (Creature vehicle :applicationContext.getVehicleGrid().getVehicles()){
 			Point2D point = vehicle.getPosition();

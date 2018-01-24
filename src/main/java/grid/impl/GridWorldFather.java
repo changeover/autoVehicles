@@ -6,6 +6,13 @@ import javafx.geometry.Point2D;
 
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * This class should be the Father of all Grids which are generated.
+ * Therefore should have basic methods and attributes
+ * @author Joel Zimmerli, Andreas Ott, Kevin Streiter
+ *
+ * @param <T>
+ */
 
 abstract class GridWorldFather<T> implements GridWorld<T> {
 	protected T[][] values;
@@ -21,7 +28,6 @@ abstract class GridWorldFather<T> implements GridWorld<T> {
 	abstract public void setData(T[][] values, String name);
 	@Override
 	public void setValue(Point2D coordinates, T value) {
-
 		try{
 			values[(int) coordinates.getX()][(int) coordinates.getY()]=value;
 			fireDataChanged();
@@ -34,7 +40,7 @@ abstract class GridWorldFather<T> implements GridWorld<T> {
 		for (int i = 0 ; i<values.length; i++){
 			for (int y =0; y<values[i].length; y++){
 				if(getValue(i,y) instanceof Double) {
-					values[i][y] = (T)(Object)(0.0);
+					values[i][y] = (T)(Double)(0.0);
 				}
 			}
 		}
@@ -54,9 +60,7 @@ abstract class GridWorldFather<T> implements GridWorld<T> {
 	
 	@Override
 	public T getValue(int x, int y) {
-
 		return values[x][y];
-
 	}
 
 	@Override
@@ -87,7 +91,4 @@ abstract class GridWorldFather<T> implements GridWorld<T> {
 		}
 		return out;
 	}
-
-	
-	
 }

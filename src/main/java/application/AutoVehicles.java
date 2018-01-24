@@ -6,7 +6,12 @@ import javafx.stage.Stage;
 import present.MainPanel;
 import vehicle.Creature;
 
-
+/**
+ * This is the Start of our little Prohramm, so it's deals
+ * with the population of all models in the ApplicationContext
+ * @author Andreas Ott, Sahin Bayram, Cesar de Carmo, Joel Zimmerli, Matthias Meichtry, Gregor von Gunten, Streiter Kevin
+ *
+ */
 public class AutoVehicles extends Application {
 
     int WINDOWWIDTH;
@@ -30,11 +35,7 @@ public class AutoVehicles extends Application {
             primaryStage.setScene(scene);
             createLayers(applicationContext);
             int[] coord = new int[]{WINDOWWIDTH/2,WINDOWHEIGHT/2};
-            applicationContext.getLightGrid().addSource( coord, 100);
-            //coord = new int[]{WINDOWWIDTH/2+100,WINDOWHEIGHT/2+100};
-            //applicationContext.getLightGrid().addSource( coord, 100);
-            System.out.println(mainPane.getHeight());
-
+            applicationContext.getLightGrid().addSource( coord);
             primaryStage.show();
             
 			
@@ -44,21 +45,21 @@ public class AutoVehicles extends Application {
         
     }
     private void createLayers(ApplicationContext applicationContext){
-    	Creature[][] dataLayer =new Creature[WINDOWWIDTH][WINDOWHEIGHT];
-    	for (int i = 0 ; i<dataLayer.length; i++){
-    		for (int y =0; y<dataLayer[i].length; y++){
-    			dataLayer[i][y]=null;
+    	Creature[][] creatureLayer =new Creature[WINDOWWIDTH][WINDOWHEIGHT];
+    	for (int i = 0 ; i<creatureLayer.length; i++){
+    		for (int y =0; y<creatureLayer[i].length; y++){
+    			creatureLayer[i][y]=null;
     		}
     	}
-    	applicationContext.getVehicleGrid().setData(dataLayer, "Vehicles");
+    	applicationContext.getVehicleGrid().setData(creatureLayer, "Vehicles");
     	
-    	Double[][] valueLayer = new Double[WINDOWWIDTH][WINDOWHEIGHT];
-    	for (int i = 0 ; i<valueLayer.length; i++){
-    		for (int y =0; y<valueLayer[i].length; y++){
-    			valueLayer[i][y]=(double) 0;
+    	Double[][] lightLayer = new Double[WINDOWWIDTH][WINDOWHEIGHT];
+    	for (int i = 0 ; i<lightLayer.length; i++){
+    		for (int y =0; y<lightLayer[i].length; y++){
+    			lightLayer[i][y]=(double) 0;
     		}
     	}
-    	applicationContext.getLightGrid().setData(valueLayer, "Light Grid");
+    	applicationContext.getLightGrid().setData(lightLayer, "Light Grid");
     	
     }
 }

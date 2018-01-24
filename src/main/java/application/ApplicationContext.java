@@ -2,51 +2,40 @@ package application;
 
 
 
+import grid.GridWorldVehicle;
 import grid.impl.LightLayer;
-import grid.impl.VehicleDataLayer;
+import grid.impl.VehicleLayer;
 import javafx.scene.image.Image;
 import logic.SettingsController;
 import logic.impl.SettingsControllerImpl;
 import vehicle.Creature;
-
+/**
+ * This class holds all the important information for the whole Application
+ * @author Kevin Streiter, Andreas Ott, Joël Zimmerli, Matthias Meichtry
+ *
+ */
 
 public class ApplicationContext {
 
     private int WINDOWWIDTH = 1000;
     private int WINDOWHEIGHT = 800;
     private SettingsController settingsController;
-    private LightLayer lightGrid;
-    private VehicleDataLayer<Creature> vehicleGrid;
+    private LightLayer lightLayer;
+    private GridWorldVehicle<Creature,Creature>vehicleLayer;
     private Image image;
     public ApplicationContext(){
         settingsController = new SettingsControllerImpl();
-        lightGrid = new LightLayer();
-        vehicleGrid = new VehicleDataLayer<>();
+        lightLayer = new LightLayer();
+        vehicleLayer = new VehicleLayer<>(this);
         image = new Image("VehicleImage.jpg");
     }
 
-    public void run(){
-        deleteVehicles();
-        settingsController.deactivateSlider();
-        int vehiclesAmount = settingsController.getVehicleCount();
-        for(int i = 0; i < vehiclesAmount; i++ ){
-            double randomX = Math.random();
-            double randomY = Math.random();
-            createVehicle((int)((randomX*WINDOWWIDTH)-(randomX*20)), (int)((randomY*WINDOWHEIGHT)-(randomY*20)));
-        }
-
-    }
-    public void stop(){
-        settingsController.activateSlider();
-        deleteVehicles();
-    }
-
     public LightLayer getLightGrid() {
-		return lightGrid;
+		return lightLayer;
 	}
 
-	public VehicleDataLayer<Creature> getVehicleGrid() {
-		return vehicleGrid;
+	public GridWorldVehicle<Creature,Creature> getVehicleGrid() {
+		return vehicleLayer;
 	}
     public SettingsController getSettingsController(){
         return this.settingsController;
@@ -55,17 +44,6 @@ public class ApplicationContext {
     public Image getImage(){
         return image;
     }
-
-    private void createVehicle(int x, int y){
-        Thread creatureThread = new Thread(new vehicle.Creature( this,x,y));
-        creatureThread.setDaemon(true);
-        creatureThread.start();
-    }
-
-    private void deleteVehicles(){
-
-        vehicleGrid.clearData();
-       }
 
     public int getWindowWidth() {
         return WINDOWWIDTH;

@@ -46,12 +46,12 @@ public abstract class DrawingPane extends Pane {
      */
     public void repaint() {
         g.clearRect(0, 0, getWidth(), getHeight());
-        paint();
+        paitWorld();
     }
 
     /**
      * This method must be overridden with the actual drawing code.
      */
-    protected abstract void paint();
+    protected abstract void paitWorld();
 
 }

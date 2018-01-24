@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
+import application.ApplicationContext;
+
 /**
  * This class is for saving all produced vehicles and to handle them 
  * with the calculation timing. 
@@ -17,13 +19,15 @@ import java.util.concurrent.locks.ReentrantLock;
  * @author Joel Zimmerli
  *
  */
-public class VehicleDataLayer<Vehicle extends Creature> extends GridWorldFather<Vehicle> implements GridWorldVehicle<Vehicle, Vehicle> {
+public class VehicleLayer<Vehicle extends Creature> extends GridWorldFather<Vehicle> implements GridWorldVehicle<Vehicle, Vehicle> {
 	List<Vehicle> vehicels;
 	private ReentrantLock reentLock;
 	private Condition waitForView, waitForBot;
+	private ApplicationContext applicationContext;
 	
 	
-	public VehicleDataLayer() {
+	public VehicleLayer(ApplicationContext applicationContext) {
+		this.applicationContext=applicationContext;
 		reentLock= new ReentrantLock();
 		waitForView= reentLock.newCondition();
 		waitForBot= reentLock.newCondition();
@@ -48,6 +52,17 @@ public class VehicleDataLayer<Vehicle extends Creature> extends GridWorldFather<
 		} finally {
 			reentLock.unlock();
 		}	
+	}
+	@Override
+	public void createVehicle(int x, int y){
+        Thread creatureThread = new Thread(new Creature( applicationContext,x,y));
+        creatureThread.setDaemon(true);
+        creatureThread.start();
+    }
+	
+	@Override
+	public void deleteVehicles(){
+		 clearData();
 	}
 	
 	@Override
@@ -97,7 +112,7 @@ public class VehicleDataLayer<Vehicle extends Creature> extends GridWorldFather<
 	}
 
 	public void clearData(){
-		vehicels.forEach(Creature::kill);
+		vehicels.forEach(Vehicle::kill);
 
 		vehicels.clear();
 	}
