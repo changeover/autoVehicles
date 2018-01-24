@@ -21,12 +21,14 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
 	private Double min;
 	private Double max;
 	private Image backGround;
+	private Double[][] lightLayer;
 
 	public enum reachedBorder {TOP,BOTTOM,RIGHT,LEFT,NONE};
 
 	
 	public LightDataLayer() {
 		super();
+		
 		sources= new HashMap<>();
 	}
 
@@ -34,10 +36,20 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
 	public void addSource(int[] coordinates, Integer value) {
 		Point2D point= new Point2D(coordinates[0], coordinates[1]);
 		sources.put(point, value);
-		calculateLight(point);
-		findMinMax();
+		changeWindow(point);
 		makePictures();
-		fireDataChanged();
+	}
+	private void changeWindow(Point2D position){
+		//Calculate difference of Source to center
+		int xDiffCenter=(int) (-position.getX()+values.length/2);
+		int yDiffCenter=(int) (-position.getY()+values[0].length/2);
+		int xValuesStart=(int) lightLayer.length/2-values.length/2;
+		int yValuesStart=(int) lightLayer[0].length/2-values[0].length/2;
+		for (int i = 0; i<values.length;i++){
+			for (int j = 0; j<values[0].length;j++){
+				values[i][j]=lightLayer[i+xValuesStart+xDiffCenter][j+yValuesStart+yDiffCenter];
+			}
+		}
 	}
 
 	@Override
@@ -69,81 +81,59 @@ public class LightDataLayer  extends GridWorldFather<Double> implements GridWorl
 		return max;
 	}
 	private void findMinMax(){
-		min = super.values[0][0];
-        max = super.values[0][0];
-        for (Double[] row : super.values) {
+		min = lightLayer[0][0];
+        max = lightLayer[0][0];
+        for (Double[] row : lightLayer) {
             for (Double value : row) {
                 if (value > max) max = value;
                 if (value < min) min = value;
             }
         }
-        //System.out.println("lightDataLayer.findMinMax()"+min+" : "+max);
 	}
 
 	@Override
 	public void setData(Double[][] values, String name) {{
 			super.values=values;
 			super.name = name;
+			lightLayer= new Double[values.length*4][values[0].length*4];
+			calculateLightLayer();
 			findMinMax();
-			//System.out.println("lightDataLayer.setData()");
 			super.fireDataChanged();
 		}
 		
 	}
 
 	private void makePictures() {
-		//System.out.println("BackgroundPic.makePictures()");
-	    if ((getWidth() > 0) && (getHeight() > 0)) {
-	    	//System.out.println("make Pic");
+		
 	    	WritableImage writableImage = new WritableImage(getWidth(), getHeight());
 	        int[] windowedValue = new int[1];
-            double p = 0.7;
             for (int row = 0; row < getWidth(); row++) {
                 for (int column = 0; column < getHeight(); column++) {
-                    
                     Double value = (values[row][column] * 255);
                     windowedValue[0] = (int) (value/max);
-                    //int value = lightData.getValue(new int[] {column, row});
-                    //windowedValue[0] = (int) ((double)(value - lightData.getMinValue() /
-                    //		(double)(lightData.getMaxValue() - lightData.getMinValue()) * 255));
-                    //windowedValue[0] = Math.min(windowedValue[0], 255);
-                    //windowedValue[0] = Math.max(windowedValue[0], 0);
+                    
                     writableImage.getPixelWriter().setColor(row, column, Color.rgb(windowedValue[0], windowedValue[0], 100));
                 }
             }
             backGround = writableImage;
-        }
+        
 	}
 
 	
 	public Image getBackground() {
-		//System.out.println("lightDataLayer.getBackground()");
 		return backGround;
 	}
 	
-	public void calculateLight(Point2D position){
-	    int lightValue = 1;
-	    int scatterMultiplier =5;
-	    int difX;
-	    int difY;
-	    double difTotal;
-	   /* 
-	    for (int j = 0; j < values.length; j++) {
-	        for (int i = 0; i < values[j].length; i++) {
-	            difX = (int) (position.getX()- i);
-	            difY = (int) (position.getY() - j);
-	            difTotal = Math.sqrt(difX*difX + difY*difY);
-	            values[j][i] += (lightValue * Math.exp(-difTotal/scatterMultiplier));
-	        }
-	    }*/
+	public void calculateLightLayer(){
+		Point2D position= new Point2D(lightLayer.length/2, lightLayer[0].length/2);
 	    double p = 0.1;
-        for (int x = 0; x < values.length; x++) {
-            for (int y = 0; y < values[x].length; y++) {
-                int xPos =x-(int) position.getX(); //x - values[x].length / 2 + 1;
-                int yPos =y-(int) position.getY(); //y - values.length / 2 + 1;
-                values[x][y] += 1 / (2 * 6.1 * Math.sqrt(1 - p)) *
+        for (int x = 0; x < lightLayer.length; x++) {
+            for (int y = 0; y < lightLayer[x].length; y++) {
+                int xDiff =x-(int) position.getX(); 
+                int yDiff =y-(int) position.getY(); 
+                lightLayer[x][y] = 1 / (2 * 6.1 * Math.sqrt(1 - p)) *
                         Math.exp(-1 / (2 * (1 - Math.sqrt(1 - Math.pow(p, 2))) *
-                                (xPos * xPos + 2 * p * xPos * yPos + yPos * yPos)));
+                                (xDiff * xDiff + 2 * p * xDiff * yDiff + yDiff * yDiff)));
 
             }
         }
