@@ -1,11 +1,11 @@
 package grid.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import grid.GridWorld;
 import grid.GridWorldListener;
 import javafx.geometry.Point2D;
+
+import java.util.ArrayList;
+import java.util.List;
 
 abstract class GridWorldFather<T> implements GridWorld<T> {
 	protected T[][] values;
@@ -26,7 +26,7 @@ abstract class GridWorldFather<T> implements GridWorld<T> {
 			values[(int) coordinates.getX()][(int) coordinates.getY()]=value;
 			fireDataChanged();
 		}catch (ArrayIndexOutOfBoundsException e){
-			System.out.println("bam");
+
 		}
 	}
 
@@ -54,12 +54,9 @@ abstract class GridWorldFather<T> implements GridWorld<T> {
 	
 	@Override
 	public T getValue(int x, int y) {
-		try {
-			return values[x][y];
-		}catch (ArrayIndexOutOfBoundsException e){
-			System.out.println("bäm");
-			return (T)(Object)(0.0);
-		}
+
+		return values[x][y];
+
 	}
 
 	@Override

@@ -136,7 +136,6 @@ public class Creature implements Runnable{
             currentVelocity = result.add(currentVelocity);
         }
         else {
-            System.out.println(border);
             if(border == LightDataLayer.reachedBorder.TOP || border == LightDataLayer.reachedBorder.BOTTOM){
                 currentVelocity = new Point2D((currentVelocity.getX() * Math.cos(3.1) - currentVelocity.getY() * Math.sin(3.1)), (currentVelocity.getX() * Math.sin(3.1) + currentVelocity.getY() * Math.cos(3.1)));
                 position = position.add(currentVelocity);

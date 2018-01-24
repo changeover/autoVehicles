@@ -12,8 +12,8 @@ import vehicle.Creature;
 
 public class ApplicationContext {
 
-    private int WINDOWWIDTH = 600;
-    private int WINDOWHEIGHT = 400;
+    private int WINDOWWIDTH = 1000;
+    private int WINDOWHEIGHT = 800;
     private SettingsController settingsController;
     private LightDataLayer lightGrid;
     private VehicleDataLayer<Creature> vehicleGrid;

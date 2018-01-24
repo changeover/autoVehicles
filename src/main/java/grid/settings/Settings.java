@@ -22,7 +22,6 @@ public class Settings extends StackPane {
         Slider vehicleCount = new Slider();
         Slider vehicleSpeed = new Slider();
         Label count = new Label();
-        Label speed = new Label();
         vehicleCount.setMin(1);
         vehicleCount.setMax(1000);
         vehicleCount.setValue(100);
@@ -36,17 +35,13 @@ public class Settings extends StackPane {
         vehicleCount.valueProperty().addListener((observable, oldValue, newValue) -> settingsController.setVehicleCount(newValue.intValue()));
         vehicleSpeed.valueProperty().addListener((observable, oldValue, newValue) -> settingsController.setVehicleSpeed(newValue.intValue()));
         count.setText(String.valueOf(settingsController.getVehicleCount()));
-        speed.setText(String.valueOf(settingsController.getVehicleSpeed()));
         settingsController.addListener(() -> {count.setText(String.valueOf(settingsController.getVehicleCount()));});
-        settingsController.addListener(() -> {
-            speed.setText(String.valueOf(settingsController.getVehicleSpeed()));
-        });
+
         controlPanel.getChildren().add(vehicleCountLabel);
         controlPanel.getChildren().add(vehicleCount);
         controlPanel.getChildren().add(count);
         controlPanel.getChildren().add(vehicleSpeedLabel);
         controlPanel.getChildren().add(vehicleSpeed);
-        controlPanel.getChildren().add(speed);
 
         VBox vBox = new VBox();
         vBox.getChildren().add(controlPanel);
