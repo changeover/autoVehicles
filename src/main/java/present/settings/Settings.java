@@ -11,7 +11,7 @@ import javafx.scene.layout.VBox;
 import logic.SettingsController;
 /**
  * This class provides the view of possible Settings in the Interface
- * @author Sahin Bayram, Andreas Ott, Gregor von Gunten
+ * @author Sahin Bayram, Andreas Ott, Gregor von Gunten, Mattias Meichtry
  *
  */
 

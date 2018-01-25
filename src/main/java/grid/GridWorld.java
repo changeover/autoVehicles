@@ -9,7 +9,7 @@ import javafx.geometry.Point2D;
  * if the data is changed over a setData method then a 
  * dataChanged event is sent to registered observers (listeners)
  * This Interface needs to be Modified to fit to different layers types
- * @author Joel Zimmerli
+ * @author Joel Zimmerli, Cesar De Carmo
  *
  */
 public interface GridWorld<GridValue> {

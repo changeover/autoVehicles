@@ -1,7 +1,7 @@
 package grid.impl;
 /**
  * Small class which defines a Source
- * @author Kevin Streiter
+ * @author Kevin Streiter, Cesar De Carmo
  *
  */
 

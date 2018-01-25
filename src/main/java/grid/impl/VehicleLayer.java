@@ -15,7 +15,7 @@ import logic.vehicle.Creature;
  * with the calculation timing. 
  * Vehicles should always be added to the list, so it is going to be 
  * painted.
- * @author Joel Zimmerli
+ * @author Joel Zimmerli, Cesar De Carmo
  *
  */
 public class VehicleLayer<Vehicle extends Creature> extends GridWorldFather<Vehicle> implements GridWorldVehicle<Vehicle, Vehicle> {

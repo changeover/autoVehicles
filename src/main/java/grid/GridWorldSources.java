@@ -5,7 +5,7 @@ package grid;
  * Interface for a Source in this Project. 
  * This should be the necessary classes to add and Update a source
  * 
- * @author Joel Zimmerli, Kevin Streiter
+ * @author Joel Zimmerli, Kevin Streiter, Cesar De Carmo
  *
  * @param <T>
  */
