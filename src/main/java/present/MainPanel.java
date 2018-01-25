@@ -11,7 +11,7 @@ import javafx.scene.layout.TilePane;
 import present.settings.Settings;
 /**
  * Main Panel with all components.
- * @author Andreas Ott
+ * @author Andreas Ott, Matthias Meichtry, Sahin Bayram
  *
  */
 

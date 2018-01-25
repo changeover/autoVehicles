@@ -2,7 +2,7 @@ package grid;
 /**
  * This Interface extends the GridWorld Interface and add
  * methods used from vehicles only
- * @author Joel Zimmerli, Gregor von Gunten
+ * @author Joel Zimmerli, Gregor von Gunten, Cesar De Carmo
  *
  * @param <Vehicle>  Vehicle what it contains
  */

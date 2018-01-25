@@ -11,7 +11,7 @@ import logic.vehicle.Creature;
  * It's repaint this canvas with all Vehicles position 
  * and the Background from LightSources.
  * 
- * @author Joel Zimmerli, Kevin Streiter
+ * @author Joel Zimmerli, Kevin Streiter, Matthias Meichtry
  *
  */
 public class WorldPage extends DrawingPane{
