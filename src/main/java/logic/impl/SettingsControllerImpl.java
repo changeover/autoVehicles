@@ -7,12 +7,17 @@ import logic.SettingsControllerListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller for the Settings on the GUI
+ * @author Andreas Ott, Gregor von Gunten
+ *
+ */
 public class SettingsControllerImpl implements SettingsController {
     private List<SettingsControllerListener> listeners;
     private int vehicleCount;
     private int vehicleSpeed;
-    private Slider countSlider;
-    private Slider speedSlider;
+    private Slider vehicleCountSlider;
+    private Slider vehicleSpeedSlider;
     public SettingsControllerImpl(){
         listeners = new ArrayList<>();
     }
@@ -38,18 +43,18 @@ public class SettingsControllerImpl implements SettingsController {
     }
 
     public void deactivateSlider(){
-        this.speedSlider.setDisable(true);
-        this.countSlider.setDisable(true);
+        this.vehicleSpeedSlider.setDisable(true);
+        this.vehicleCountSlider.setDisable(true);
     }
 
-    public void setSliders(Slider countSlider, Slider speedSlider) {
-        this.speedSlider = speedSlider;
-        this.countSlider = countSlider;
+    public void setSliders(Slider vehicleCountSlider, Slider vehicleSpeedSlider) {
+        this.vehicleSpeedSlider = vehicleSpeedSlider;
+        this.vehicleCountSlider = vehicleCountSlider;
     }
 
     public void activateSlider(){
-        this.speedSlider.setDisable(false);
-        this.countSlider.setDisable(false);
+        this.vehicleSpeedSlider.setDisable(false);
+        this.vehicleCountSlider.setDisable(false);
     }
 
     public void addListener(SettingsControllerListener settingsControllerListener){

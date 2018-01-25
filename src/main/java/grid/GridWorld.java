@@ -32,18 +32,18 @@ public interface GridWorld<GridValue> {
 	 * Returns the width of the grid
 	 * @return
 	 */
-	int getWidth();
+	int getWidthGrid();
 	/**
 	 * Return the height of the grid
 	 * @return
 	 */
-	int getHeight();
+	int getHeightGrid();
 	/**
 	 * Returns the data Value at the specific position.
 	 * @param x,y coordinates of the searched Value
 	 * @return data Value of the specific field
 	 */
-	GridValue getValue(int x, int y);
+	GridValue getCellValue(int x, int y);
 	/**
 	 * Returns the name of the layer
 	 * @return
@@ -55,7 +55,9 @@ public interface GridWorld<GridValue> {
 	 * @param listener
 	 */
 	void addListener(GridWorldListener listener);
-
+	/**
+	 * set All value back
+	 */
 	void resetValues();
 
 }

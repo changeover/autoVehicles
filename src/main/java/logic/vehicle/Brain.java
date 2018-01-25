@@ -1,4 +1,4 @@
-package vehicle;
+package logic.vehicle;
 
 
 import java.beans.PropertyChangeEvent;
@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Greg on 17.12.2017.
+ * This class links different thing together
+ * 
+ * @author Gregor von Gunten
  */
 public class Brain {
 

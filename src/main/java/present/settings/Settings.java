@@ -1,4 +1,4 @@
-package grid.settings;
+package present.settings;
 
 import application.ApplicationContext;
 import javafx.geometry.Insets;
@@ -9,6 +9,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import logic.SettingsController;
+/**
+ * This class provides the view of possible Settings in the Interface
+ * @author Sahin Bayram, Andreas Ott, Gregor von Gunten
+ *
+ */
 
 public class Settings extends StackPane {
     SettingsController settingsController;
@@ -23,11 +28,11 @@ public class Settings extends StackPane {
         Slider vehicleSpeed = new Slider();
         Label count = new Label();
         vehicleCount.setMin(1);
-        vehicleCount.setMax(1000);
-        vehicleCount.setValue(100);
+        vehicleCount.setMax(100);
+        vehicleCount.setValue(10);
         vehicleSpeed.setMin(1);
         vehicleSpeed.setMax(100);
-        vehicleSpeed.setValue(50);
+        vehicleSpeed.setValue(10);
 
         settingsController.setVehicleCount(100);
         settingsController.setVehicleSpeed(50);

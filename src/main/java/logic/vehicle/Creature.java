@@ -1,4 +1,4 @@
-package vehicle;
+package logic.vehicle;
 
 import application.ApplicationContext;
 import grid.impl.LightLayer;
@@ -10,10 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * /**
+ * 
  * Creatures have sensors (eyes), actors (wheels) and a brain to link them. Based on information (next position)
  * given by the brain a creature can move to a certain position on its world (map).
  * Every creature lives in its own thread
+ * 
+ * @author Gregor von Gunten, Sahin Bayram, Andreas Ott, Cesar de Carmo
  */
 
 public class Creature implements Runnable{
@@ -24,7 +26,7 @@ public class Creature implements Runnable{
 
     private Location located;
     private Point2D currentVelocity = new Point2D(1, 1);
-    private Point2D position;
+    private Point2D positionVehicle;
     private Wheel leftWheel;
     private Wheel rightWheel;
     private ApplicationContext applicationContext;
@@ -39,20 +41,22 @@ public class Creature implements Runnable{
 
     public Creature(ApplicationContext applicationContext, int x, int y) {
         this.speedAmplification = applicationContext.getSettingsController().getVehicleSpeed();
-        this.position  = new Point2D(x, y);
+        this.positionVehicle  = new Point2D(x, y);
     	this.applicationContext=applicationContext;
         this.lightMap = applicationContext.getLightGrid();
+        
         this.leftFrontEye = new Eye(Eye.sensorPosition.LEFTFRONT, lightMap);
         this.leftBackEye = new Eye(Eye.sensorPosition.LEFTBACK, lightMap);
         this.rightFrontEye = new Eye(Eye.sensorPosition.RIGHTFRONT, lightMap);
         this.rightBackEye = new Eye(Eye.sensorPosition.RIGHTBACK, lightMap);
-        leftWheel = new Wheel(Wheel.WheelPosition.LEFT, speedAmplification);
-        rightWheel = new Wheel(Wheel.WheelPosition.RIGHT, speedAmplification);
+        this.leftWheel = new Wheel(Wheel.WheelPosition.LEFT, speedAmplification);
+        this.rightWheel = new Wheel(Wheel.WheelPosition.RIGHT, speedAmplification);
 
         this.brain = new Brain(this);
         this.brain.linkComponents(leftFrontEye, leftBackEye, leftWheel);
         this.brain.linkComponents(rightFrontEye, rightBackEye, rightWheel);
-        applicationContext.getVehicleGrid().addVehicle(this, position);
+        applicationContext.getVehicleGrid().addVehicle(this, positionVehicle);
+       
         leftFrontEye.addPropertyChangeListener(evt -> {
             if(leftFrontEye.getBorder() == LightLayer.reachedBorder.TOP ||
                     leftFrontEye.getBorder() == LightLayer.reachedBorder.LEFT){
@@ -78,26 +82,23 @@ public class Creature implements Runnable{
     }
 
     public void update() {
-    	//System.out.println("Creature.update()");
-        emitPropertyChange("currentPosition", position.getX(), position.getY());
-
-
+    	emitPropertyChange("currentPosition", positionVehicle.getX(), positionVehicle.getY());
         if(border == LightLayer.reachedBorder.NONE){
 
             Point2D leftVelocity = leftWheel.getVelocity();
             Point2D rightVelocity = rightWheel.getVelocity();
-            Point2D result = leftVelocity.add(rightVelocity);
+            Point2D vehicleVelocity = leftVelocity.add(rightVelocity);
 
             double x = currentVelocity.getX();
             double y = currentVelocity.getY();
 
             double currentAngle = angleBetween(currentVelocity);
-            double resultAngle = angleBetween(result);
+            double resultAngle = angleBetween(vehicleVelocity);
 
-            double angle = resultAngle - currentAngle;
+            double angleToRotate = resultAngle - currentAngle;
 
 
-            if (angle > 90 || angle < -90) {
+            if (angleToRotate > 90 || angleToRotate < -90) {
                 switch (located) {
                     case TOPLEFT:
                         if (y > 0) {
@@ -132,54 +133,54 @@ public class Creature implements Runnable{
                 currentVelocity = new Point2D((x * Math.cos(rotate) - y * Math.sin(rotate)),( x * Math.sin(rotate) + y * Math.cos(rotate)));
             }
 
-            position = position.add((result.getX() + currentVelocity.getX()), (result.getY() + currentVelocity.getY()));
-            currentVelocity = result.add(currentVelocity);
+            positionVehicle = positionVehicle.add((vehicleVelocity.getX() + currentVelocity.getX()), (vehicleVelocity.getY() + currentVelocity.getY()));
+            currentVelocity = vehicleVelocity.add(currentVelocity);
         }
         else {
             if(border == LightLayer.reachedBorder.TOP || border == LightLayer.reachedBorder.BOTTOM){
                 currentVelocity = new Point2D((currentVelocity.getX() * Math.cos(3.1) - currentVelocity.getY() * Math.sin(3.1)), (currentVelocity.getX() * Math.sin(3.1) + currentVelocity.getY() * Math.cos(3.1)));
-                position = position.add(currentVelocity);
+                positionVehicle = positionVehicle.add(currentVelocity);
                 border = LightLayer.reachedBorder.NONE;
             }
             else if(border == LightLayer.reachedBorder.LEFT || border == LightLayer.reachedBorder.RIGHT){
                 currentVelocity = new Point2D((currentVelocity.getX() * Math.cos(3.1) - currentVelocity.getY() * Math.sin(3.1)), (currentVelocity.getX() * Math.sin(3.1) + currentVelocity.getY() * Math.cos(3.1)));
-                position = position.add(currentVelocity);
+                positionVehicle = positionVehicle.add(currentVelocity);
                 border = LightLayer.reachedBorder.NONE;
             }
         }
     }
 
     public Point2D getPosition(){
-    	return position;
+    	return positionVehicle;
     }
 
-    public double angleBetween(Point2D v) {
+    public double angleBetween(Point2D currentPoint) {
 
-        Point2D reference = new Point2D(1, 0);
+        Point2D referencePoint = new Point2D(1, 0);
 
         //sector1
-        if (v.getY() < 0 && v.getX() > 0) {
+        if (currentPoint.getY() < 0 && currentPoint.getX() > 0) {
             located = Location.TOPLEFT;
             //System.out.print("go down right");
-            return reference.angle(v);
+            return referencePoint.angle(currentPoint);
         }
         //sector2
-        else if (v.getY() < 0 && v.getX() < 0) {
+        else if (currentPoint.getY() < 0 && currentPoint.getX() < 0) {
             located = Location.TOPRIGHT;
             //System.out.print("go down left");
-            return reference.angle(v);
+            return referencePoint.angle(currentPoint);
         }
         //sector3
-        else if (v.getY() > 0 && v.getX() < 0) {
+        else if (currentPoint.getY() > 0 && currentPoint.getX() < 0) {
             located = Location.BOTTOMRIGHT;
             //System.out.print("go up left");
-            return reference.angle(v) + 90;
+            return referencePoint.angle(currentPoint) + 90;
         }
         //sector4
-        else if (v.getY() > 0 && v.getX() > 0) {
+        else if (currentPoint.getY() > 0 && currentPoint.getX() > 0) {
             located = Location.BOTTOMLEFT;
             //System.out.print("go up right");
-            return reference.angle(v) + 180 + 90;
+            return referencePoint.angle(currentPoint) + 180 + 90;
         }
         return 0;
     }
@@ -199,7 +200,7 @@ public class Creature implements Runnable{
         }
     }
 
-    public void kill() {
+    public void killCreature() {
         isDead = true;
     }
 
@@ -208,15 +209,12 @@ public class Creature implements Runnable{
 		try {
             while (!isDead) {
                 update();
-    			applicationContext.getVehicleGrid().setValue(position, this);
+    			applicationContext.getVehicleGrid().setValue(positionVehicle, this);
 
     		}
 		} catch (Exception e) {
 			e.printStackTrace();
-			// TODO: handle exception
 		}
-
 	}
-
     private enum Location {TOPRIGHT, TOPLEFT, BOTTOMLEFT, BOTTOMRIGHT}
 }

@@ -4,7 +4,7 @@ import application.ApplicationContext;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.ImagePattern;
-import vehicle.Creature;
+import logic.vehicle.Creature;
 
 /**
  * This class extends an Canvas.
@@ -34,11 +34,11 @@ public class WorldPage extends DrawingPane{
 	}
 
 	@Override
-	protected void paitWorld() {
+	protected void painWorld() {
 		g.drawImage(applicationContext.getLightGrid().getBackground(), 0, 0);
 		for (Creature vehicle :applicationContext.getVehicleGrid().getVehicles()){
 			Point2D point = vehicle.getPosition();
-            ImagePattern imagePattern = new ImagePattern(applicationContext.getImage());
+            ImagePattern imagePattern = new ImagePattern(applicationContext.getImageVehicle());
             g.setFill(imagePattern);
 			g.fillOval(point.getX(), point.getY(), 20, 20);
 		}

@@ -35,11 +35,11 @@ abstract class GridWorldFather<T> implements GridWorld<T> {
 
 		}
 	}
-
+	@Override
 	public void resetValues(){
 		for (int i = 0 ; i<values.length; i++){
 			for (int y =0; y<values[i].length; y++){
-				if(getValue(i,y) instanceof Double) {
+				if(getCellValue(i,y) instanceof Double) {
 					values[i][y] = (T)(Double)(0.0);
 				}
 			}
@@ -47,19 +47,19 @@ abstract class GridWorldFather<T> implements GridWorld<T> {
 	}
 
 	@Override
-	public int getWidth() {
+	public int getWidthGrid() {
 		if (values == null) return 0;
 		return values.length;
 	}
 
 	@Override
-	public int getHeight() {
+	public int getHeightGrid() {
 		if (values == null ||values[0] == null)return 0;
 		return values[0].length;
 	}
 	
 	@Override
-	public T getValue(int x, int y) {
+	public T getCellValue(int x, int y) {
 		return values[x][y];
 	}
 

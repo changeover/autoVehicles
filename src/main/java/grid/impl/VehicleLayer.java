@@ -1,15 +1,14 @@
 package grid.impl;
 
-import grid.GridWorldVehicle;
-import javafx.geometry.Point2D;
-import vehicle.Creature;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 import application.ApplicationContext;
+import grid.GridWorldVehicle;
+import javafx.geometry.Point2D;
+import logic.vehicle.Creature;
 
 /**
  * This class is for saving all produced vehicles and to handle them 
@@ -38,16 +37,7 @@ public class VehicleLayer<Vehicle extends Creature> extends GridWorldFather<Vehi
 	public List<Vehicle> getVehicles() {
 		reentLock.lock();
 		try {
-			//System.out.println("VehicleDataLayer.getVehicles()");
 			waitForView.signalAll();
-			/**try{
-				
-				while(vehicels.isEmpty()){
-					waitForBot.await();
-				}
-			}catch (Exception e) {
-				e.printStackTrace();
-			}*/
 			return vehicels;
 		} finally {
 			reentLock.unlock();
@@ -93,7 +83,6 @@ public class VehicleLayer<Vehicle extends Creature> extends GridWorldFather<Vehi
 			super.setValue(coordinates, value);
 			waitForBot.signalAll();
 			try {
-				//System.out.println("VehicleDataLayer.setValue()"+"wait for view");
 				waitForView.await();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -111,9 +100,8 @@ public class VehicleLayer<Vehicle extends Creature> extends GridWorldFather<Vehi
 		super.name = name;
 	}
 
-	public void clearData(){
-		vehicels.forEach(Vehicle::kill);
-
+	private void clearData(){
+		vehicels.forEach(Vehicle::killCreature);
 		vehicels.clear();
 	}
 

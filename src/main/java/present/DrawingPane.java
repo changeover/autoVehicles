@@ -9,6 +9,7 @@ import javafx.scene.layout.Pane;
  * Clients should extend this class and then simply implement the paint() method.
  * Inside paint() the graphics context g is available for issuing drawing commands.
  * The canvas is automatically created and updated if the size of the pane changes.
+ * @author Dommenique Brodbeck
  */
 public abstract class DrawingPane extends Pane {
     private Canvas canvas;
@@ -46,12 +47,12 @@ public abstract class DrawingPane extends Pane {
      */
     public void repaint() {
         g.clearRect(0, 0, getWidth(), getHeight());
-        paitWorld();
+        painWorld();
     }
 
     /**
      * This method must be overridden with the actual drawing code.
      */
-    protected abstract void paitWorld();
+    protected abstract void painWorld();
 
 }

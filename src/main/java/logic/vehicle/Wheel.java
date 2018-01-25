@@ -1,4 +1,4 @@
-package vehicle;
+package logic.vehicle;
 
 import javafx.geometry.Point2D;
 import logic.Actor;
@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Greg on 16.12.2017.
+ * This class simulates an Wheel on the Vehicle.
+ * 
+ * @author Gregor von Gunten, Andreas Ott
  */
 public class Wheel implements Actor {
 

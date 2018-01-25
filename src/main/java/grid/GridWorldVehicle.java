@@ -4,7 +4,7 @@ package grid;
  * methods used from vehicles only
  * @author Joel Zimmerli, Gregor von Gunten
  *
- * @param <Vehicle>  need to be created
+ * @param <Vehicle>  Vehicle what it contains
  */
 
 import java.util.List;
@@ -20,7 +20,7 @@ public interface GridWorldVehicle<GridValue,Vehicle> extends GridWorld<GridValue
 	 */
 	void addVehicle(Vehicle vehicle, Point2D koordinates);
 	/**
-	 * create a new Vehicle on the given coordinates
+	 * create a new Vehicle with the given coordinates as Start point
 	 * @param x
 	 * @param y
 	 */

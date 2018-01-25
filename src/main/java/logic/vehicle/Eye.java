@@ -1,4 +1,4 @@
-package vehicle;
+package logic.vehicle;
 
 import logic.Sensor;
 
@@ -8,7 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import grid.impl.LightLayer;
-
+/**
+ * This class reads an value out of a specific Grid
+ * @author Gregor von Gunten, Andreas Ott
+ *
+ */
 
 public class Eye implements Sensor {
 
@@ -19,7 +23,7 @@ public class Eye implements Sensor {
     private sensorPosition position;
 
     private LightLayer lightmap;
-    double intensity;
+    private double intensity;
 
     private LightLayer.reachedBorder border;
 
@@ -40,16 +44,16 @@ public class Eye implements Sensor {
         if(border == LightLayer.reachedBorder.NONE){
             switch (position) {
                 case LEFTBACK:
-                    intensity = lightmap.getValue((int) currentPosX - 1, (int) currentPosY + 1);
+                    intensity = lightmap.getCellValue((int) currentPosX - 1, (int) currentPosY + 1);
                     break;
                 case LEFTFRONT:
-                    intensity = lightmap.getValue((int) currentPosX - 1, (int) currentPosY - 1);
+                    intensity = lightmap.getCellValue((int) currentPosX - 1, (int) currentPosY - 1);
                     break;
                 case RIGHTBACK:
-                    intensity = lightmap.getValue((int) currentPosX + 1, (int) currentPosY + 1);
+                    intensity = lightmap.getCellValue((int) currentPosX + 1, (int) currentPosY + 1);
                     break;
                 case RIGHTFRONT:
-                    intensity = lightmap.getValue((int) currentPosX + 1, (int) currentPosY - 1);
+                    intensity = lightmap.getCellValue((int) currentPosX + 1, (int) currentPosY - 1);
                     break;
 
             }

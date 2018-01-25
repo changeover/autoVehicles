@@ -1,10 +1,11 @@
 package logic;
 
-import javafx.geometry.Point2D;
 
 /**
  * This interface models an actor of a vehicle. Based on signals emit by its linked sensors the actor can calculate
  * a velocity vector. (the stronger the signal the bigger is the magnitude of the computed vector
+ * 
+ * @author Gregor von Gunten
  */
 public interface Actor {
 

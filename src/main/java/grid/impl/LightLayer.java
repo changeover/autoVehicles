@@ -33,16 +33,16 @@ public class LightLayer  extends GridWorldFather<Double> implements GridWorldSou
 	public void addSource(int[] coordinates) {
 		lightSources.add(new LightSource(coordinates, 0));
 		changeIllumination(coordinates);
-		makePictures();
+		makeBackgroundPicture();
 	}
 	@Override
 	public void updateSource(int[] coordinates) {
 		lightSources.get(0).setKoordinates(coordinates);
 		changeIllumination(coordinates);
-		makePictures();
+		makeBackgroundPicture();
 	}
 	private void changeIllumination(int[] coordinates){
-		//Calculate difference of Source to center
+		//Changes the illumination of the World when light is moved
 		int xDiffCenter=(int) (-coordinates[0]+values.length/2);
 		int yDiffCenter=(int) (-coordinates[1]+values[0].length/2);
 		int xValuesStart=(int) lightLayer.length/2-values.length/2;
@@ -59,7 +59,7 @@ public class LightLayer  extends GridWorldFather<Double> implements GridWorldSou
 		resetValues();
 		lightSources.clear();
 		changeIllumination(new int[]{1,1});
-		makePictures();
+		makeBackgroundPicture();
 	}
 
 	
@@ -102,36 +102,33 @@ public class LightLayer  extends GridWorldFather<Double> implements GridWorldSou
 		
 	}
 
-	private void makePictures() {
-		
-	    	WritableImage writableImage = new WritableImage(getWidth(), getHeight());
-			int windowedValue;
-            for (int row = 0; row < getWidth(); row++) {
-                for (int column = 0; column < getHeight(); column++) {
-                    Double value = (values[row][column] * 255);
-					windowedValue = 255 - (int) (value / maxValueLight);
-
-					writableImage.getPixelWriter().setColor(row, column, Color.rgb(windowedValue, windowedValue, 100));
-                }
+	private void makeBackgroundPicture() {
+	   	WritableImage writableImage = new WritableImage(getWidthGrid(), getHeightGrid());
+		int windowedValue;
+        for (int row = 0; row < getWidthGrid(); row++) {
+            for (int column = 0; column < getHeightGrid(); column++) {
+                Double value = (values[row][column] * 255);
+                windowedValue = 255 - (int) (value / maxValueLight);
+				writableImage.getPixelWriter().setColor(row, column, Color.rgb(windowedValue, windowedValue, 100));
             }
-            backGround = writableImage;
-        
+         }
+         backGround = writableImage;
 	}
 
 	public Image getBackground() {
 		return backGround;
 	}
 	
-	public void calculateLightLayer(){
-		Point2D position= new Point2D(lightLayer.length/2, lightLayer[0].length/2);
-	    double p = 0.1;
+	private void calculateLightLayer(){
+		Point2D positionLight= new Point2D(lightLayer.length/2, lightLayer[0].length/2);
+	    double factor = 0.1;
         for (int x = 0; x < lightLayer.length; x++) {
             for (int y = 0; y < lightLayer[x].length; y++) {
-                int xDiff =x-(int) position.getX(); 
-                int yDiff =y-(int) position.getY(); 
-                lightLayer[x][y] = 1 / (2 * 6.1 * Math.sqrt(1 - p)) *
-                        Math.exp(-1 / (2 * (1 - Math.sqrt(1 - Math.pow(p, 2))) *
-                                (xDiff * xDiff + 2 * p * xDiff * yDiff + yDiff * yDiff)));
+                int xDiff =x-(int) positionLight.getX(); 
+                int yDiff =y-(int) positionLight.getY(); 
+                lightLayer[x][y] = 1 / (2 * 6.1 * Math.sqrt(1 - factor)) *
+                        Math.exp(-1 / (2 * (1 - Math.sqrt(1 - Math.pow(factor, 2))) *
+                                (xDiff * xDiff + 2 * factor * xDiff * yDiff + yDiff * yDiff)));
 
             }
         }

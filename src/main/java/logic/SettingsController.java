@@ -1,6 +1,11 @@
 package logic;
 
 import javafx.scene.control.Slider;
+/**
+ * HAs the main Functionality of the Setting
+ * @author Andreas Ott, Gregor von Gunten
+ *
+ */
 
 public interface SettingsController {
     int getVehicleSpeed();

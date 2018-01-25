@@ -3,7 +3,7 @@ package present;
 import javafx.scene.control.Button;
 
 /**
- * Created by matth on 16.01.2018.
+ * @author Matthias Meychtry
  */
 class GUIElements {
     static Button createButton(String text){

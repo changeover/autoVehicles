@@ -1,11 +1,19 @@
 package present;
 
-import grid.settings.Settings;
 import application.ApplicationContext;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.SplitPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.TilePane;
+import present.settings.Settings;
+/**
+ * Main Panel with all components.
+ * @author Andreas Ott
+ *
+ */
 
 public class MainPanel extends BorderPane{
 	private WorldPage front;
@@ -54,30 +62,6 @@ public class MainPanel extends BorderPane{
 
         visualPane.getChildren().add(front);
 
-
-
-        //MenuBar menuBar = new MenuBar();
-        //Menu menu;
-        //MenuItem menuItem;
-//
-        //menu = new Menu("Application");
-        //menuBar.getMenus().add(menu);
-//
-        //menuItem = new MenuItem("Start");
-        //menu.getItems().add(menuItem);
-        //menuItem.setOnAction(event -> applicationContext.run());
-//
-        //menuItem = new MenuItem("Stop");
-        //menu.getItems().add(menuItem);
-        //menuItem.setOnAction(event -> applicationContext.stop());
-//
-        //menuItem = new MenuItem("Exit");
-        //menu.getItems().add(menuItem);
-        //menuItem.setOnAction(event -> System.exit(0));
-        //
-//
-//
-        //setTop(menuBar);
         setCenter(splitPane);
 
     }

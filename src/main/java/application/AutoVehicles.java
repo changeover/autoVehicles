@@ -3,8 +3,8 @@ package application;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import logic.vehicle.Creature;
 import present.MainPanel;
-import vehicle.Creature;
 
 /**
  * This is the Start of our little Prohramm, so it's deals
